@@ -3,34 +3,34 @@ import React, { Fragment, useEffect, useState } from "react";
 import EditTask from "./EditTask";
 
 const ListTasks = () => {
-  const [todos, setTodos] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
-  // delete todo function
-async function deleteTodo(id) {
-  try {
-    await fetch(`http://localhost:5000/todos/${id}`, {
-      method:"DELETE"
-    });
-    
-    // automatically update todo view
-    setTodos(todos.filter(todo => todo.todo_id !== id));
-  } catch (err) {
-    console.error(err.message);
+  // delete task function
+  async function deleteTask(id) {
+    try {
+      await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: "DELETE",
+      });
+
+      // automatically update task view
+      setTasks(tasks.filter((task) => task.task_id !== id));
+    } catch (err) {
+      console.error(err.message);
+    }
   }
-}
 
-  async function getTodos() {
-    const res = await fetch("http://localhost:5000/todos");
+  async function getTasks() {
+    const res = await fetch("http://localhost:5000/tasks");
 
-    const todosArray = await res.json();
+    const tasksArray = await res.json();
 
-    setTodos(todosArray);
+    setTasks(tasksArray);
   }
   useEffect(() => {
-    getTodos();
+    getTasks();
   }, []);
 
-    console.log(todos);
+  console.log(tasks);
   return (
     <Fragment>
       {" "}
@@ -43,37 +43,34 @@ async function deleteTodo(id) {
           </tr>
         </thead>
         <tbody>
-        {/* 
+          {/* 
             <tr>
               <td>John</td>
               <td>Doe</td>
               <td>john@example.com</td>
             </tr>
 */}
-        {
-          todos.map(todo => (
-            <tr key={todo.todo_id}>
-              <td>{todo.description}</td>
+          {tasks.map((task) => (
+            <tr key={task.task_id}>
+              <td>{task.description}</td>
               <td>
-                <EditTask todo={todo}/>
+                <EditTask task={task} />
               </td>
               <td>
-                <button 
-                  className="btn btn-danger" 
-                  onClick={() => deleteTodo(todo.todo_id)}
+                <button
+                  className="btn btn-danger"
+                  onClick={() => deleteTask(task.task_id)}
                 >
-                Delete
+                  Delete
                 </button>
               </td>
             </tr>
-          ))
-        }
+          ))}
         </tbody>
       </table>
     </Fragment>
   );
-
-}
+};
 
 // George's starter code
 // const App = () => {
@@ -125,6 +122,5 @@ async function deleteTodo(id) {
 //     </form>
 //   );
 // };
-
 
 export default ListTasks;
