@@ -38,6 +38,9 @@ To install this app, please install the project dependencies and run it locally.
 ## User Flow
 <img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/user-flow.png" alt="A screenshot of the user flow" width="300" border="1" />
 
+## Homepage Wireframe 
+<img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/homepage-wireframe.png" alt="An image showing the wireframe connections between the backend and the frontend" width="300" border='1" />
+
 # Remaining Issues
 I need to build the app!
 
