@@ -31,7 +31,7 @@ To install this app, please install the project dependencies and run it locally.
 <img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/user-flow.png" alt="A screenshot of the user flow" width="600" border="1" />
 
 ## Homepage Wireframe 
-<img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/homepage-wireframe.png" alt="An image showing the wireframe connections between the backend and the frontend" width="300" border="1" />
+<img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/homepage-wireframe.png" alt="An image showing the wireframe connections between the backend and the frontend" width="600" border="1" />
 
 # Mock Ups
 <img src="https://github.com/m3ia/GotIt/blob/george/images/view-all-lists.png" alt="A screenshot to view all lists" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/george/images/view-one-list.png" alt="A screenshot to view one list" width="300" border="1" />
