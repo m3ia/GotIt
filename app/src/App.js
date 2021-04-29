@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import ListTasks from "./ListTasks";
 import * as apiClient from "./apiClient";
 
 const App = () => {
@@ -12,10 +13,13 @@ const App = () => {
   }, []);
 
   return (
-    <main className="App">
-      <TaskList tasks={tasks} />
-      <AddTask loadTasks={loadTasks} />
-    </main>
+    <Fragment>
+      <div className="container">
+        <TaskList tasks={tasks} />
+        <AddTask loadTasks={loadTasks} />
+        <ListTasks />
+      </div>
+    </Fragment>
   );
 };
 

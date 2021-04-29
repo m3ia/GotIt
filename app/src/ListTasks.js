@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
-import EditTodo from "./EditTodo";
 
-const ListTodos = () => {
+import EditTask from "./EditTask";
+
+const ListTasks = () => {
   const [todos, setTodos] = useState([]);
 
   // delete todo function
@@ -54,7 +55,7 @@ async function deleteTodo(id) {
             <tr key={todo.todo_id}>
               <td>{todo.description}</td>
               <td>
-                <EditTodo todo={todo}/>
+                <EditTask todo={todo}/>
               </td>
               <td>
                 <button 
@@ -74,4 +75,56 @@ async function deleteTodo(id) {
 
 }
 
-export default ListTodos;
+// George's starter code
+// const App = () => {
+//   const [tasks, setTasks] = React.useState([]);
+
+//   const loadTasks = async () => setTasks(await apiClient.getTasks());
+
+//   React.useEffect(() => {
+//     loadTasks();
+//   }, []);
+
+//   return (
+//     <main className="App">
+//       <TaskList tasks={tasks} />
+//       <AddTask loadTasks={loadTasks} />
+//     </main>
+//   );
+// };
+
+// const TaskList = ({ tasks }) => (
+//   <ul>
+//     {tasks.map(({ id, name }) => (
+//       <li key={id}>{name}</li>
+//     ))}
+//   </ul>
+// );
+
+// const AddTask = ({ loadTasks }) => {
+//   const [task, setTask] = React.useState("");
+
+//   const canAdd = task !== "";
+
+//   const onSubmit = async (e) => {
+//     e.preventDefault();
+//     if (canAdd) {
+//       await apiClient.addTask(task);
+//       loadTasks(); // grabs all tasks so you don't have to reload
+//       setTask("");
+//     }
+//   };
+
+//   return (
+//     <form onSubmit={onSubmit}>
+//       <label>
+//         New task:{" "}
+//         <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
+//       </label>
+//       <button disabled={!canAdd}>Add</button>
+//     </form>
+//   );
+// };
+
+
+export default ListTasks;
