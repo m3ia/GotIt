@@ -12,6 +12,9 @@ export const addTask = async (name) =>
     ])
   )[0];
 
+export const deleteTask = async (id) =>
+  await db.query("DELETE FROM tasks WHERE id = $1", [id]);
+
 function initDb() {
   let connection;
 

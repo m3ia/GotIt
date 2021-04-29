@@ -36,7 +36,7 @@ const AddTask = ({ loadTasks }) => {
     e.preventDefault();
     if (canAdd) {
       await apiClient.addTask(task);
-      loadTasks();
+      loadTasks(); // grabs all tasks so you don't have to reload
       setTask("");
     }
   };
