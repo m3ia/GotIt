@@ -22,11 +22,14 @@ To install this app, please install the project dependencies and run it locally.
 1. Have Docker and Node.js installed
 2. Have Docker running
 3. Clone the repo
-4. Run a terminal and cd into directory "GotIt"
-5. Run `npm install`
-6. Run `npm db:init` 
-7. Run `npm start`
-8. Open http://localhost/3000 to view
+4. Run a terminal and cd into directory "GotIt". Run the following commands:
+5. `npm install`
+6. `cd app`
+7. `npm install`
+8. `cd ..`(back into root folder for 'GotIt')
+12. `npm db:init` 
+13. `npm start`
+14. Open http://localhost/3000 to view
 
 Optional: To open the console to the database, open a terminal window and run `npm run psql` 
 
