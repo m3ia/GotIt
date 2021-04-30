@@ -16,13 +16,19 @@
 6. React.js
 7. Node.js
 
-# How To Install 
+# How To Install & Run
 To install this app, please install the project dependencies and run it locally. Got It! is currently hosted on [Heroku](https://got-it-app.herokuapp.com/).
 
 1. Clone the repo
 2. Run a terminal and cd into directory "GotIt"
-3. Run `npm start` 
-4. Open http://localhost/3000 to videw
+3. Run `npm install`
+4. Run `npm db:init` 
+5. Run `npm start`
+6. Open http://localhost/3000 to view
+
+# How To Close App
+1. Run `ctrl + C` 
+
 
 ## Database Schema
 <img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/schema.png" alt="A screenshot of the DB schema" width="600" border="1" />
