@@ -1,36 +1,36 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import EditTask from "./EditTask";
+import EditItem from "./EditItem";
 
-const ListTasks = () => {
-  const [tasks, setTasks] = useState([]);
+const ListItems = () => {
+  const [items, setItems] = useState([]);
 
-  // delete task function
-  async function deleteTask(id) {
+  // delete item function
+  async function deleteItem(id) {
     try {
-      await fetch(`http://localhost:5000/tasks/${id}`, {
+      await fetch(`http://localhost:5000/items/${id}`, {
         method: "DELETE",
       });
 
-      // automatically update task view
-      setTasks(tasks.filter((task) => task.task_id !== id));
+      // automatically update item view
+      setItems(items.filter((item) => item.item_id !== id));
     } catch (err) {
       console.error(err.message);
     }
   }
 
-  async function getTasks() {
-    const res = await fetch("http://localhost:5000/tasks");
+  async function getItems() {
+    const res = await fetch("http://localhost:5000/items");
 
-    const tasksArray = await res.json();
+    const itemsArray = await res.json();
 
-    setTasks(tasksArray);
+    setItems(itemsArray);
   }
   useEffect(() => {
-    getTasks();
+    getItems();
   }, []);
 
-  console.log(tasks);
+  console.log(items);
   return (
     <Fragment>
       {" "}
@@ -50,16 +50,16 @@ const ListTasks = () => {
               <td>john@example.com</td>
             </tr>
 */}
-          {tasks.map((task) => (
-            <tr key={task.task_id}>
-              <td>{task.description}</td>
+          {items.map((item) => (
+            <tr key={item.item_id}>
+              <td>{item.description}</td>
               <td>
-                <EditTask task={task} />
+                <EditItem item={item} />
               </td>
               <td>
                 <button
                   className="btn btn-danger"
-                  onClick={() => deleteTask(task.task_id)}
+                  onClick={() => deleteItem(item.item_id)}
                 >
                   Delete
                 </button>
@@ -123,4 +123,4 @@ const ListTasks = () => {
 //   );
 // };
 
-export default ListTasks;
+export default ListItems;
