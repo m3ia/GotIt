@@ -1,6 +1,6 @@
 // import React, { Fragment, useState } from "react";
 
-// const EditTask = ({todo}) => {
+// const EditItem = ({todo}) => {
 // //editText function
 // const editText = async(id)=>{
 //   try {
@@ -20,7 +20,7 @@
 // }
 // const [description, setDescription] = useState(todo.description);
 
-// return <h1>Edit Task</h1>
+// return <h1>Edit Item</h1>
 
 // <Fragment>
 //       <button
@@ -75,4 +75,4 @@
 // </Fragment>
 // );
 
-// export default EditTask;
+// export default EditItem;
