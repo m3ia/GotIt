@@ -17,8 +17,9 @@
 7. Node.js
 
 # How To Install & Run
-To install this app, please install the project dependencies and run it locally. Got It! is currently hosted on [Heroku](https://got-it-app.herokuapp.com/).
+Got It! is currently hosted on [Heroku](https://got-it-app.herokuapp.com/).
 
+If you'd like to quickly install and run this app locally, please install the project dependencies and run it following these instructions:
 1. Have Docker and Node.js installed
 2. Have Docker running
 3. Clone the repo
@@ -30,7 +31,32 @@ To install this app, please install the project dependencies and run it locally.
 12. `npm db:init` 
 13. `npm start`
 14. Open http://localhost/3000 to view
+Optional: To open the console to the database, open a terminal window and run `npm run psql` 
 
+For optimal debugging/reviewing code, follow these instructions:  
+1. Have Docker and Node.js installed
+2. Have Docker running
+3. Clone the repo
+4. Run a terminal and cd into directory "GotIt". Run the following commands:
+5. `npm install`
+6. `npm db:init`
+7. `npm db:start` 
+8. `cd server`
+9. `nodemon server.mjs`
+10. `cd ..` (back into root folder for 'GotIt')
+11. `cd app`
+12. `npm start`
+13. Open http://localhost/3000 to view
+Optional: To open the console to the database, open a terminal window and run `npm run psql` 
+
+For ongoing development (without reinstalling), follow these instructions:
+1. Have Docker and Node.js installed
+2. Have Docker running
+3. Run a terminal and cd into directory "GotIt". Run the following commands:
+4. `npm db:start`
+5. In a new terminal tab: `cd server && nodemon server.mjs`
+9. In another new terminal tab: `cd app && npm start`
+12. Open http://localhost/3000 to view
 Optional: To open the console to the database, open a terminal window and run `npm run psql` 
 
 # How To Close App
