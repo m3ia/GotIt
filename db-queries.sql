@@ -5,4 +5,4 @@ CREATE TABLE items(
   name VARCHAR(255)
 );
 
--- eventually, when we get onto adding more columns 
+-- eventually, when we get onto adding more columns edit seed.psql file
