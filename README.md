@@ -63,18 +63,18 @@ Optional: To open the console to the database, open a terminal window and run `n
 1. Run `ctrl + C` in "GotIt" directory.
 
 ## Database Schema
-<img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/schema.png" alt="A screenshot of the DB schema" width="600" border="1" />
+<img src="https://github.com/m3ia/GotIt/blob/main/images/schema.png" alt="A screenshot of the DB schema" width="600" border="1" />
 
 ## User Flow
-<img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/user-flow.png" alt="A screenshot of the user flow" width="600" border="1" />
+<img src="https://github.com/m3ia/GotIt/blob/main/images/user-flow.png" alt="A screenshot of the user flow" width="600" border="1" />
 
 ## Homepage Wireframe 
-<img src="https://github.com/m3ia/GotIt/blob/george2/docs/images/homepage-wireframe.png" alt="An image showing the wireframe connections between the backend and the frontend" width="600" border="1" />
+<img src="https://github.com/m3ia/GotIt/blob/main/images/homepage-wireframe.png" alt="An image showing the wireframe connections between the backend and the frontend" width="600" border="1" />
 
 # Mock Ups
-<img src="https://github.com/m3ia/GotIt/blob/george/images/view-all-lists.png" alt="A screenshot to view all lists" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/george/images/view-one-list.png" alt="A screenshot to view one list" width="300" border="1" />
-<img src="https://github.com/m3ia/GotIt/blob/george/images/add-details.png" alt="A screenshot to view details of an item" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/george/images/add-freq.png" alt="A screenshot to show how to adjust frequency of a list" width="300" border="1" />
-<img src="https://github.com/m3ia/GotIt/blob/george/images/cross-item.png" alt="A screenshot to show updated recurring list" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/george/images/show-recurred-list.png" alt="A screenshot to show recurred item on list" width="300" border="1" />
+<img src="https://github.com/m3ia/GotIt/blob/main/images/view-all-lists.png" alt="A screenshot to view all lists" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/main/images/view-one-list.png" alt="A screenshot to view one list" width="300" border="1" />
+<img src="https://github.com/m3ia/GotIt/blob/main/images/add-details.png" alt="A screenshot to view details of an item" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/main/images/add-freq.png" alt="A screenshot to show how to adjust frequency of a list" width="300" border="1" />
+<img src="https://github.com/m3ia/GotIt/blob/main/images/cross-item.png" alt="A screenshot to show updated recurring list" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/main/images/show-recurred-list.png" alt="A screenshot to show recurred item on list" width="300" border="1" />
 
 # Remaining Issues
 I need to build the app!
