@@ -2,8 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import EditItem from "./EditItem";
 
-
-// This is 
+// This is view for one list.
 const ListItems = () => {
   const [items, setItems] = useState([]);
 
@@ -15,7 +14,7 @@ const ListItems = () => {
       });
 
       // automatically update item view
-      setItems(items.filter((item) => item.item_id !== id));
+      setItems(items.filter((item) => item.id !== id));
     } catch (err) {
       console.error(err.message);
     }
@@ -53,7 +52,7 @@ const ListItems = () => {
             </tr>
 */}
           {items.map((item) => (
-            <tr key={item.item_id}>
+            <tr key={item.id}>
               <td>{item.description}</td>
               <td>
                 <EditItem item={item} />
@@ -61,7 +60,7 @@ const ListItems = () => {
               <td>
                 <button
                   className="btn btn-danger"
-                  onClick={() => deleteItem(item.item_id)}
+                  onClick={() => deleteItem(item.id)}
                 >
                   Delete
                 </button>

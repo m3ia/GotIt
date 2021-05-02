@@ -3,7 +3,7 @@ import pgp from "pg-promise";
 
 const db = initDb();
 
-export const getTasks = async () => await db.any("SELECT * FROM tasks");
+export const getTasks = async () => await db.any("SELECT * FROM items");
 
 export const addTask = async (name) =>
   (

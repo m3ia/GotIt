@@ -21,22 +21,22 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: tasks; Type: TABLE; Schema: public; Owner: postgres
+-- Name: items; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.tasks (
+CREATE TABLE public.items (
     id integer NOT NULL,
     name text
 );
 
 
-ALTER TABLE public.tasks OWNER TO postgres;
+ALTER TABLE public.items OWNER TO postgres;
 
 --
--- Name: tasks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: items_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.tasks_id_seq
+CREATE SEQUENCE public.items_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -45,27 +45,27 @@ CREATE SEQUENCE public.tasks_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tasks_id_seq OWNER TO postgres;
+ALTER TABLE public.items_id_seq OWNER TO postgres;
 
 --
--- Name: tasks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.tasks_id_seq OWNED BY public.tasks.id;
-
-
---
--- Name: tasks id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_id_seq'::regclass);
+ALTER SEQUENCE public.items_id_seq OWNED BY public.items.id;
 
 
 --
--- Data for Name: tasks; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Name: items id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-COPY public.tasks (id, name) FROM stdin;
+ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_id_seq'::regclass);
+
+
+--
+-- Data for Name: items; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.items (id, name) FROM stdin;
 1	🙏 Be nice when you add test entries
 2	⏲ Added entries will be reset every Sunday
 3	End white supremacy
@@ -75,18 +75,18 @@ COPY public.tasks (id, name) FROM stdin;
 
 
 --
--- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: items_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.tasks_id_seq', 5, true);
+SELECT pg_catalog.setval('public.items_id_seq', 5, true);
 
 
 --
--- Name: tasks tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.tasks
-    ADD CONSTRAINT tasks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (id);
 
 
 --

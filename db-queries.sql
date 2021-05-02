@@ -1,8 +1,8 @@
-npm run heroku:psql
+-- npm run heroku:psql
 
-CREATE DATABASE pernstack;
-
-CREATE TABLE todo(
-  todo_id SERIAL PRIMARY KEY, 
-  description VARCHAR(255)
+CREATE TABLE items(
+  id SERIAL PRIMARY KEY, 
+  name VARCHAR(255)
 );
+
+-- eventually, when we get onto adding more columns 
