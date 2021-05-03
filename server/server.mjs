@@ -38,7 +38,7 @@ items.post("/", async (request, response) => {
 // write get, put, post, delete routes here with items.
 
 // edits an item
-items.put("/:id", async(request, response) => {
+items.put("/:id", async (request, response) => {
   const { id } = request.params;
   const { name } = request.body;
   response.json("Item was updated");

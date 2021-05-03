@@ -24,17 +24,12 @@ const ListItems = () => {
   }, []);
   // delete item function
   async function deleteItem(id) {
-    try {
-      // await fetch(`http://localhost:4000/items/${id}`, {
-      //   method: "DELETE",
-      // });
+    apiClient.deleteItem(id);
 
-      // automatically update item view
-      setItems(items.filter((item) => item.id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
+    // automatically update item view
+    setItems(items.filter((item) => item.id !== id));
   }
+
   return (
     <Fragment>
       {" "}
