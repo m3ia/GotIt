@@ -1,7 +1,14 @@
 // import React, { Fragment, useState } from "react";
 
+// editText function
 // const EditItem = ({todo}) => {
-// //editText function
+// state: value
+// onClick: setState (via useState): input box with value as placeholder. "submit" button appears
+// if user clicks out, value resets as placeholder
+// if user clicks enter, or clicks "submit", value changes to e.target.value
+// post http req is sent to edit info in db
+// api call is made to get all items seemlessly
+
 // const editText = async(id)=>{
 //   try {
 
