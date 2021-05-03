@@ -2,13 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
-import ListItems from "./ListItems";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <ListItems />
   </React.StrictMode>,
   document.getElementById("root"),
 );
