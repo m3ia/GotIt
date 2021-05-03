@@ -1,5 +1,7 @@
 import * as React from "react";
+import { Fragment } from "react";
 
+import ListTasks from "./ListItems";
 import * as apiClient from "./apiClient";
 
 const App = () => {
@@ -12,10 +14,13 @@ const App = () => {
   }, []);
 
   return (
-    <main className="App">
-      <TaskList tasks={tasks} />
-      <AddTask loadTasks={loadTasks} />
-    </main>
+    <Fragment>
+      <div className="container">
+        <TaskList tasks={tasks} />
+        <AddTask loadTasks={loadTasks} />
+        <ListTasks />
+      </div>
+    </Fragment>
   );
 };
 
@@ -36,7 +41,7 @@ const AddTask = ({ loadTasks }) => {
     e.preventDefault();
     if (canAdd) {
       await apiClient.addTask(task);
-      loadTasks();
+      loadTasks(); // grabs all tasks so you don't have to reload
       setTask("");
     }
   };

@@ -6,21 +6,31 @@ import * as db from "./db.mjs";
 const app = express();
 const port = process.env.PORT || 4000;
 
-const tasks = express.Router();
+// items defines the routes
+const items = express.Router();
 
-tasks.get("/", async (request, response) => {
-  const tasks = await db.getTasks();
-  response.json(tasks);
+items.get("/", async (request, response) => {
+  const items = await db.getItems();
+  response.json(items);
 });
 
-tasks.use(express.json());
-tasks.post("/", async (request, response) => {
+items.use(express.json());
+
+items.post("/", async (request, response) => {
   const { name } = request.body;
-  const task = await db.addTask(name);
-  response.status(201).json(task);
+  // const { name, dueDate } = request.body; // for multiple inputs
+  // console.log(request.body); // to test 
+  const item = await db.addItem(name);
+  response.status(201).json(item);
+});
+// write get, put, post, delete routes here with items.
+items.delete("/:id", async (request, response) => {
+  const { id } = request.params;
+  await db.deleteItem(id);
+  response.status(201);
 });
 
-app.use("/api/tasks", tasks);
+app.use("/api/items", items);
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(
