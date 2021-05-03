@@ -11,6 +11,7 @@ const items = express.Router();
 
 items.get("/", async (request, response) => {
   const items = await db.getItems();
+  console.log("hello test test");
   response.json(items);
 });
 

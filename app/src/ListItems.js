@@ -1,27 +1,19 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import EditItem from "./EditItem";
+import * as apiClient from "./apiClient";
 
 // This is view for one list.
 const ListItems = () => {
   const [items, setItems] = useState([]);
 
-  // delete item function
-  async function deleteItem(id) {
-    try {
-      await fetch(`http://localhost:5000/items/${id}`, {
-        method: "DELETE",
-      });
+  // const loadItems = async () => setItems(await apiClient.getItems());
 
-      // automatically update item view
-      setItems(items.filter((item) => item.id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
-
+  // useEffect(() => {
+  //   loadItems();
+  // }, []);
   async function getItems() {
-    const res = await fetch("http://localhost:5000/items");
+    const res = await fetch("/api/items");
 
     const itemsArray = await res.json();
 
@@ -30,12 +22,23 @@ const ListItems = () => {
   useEffect(() => {
     getItems();
   }, []);
+  // delete item function
+  async function deleteItem(id) {
+    try {
+      // await fetch(`http://localhost:4000/items/${id}`, {
+      //   method: "DELETE",
+      // });
 
-  console.log(items);
+      // automatically update item view
+      setItems(items.filter((item) => item.id !== id));
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
   return (
     <Fragment>
       {" "}
-      <table class="table table-hover mt-5">
+      <table className="table table-hover mt-5">
         <thead>
           <tr>
             <th>Description</th>
@@ -53,9 +56,10 @@ const ListItems = () => {
 */}
           {items.map((item) => (
             <tr key={item.id}>
-              <td>{item.description}</td>
+              <td>{item.name}</td>
               <td>
-                <EditItem item={item} />
+                Edit Item button
+                {/* <EditItem item={item} /> */}
               </td>
               <td>
                 <button
@@ -66,6 +70,7 @@ const ListItems = () => {
                 </button>
               </td>
             </tr>
+            // <div> {item.name}; </div>
           ))}
         </tbody>
       </table>
