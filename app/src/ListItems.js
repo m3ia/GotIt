@@ -53,7 +53,8 @@ const ListItems = () => {
             <tr key={item.id}>
               <td>{item.name}</td>
               <td>
-                Edit Item button
+                Recurring Option
+                {/* After added, please remove the Edititem placeholder below */}
                 {/* <EditItem item={item} /> */}
               </td>
               <td>
