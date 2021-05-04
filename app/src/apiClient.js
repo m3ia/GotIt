@@ -17,16 +17,16 @@ export const addItem = async (name) => {
   return response.json();
 };
 
-// edit item function 
+// edit item function
 
-export const editItem = async (id) => {
+export const editItem = async (id, name) => {
   const body = { name };
-  const response = await fetch(`/api/items/${id}`, {
+  await fetch(`/api/items/${id}`, {
     method: "PUT",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(body)
-
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
   });
+};
 
 // delete item function
 export const deleteItem = async (id) => {

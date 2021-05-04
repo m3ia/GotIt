@@ -38,6 +38,7 @@ const ListItems = () => {
           <tr>
             <th>Description</th>
             <th>Edit</th>
+            <th>Frequency</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -51,7 +52,12 @@ const ListItems = () => {
 */}
           {items.map((item) => (
             <tr key={item.id}>
-              <td>{item.name}</td>
+              <div className="item-row">
+                <td>{item.name}</td>
+                <td>
+                  <EditItem item={item} />
+                </td>
+              </div>
               <td>
                 Recurring Option
                 {/* After added, please remove the Edititem placeholder below */}

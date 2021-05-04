@@ -1,72 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
+import * as apiClient from "./apiClient";
 
 // editText function
-const EditItem = ({item}) => {
-// state: value
-// onClick: setState (via useState): input box with value as placeholder. "submit" button appears
-// if user clicks out, value resets as placeholder
-// if user clicks enter, or clicks "submit", value changes to e.target.value
-// post http req is sent to edit info in db
-// api call is made to get all items seemlessly
+const EditItem = ({ item }) => {
+  const editText = async (id) => {
+    apiClient.editItem(id);
+    window.location = "/"; // ensures you don't have to refresh again
+  };
 
-const editText = async(id)=>{
-  apiClient.editItem(id);
-  window.location = "/"; // ensures you don't have to refresh again
-}
-const [name, setName] = useState(item.name);
+  //useRef for focusing into input bar
+  const inputItem = useRef();
 
-return <h1>Edit Item</h1>
+  // Clicking Edit/on the value activates editMode. User sees input and Submit button.
+  const onEditClick = () => {
+    setEditMode(true);
+  };
+  // Submit sets setEditMode(false). User sees value with submitted input item, Edit button.
+  const onSaveClick = () => {
+    setEditMode(false);
+  };
+  // Want: When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
+  //   const cancelEdit = () => {
+  //   setEditMode(false);
+  // }
 
-      <button
-        type="button"
-        class="btn btn-warning" data-toggle="modal"
-        data-target={`#id${item.id}`}>
-        Edit
-      </button>
-      {/* id = "id25*/}
-      <div class="modal" id={`id${item.id}`}
-        onClick={() => setName(item.name)}>
-        <div class="modal-dialog">
-          <div class="modal-content">
+  // When user clicks Enter on Edit Mode, onSubmitClick is processed.
+  const handleKeyPress = (e) => {
+    if (e.charCode === 13) {
+      onSaveClick();
+      editText(item.id);
+    }
+  };
+  const [name, setName] = useState(item.name);
+  const [editMode, setEditMode] = React.useState(false);
+  useEffect(() => {
+    if (editMode) {
+      inputItem.current.focus();
+    }
+  }, [editMode]);
 
-            <div class="modal-header">
-              <h4 class="modal-title">Edit item</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                onClick={() => setName(item.name)} >&times;</button>
-            </div>
+  return (
+    <>
+      <h1>Edit Item</h1>
+      {!editMode && (
+        <>
+          <button
+            type="button"
+            class="btn btn-warning"
+            className="edit-button"
+            data-target={`#id${item.id}`}
+            onClick={onEditClick}
+          >
+            Edit
+          </button>
+          <br />
+          {/* Need to figure out how to add event listener below. */}
+          {/* <div 
+            className="item-row" 
+            id={`id${item.id}`}
+            onClick={onEditClick}> */}
+          {name}
+          {/* </div> */}
+        </>
+      )}
 
-            <div class="modal-body">
-              <input
-                type="text"
-                className="form control"
-                value={name}
-                onChange={e => setName(e.target.value)}
-              />
-            </div>
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-warning"
-                data-dismiss="modal"
-                onClick={() => editText(item.id)}>
-                Save
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger" data-dismiss="modal"
-                onClick={() => setName(item.name)}>
-                  Close
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-</Fragment>
-);
+      {/* in editMode, user sees input with submitted input item as a placeholder, Submit button. */}
+      {editMode && (
+        <>
+          <button onClick={onSaveClick} className="save-button" type="submit">
+            Save
+          </button>
+          <br />
+          {/* onKeyPress:Enter => click submit button. */}
+          <input
+            type="text"
+            ref={inputItem}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+        </>
+      )}
+    </>
+  );
+};
 
 export default EditItem;
