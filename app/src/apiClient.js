@@ -1,23 +1,27 @@
-export const getTasks = async () => {
-  const response = await fetch("/api/tasks");
+const BACKEND_URL = "http://localhost:3000";
+
+export const getItems = async () => {
+  const response = await fetch(BACKEND_URL + "/api/items");
   return response.json();
 };
 
-// add task function
-export const addTask = async (name) => {
-  const response = await fetch("/api/tasks", {
+// add item function
+export const addItem = async (name) => {
+  const response = await fetch(BACKEND_URL + "/api/items", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify({
+      name,
+    }),
   });
   return response.json();
 };
 
-// delete task function
-export const deleteTask = async (id) => {
-  const response = await fetch(`/api/tasks/${id}`, {
+// delete item function
+export const deleteItem = async (id) => {
+  const response = await fetch(BACKEND_URL + `/api/items/${id}`, {
     method: "DELETE",
   });
   return response.json();
