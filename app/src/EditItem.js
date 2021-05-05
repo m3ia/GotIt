@@ -44,12 +44,25 @@ const EditItem = ({ item }) => {
   return (
     <>
       <td>
-        <div className="item-row">
-          {/* Need to figure out how to add event listener below. */}
-          {/* <div 
-          className="item-row" 
+        {/* <div className="item-row"> */}
+        {/* Need to figure out how to add event listener below. */}
+        <div
+          className="item-row"
           id={`id${item.id}`}
-          onClick={onEditClick} >  */}
+          // this is not currently working
+          onClick={() => {
+            onEditClick();
+          }}
+          onKeyPress={() => {
+            onEditClick();
+          }}
+          // see a11y doc: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/interactive-supports-focus.md
+          tabIndex={0}
+          role="button"
+          // see a11y doc: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-hidden_attribute
+          // aria-hidden="true"
+          aria-pressed="false"
+        >
           <>
             {!editMode && name}
             {/* onKeyPress:Enter => click submit button. */}
