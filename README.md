@@ -58,6 +58,7 @@ For ongoing development (without reinstalling), follow these instructions:
 9. In another new terminal tab: `cd app && npm start`
 12. Open http://localhost/3000 to view
 Optional: To open the console to the database, open a terminal window and run `npm run psql` 
+To check the Heroku database, open a terminal window and run `heroku psql --app got-it-app`
 
 # How To Close App
 1. Run `ctrl + C` in "GotIt" directory.
