@@ -34,6 +34,7 @@ const ListItems = () => {
       <table className="table table-hover mt-5">
         <thead>
           <tr>
+            <th>Complete</th>
             <th>Description</th>
             <th>Edit</th>
             <th>Frequency</th>
@@ -50,30 +51,39 @@ const ListItems = () => {
 */}
           {items.map((item) => (
             <tr key={item.id}>
-              {/* <div className="item-row">
-                <td>{item.name}</td>
-                <td> */}
+              <td>Checkbox</td>
               <EditItem item={item} />
-              {/* </td>
-              </div> */}
-              <td>
-                Recurring Option
-                {/* After added, please remove the Edititem placeholder below */}
-                {/* <EditItem item={item} /> */}
-              </td>
+              <td>Recurring Option</td>
               <td>
                 <button
                   className="btn btn-danger"
                   onClick={() => deleteItem(item.id)}
                 >
                   Delete
+                  {/* Delete icon. Removed since emojis are not ARIA - compliant. Tested and works.*/}
+                  {/* <span
+                  role="img"
+                  id={`id${item.id}`}
+                  aria-label="Delete item button"
+                  onClick={() => {
+                    deleteItem(item.id);
+                  }}
+                  onKeyPress={() => {
+                    deleteItem(item.id);
+                  }}
+                  aria-hidden="true"
+                >
+                  &#10060;
+                </span> */}
                 </button>
               </td>
             </tr>
-            // <div> {item.name}; </div>
           ))}
         </tbody>
       </table>
+      Add Item Bar goes here
+      <br />
+      Completed Dropdown goes here
     </>
   );
 };
