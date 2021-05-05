@@ -66,11 +66,11 @@ ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_
 --
 
 COPY public.items (id, name) FROM stdin;
-1	🙏 Be nice when you add test entries
-2	⏲ Added entries will be reset every Sunday
-3	End white supremacy
-4	Advocate for living wage
-5	Provide universal health care
+1	milk
+2	orange juice
+3	bread
+4	eggs
+5	rice
 \.
 
 

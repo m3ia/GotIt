@@ -25,7 +25,9 @@ function initDb() {
   let connection;
 
   if (process.env.DATABASE_URL === undefined) {
-    dotenv.config({ path: "../.env" });
+    dotenv.config({
+      path: "../.env"
+    });
     connection = {
       user: "postgres",
       database: process.env.POSTGRES_DB,
@@ -35,7 +37,9 @@ function initDb() {
   } else {
     connection = {
       connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false },
+      ssl: {
+        rejectUnauthorized: false
+      },
     };
   }
 

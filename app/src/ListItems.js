@@ -31,7 +31,7 @@ const ListItems = () => {
   }
 
   return (
-    <Fragment>
+    <>
       {" "}
       <table className="table table-hover mt-5">
         <thead>
@@ -76,7 +76,7 @@ const ListItems = () => {
           ))}
         </tbody>
       </table>
-    </Fragment>
+    </>
   );
 };
 
