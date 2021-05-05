@@ -13,9 +13,7 @@ const ListItems = () => {
   //   loadItems();
   // }, []);
   async function getItems() {
-    const res = await fetch("/api/items");
-
-    const itemsArray = await res.json();
+    const itemsArray = await apiClient.getItems();
 
     setItems(itemsArray);
   }
@@ -52,12 +50,12 @@ const ListItems = () => {
 */}
           {items.map((item) => (
             <tr key={item.id}>
-              <div className="item-row">
+              {/* <div className="item-row">
                 <td>{item.name}</td>
-                <td>
-                  <EditItem item={item} />
-                </td>
-              </div>
+                <td> */}
+              <EditItem item={item} />
+              {/* </td>
+              </div> */}
               <td>
                 Recurring Option
                 {/* After added, please remove the Edititem placeholder below */}

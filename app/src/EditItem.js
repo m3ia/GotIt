@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import * as apiClient from "./apiClient";
+// import * as apiClient from "./apiClient";
 
 // editText function
 const EditItem = ({ item }) => {
-  const editText = async (id) => {
-    apiClient.editItem(id);
-    window.location = "/"; // ensures you don't have to refresh again
-  };
+  // const editText = async (id) => {
+  //   apiClient.editItem(name, id);
+  //   window.location = "/"; // ensures you don't have to refresh again
+  // };
 
   //useRef for focusing into input bar
   const inputItem = useRef();
@@ -29,7 +29,7 @@ const EditItem = ({ item }) => {
   const handleKeyPress = (e) => {
     if (e.charCode === 13) {
       onSaveClick();
-      editText(item.id);
+      // editText(item.id);
     }
   };
   const [name, setName] = useState(item.name);
@@ -42,46 +42,54 @@ const EditItem = ({ item }) => {
 
   return (
     <>
-      <h1>Edit Item</h1>
-      {!editMode && (
-        <>
-          <button
-            type="button"
-            class="btn btn-warning"
-            className="edit-button"
-            data-target={`#id${item.id}`}
-            onClick={onEditClick}
-          >
-            Edit
-          </button>
-          <br />
+      <td>
+        <div className="item-row">
           {/* Need to figure out how to add event listener below. */}
           {/* <div 
-            className="item-row" 
-            id={`id${item.id}`}
-            onClick={onEditClick}> */}
-          {name}
-          {/* </div> */}
-        </>
-      )}
-
-      {/* in editMode, user sees input with submitted input item as a placeholder, Submit button. */}
-      {editMode && (
+          className="item-row" 
+          id={`id${item.id}`}
+          onClick={onEditClick} >  */}
+          <>
+            {!editMode && name}
+            {/* onKeyPress:Enter => click submit button. */}
+          </>
+          <>
+            {editMode && (
+              <input
+                type="text"
+                ref={inputItem}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+            )}
+          </>
+        </div>
+      </td>
+      <td>
         <>
-          <button onClick={onSaveClick} className="save-button" type="submit">
-            Save
-          </button>
-          <br />
-          {/* onKeyPress:Enter => click submit button. */}
-          <input
-            type="text"
-            ref={inputItem}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
+          {/* <h1>Edit Item</h1> */}
+          {!editMode && (
+            <button
+              type="button"
+              class="btn btn-warning"
+              className="edit-button"
+              data-target={`#id${item.id}`}
+              onClick={onEditClick}
+            >
+              Edit
+            </button>
+          )}
+          {/* in editMode, user sees input with submitted input item as a placeholder, Submit button. */}
         </>
-      )}
+        <>
+          {editMode && (
+            <button onClick={onSaveClick} className="save-button" type="submit">
+              Save
+            </button>
+          )}
+        </>
+      </td>
     </>
   );
 };
