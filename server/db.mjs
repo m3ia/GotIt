@@ -15,8 +15,8 @@ export const addItem = async (name) =>
   await db.any("INSERT INTO items(name) VALUES($1) RETURNING *", [name]);
 
 // update an item
-export const updateItem = async (name, id) =>
-  await db.any("UPDATE items SET name = $1 WHERE id = $2", [name, id]);
+export const updateItem = async (newName, id) =>
+  await db.any("UPDATE items SET name = $1 WHERE id = $2", [newName, id]);
 
 // deletes an item from db
 export const deleteItem = async (id) =>

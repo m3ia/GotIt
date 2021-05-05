@@ -20,8 +20,8 @@ export const addItem = async (name) => {
 
 // edit item function
 
-export const editItem = async (name, id) => {
-  const body = { name };
+export const editItem = async (newName, id) => {
+  const body = { newName };
   const response = await fetch(`/api/items/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

@@ -4,8 +4,8 @@ import * as apiClient from "./apiClient";
 
 // editText function
 const EditItem = ({ item }) => {
-  const editText = async (id) => {
-    apiClient.editItem(item.name, item.id);
+  const editText = async (id, newName) => {
+    apiClient.editItem(newName, id);
     window.location = "/"; // ensures you don't have to refresh again
   };
 
@@ -28,8 +28,9 @@ const EditItem = ({ item }) => {
   // When user clicks Enter on Edit Mode, onSubmitClick is processed.
   const handleKeyPress = (e) => {
     if (e.charCode === 13) {
+      editText(item.id, e.target.value);
       onSaveClick();
-      editText(item.id);
+      console.log(e.target.value, item.id);
     }
   };
   const [name, setName] = useState(item.name);
