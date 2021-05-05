@@ -15,7 +15,8 @@ export const addItem = async (name) =>
   await db.any("INSERT INTO items(name) VALUES($1) RETURNING *", [name]);
 
 // update an item
-export const updateItem = async (name, id) => await db.any("UPDATE item SET name = $1 WHERE id = $2", [name, id]);
+export const updateItem = async (name, id) =>
+  await db.any("UPDATE items SET name = $1 WHERE id = $2", [name, id]);
 
 // deletes an item from db
 export const deleteItem = async (id) =>
@@ -26,7 +27,7 @@ function initDb() {
 
   if (process.env.DATABASE_URL === undefined) {
     dotenv.config({
-      path: "../.env"
+      path: "../.env",
     });
     connection = {
       user: "postgres",
@@ -38,7 +39,7 @@ function initDb() {
     connection = {
       connectionString: process.env.DATABASE_URL,
       ssl: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
       },
     };
   }

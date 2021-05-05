@@ -20,13 +20,14 @@ export const addItem = async (name) => {
 
 // edit item function
 
-export const editItem = async (id, name) => {
+export const editItem = async (name, id) => {
   const body = { name };
-  await fetch(`/api/items/${id}`, {
+  const response = await fetch(`/api/items/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
+  return response.json();
 };
 
 // delete item function

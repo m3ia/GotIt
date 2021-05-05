@@ -13,14 +13,15 @@ const items = express.Router();
 items.get("/", async (request, response) => {
   const items = await db.getItems();
   console.log("hello test test");
-  response.json(items);
+  response.status(201).json(items);
 });
 
 // gets one item
 items.get("/:id", async (request, response) => {
   const { id } = request.params;
-  await db.getItem(id);
-  response.json(items.rows[0]);
+  const item = await db.getItem(id);
+  // response.json(items.rows[0]);
+  response.status(201).json(item);
 });
 
 items.use(express.json());
@@ -43,6 +44,7 @@ items.put("/:id", async (request, response) => {
   const { name } = request.body;
   response.json("Item was updated");
   await db.updateItem(name, id);
+  response.status(201);
 });
 
 // http req to delete an item based on id

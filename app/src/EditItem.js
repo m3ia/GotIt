@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 
-// import * as apiClient from "./apiClient";
+import * as apiClient from "./apiClient";
 
 // editText function
 const EditItem = ({ item }) => {
-  // const editText = async (id) => {
-  //   apiClient.editItem(name, id);
-  //   window.location = "/"; // ensures you don't have to refresh again
-  // };
+  const editText = async (id) => {
+    apiClient.editItem(item.name, item.id);
+    window.location = "/"; // ensures you don't have to refresh again
+  };
 
   //useRef for focusing into input bar
   const inputItem = useRef();
@@ -29,7 +29,7 @@ const EditItem = ({ item }) => {
   const handleKeyPress = (e) => {
     if (e.charCode === 13) {
       onSaveClick();
-      // editText(item.id);
+      editText(item.id);
     }
   };
   const [name, setName] = useState(item.name);
