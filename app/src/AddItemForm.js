@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 
-// import EditItem from "./EditItem";
-// import * as apiClient from "./apiClient";
+import * as apiClient from "./apiClient";
 
 const AddItem = () => {
   const inputItem = useRef();
+  const [name, setName] = useState("");
+  console.log(name);
 
+  const addNewItem = async (name) => {
+    apiClient.addItem(name);
+    window.location = "/";
+  };
   // Clicking Edit/on the value activates editMode. User sees input bar and Submit button.
   const onEditClick = () => {
     setEditMode(true);
@@ -13,6 +18,8 @@ const AddItem = () => {
 
   // Submit sets setEditMode(false). User sees value with submitted input item.
   const onSubmitClick = () => {
+    addNewItem(name);
+    setName("");
     setEditMode(false);
   };
 
@@ -24,11 +31,11 @@ const AddItem = () => {
   // When user clicks Enter on Edit Mode, onSubmitClick is processed.
   const handleKeyPress = (e) => {
     if (e.charCode === 13) {
-      onSubmitClick();
+      addNewItem(e.target.value);
+      setName("");
+      setEditMode(false);
     }
   };
-
-  const [name, setName] = useState("Click here to add an item");
 
   // By default, editMode starts out as false.
   const [editMode, setEditMode] = useState(false);
@@ -54,7 +61,7 @@ const AddItem = () => {
           aria-pressed="false"
         >
           <br />
-          {name}
+          Click here to add an item.
         </div>
       )}
 
@@ -70,6 +77,7 @@ const AddItem = () => {
             ref={inputItem}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="Item"
             onKeyPress={handleKeyPress}
           />
           <button

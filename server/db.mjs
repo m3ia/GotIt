@@ -12,7 +12,7 @@ export const getItem = async (id) =>
 
 // adds a created item to items db
 export const addItem = async (name) =>
-  await db.any("INSERT INTO items(name) VALUES($1) RETURNING *", [name]);
+  await db.any("INSERT INTO items (name) VALUES ($1) RETURNING *", [name]);
 
 // update an item
 export const updateItem = async (newName, id) =>
