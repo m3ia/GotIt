@@ -1,3 +1,4 @@
+import "./App.css";
 import React, { useState, useEffect, useRef } from "react";
 
 import * as apiClient from "./apiClient";
@@ -71,22 +72,25 @@ const AddItem = () => {
       {editMode && (
         // onKeyPress:Enter => click submit button.
         <>
-          <input
-            className="add-item-box"
-            type="text"
-            ref={inputItem}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Item"
-            onKeyPress={handleKeyPress}
-          />
-          <button
-            onClick={onSubmitClick}
-            className="submitButton"
-            type="submit"
-          >
-            Submit
-          </button>
+          <div className="add-item">
+            <input
+              className="add-item-box"
+              type="text"
+              ref={inputItem}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Item"
+              onKeyPress={handleKeyPress}
+            />
+            <button
+              onClick={onSubmitClick}
+              className="submitButton"
+              class="btn btn-primary"
+              type="submit"
+            >
+              Submit
+            </button>
+          </div>
         </>
       )}
     </>

@@ -86,8 +86,8 @@ const EditItem = ({ item }) => {
           {/* <h1>Edit Item</h1> */}
           {!editMode && (
             <button
-              type="button"
               class="btn btn-warning"
+              type="button"
               className="edit-button"
               data-target={`#id${item.id}`}
               onClick={onEditClick}
@@ -99,7 +99,12 @@ const EditItem = ({ item }) => {
         </>
         <>
           {editMode && (
-            <button onClick={onSaveClick} className="save-button" type="submit">
+            <button
+              onClick={onSaveClick}
+              className="save-button"
+              type="submit"
+              class="btn btn-warning"
+            >
               Save
             </button>
           )}
