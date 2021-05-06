@@ -5,10 +5,11 @@ import * as apiClient from "./apiClient";
 // editText function
 const EditItem = ({ item }) => {
   const [name, setName] = useState(item.name);
+  const [editMode, setEditMode] = useState(false);
 
   const editText = async (id, newName) => {
     apiClient.editItem(newName, id);
-    window.location = "/"; // ensures you don't have to refresh again
+    // window.location = "/"; // ensures you don't have to refresh again
   };
 
   //useRef for focusing into input bar
@@ -31,18 +32,17 @@ const EditItem = ({ item }) => {
   // When user clicks Enter on Edit Mode, onSubmitClick is processed.
   const handleKeyPress = (e) => {
     if (e.charCode === 13) {
+      setEditMode(false);
       editText(item.id, e.target.value);
-      onSaveClick();
       console.log(e.target.value, item.id);
     }
   };
-  const [editMode, setEditMode] = React.useState(false);
   useEffect(() => {
     if (editMode) {
       inputItem.current.focus();
     }
   }, [editMode]);
-
+  console.log(editMode);
   return (
     <>
       <td>
@@ -88,7 +88,7 @@ const EditItem = ({ item }) => {
             <button
               class="btn btn-warning"
               type="button"
-              className="edit-button"
+              // className="edit-button"
               data-target={`#id${item.id}`}
               onClick={onEditClick}
             >
@@ -103,7 +103,7 @@ const EditItem = ({ item }) => {
               onClick={onSaveClick}
               className="save-button"
               type="submit"
-              class="btn btn-warning"
+              class="btn btn-primary"
             >
               Save
             </button>

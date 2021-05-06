@@ -18,3 +18,7 @@
   margin : 0 1rem 0 0;
   place-items: center;
 }
+
+.header-row, .item-row {
+  width: 25rem;
+}

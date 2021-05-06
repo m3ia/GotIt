@@ -37,7 +37,7 @@ const ListItems = () => {
         <AddItem />
         <table className="table table-hover mt-5">
           <thead>
-            <tr>
+            <tr className="header-row">
               <th>Complete</th>
               <th>Item</th>
               <th>Edit</th>
@@ -54,7 +54,7 @@ const ListItems = () => {
               </tr>
   */}
             {items.map((item) => (
-              <tr key={item.id}>
+              <tr key={item.id} className="item-row">
                 <td>Checkbox</td>
                 <EditItem item={item} />
                 <td>Recurring Option</td>
