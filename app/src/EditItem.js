@@ -4,6 +4,8 @@ import * as apiClient from "./apiClient";
 
 // editText function
 const EditItem = ({ item }) => {
+  const [name, setName] = useState(item.name);
+
   const editText = async (id, newName) => {
     apiClient.editItem(newName, id);
     window.location = "/"; // ensures you don't have to refresh again
@@ -19,6 +21,7 @@ const EditItem = ({ item }) => {
   // Submit sets setEditMode(false). User sees value with submitted input item, Edit button.
   const onSaveClick = () => {
     setEditMode(false);
+    editText(item.id, name);
   };
   // Want: When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
   //   const cancelEdit = () => {
@@ -33,7 +36,6 @@ const EditItem = ({ item }) => {
       console.log(e.target.value, item.id);
     }
   };
-  const [name, setName] = useState(item.name);
   const [editMode, setEditMode] = React.useState(false);
   useEffect(() => {
     if (editMode) {
