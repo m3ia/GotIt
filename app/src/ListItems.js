@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import AddItem from "./AddItemForm";
-import EditItem from "./EditItem";
+import { EditItem, Checkbox } from "./EditItem";
 import * as apiClient from "./apiClient";
 
 // This is view for one list.
@@ -55,7 +55,9 @@ const ListItems = () => {
   */}
             {items.map((item) => (
               <tr key={item.id} className="item-row">
-                <td>Checkbox</td>
+                <td>
+                  <Checkbox />
+                </td>
                 <EditItem item={item} />
                 <td>Recurring Option</td>
                 <td>

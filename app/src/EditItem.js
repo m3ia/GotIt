@@ -2,8 +2,27 @@ import React, { useState, useEffect, useRef } from "react";
 
 import * as apiClient from "./apiClient";
 
+export const Checkbox = ({ item }) => {
+  return (
+    <div class="form-check-inline">
+      <label class="form-check-label">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="checkbox"
+          name="{EditItem.name}"
+          value="something"
+          onClick={
+            console.log("hi")
+            // function to update the item in the db...filters item out from view
+          }
+        />
+      </label>
+    </div>
+  );
+};
 // editText function
-const EditItem = ({ item }) => {
+export const EditItem = ({ item }) => {
   const [name, setName] = useState(item.name);
   const [editMode, setEditMode] = useState(false);
 
@@ -114,4 +133,4 @@ const EditItem = ({ item }) => {
   );
 };
 
-export default EditItem;
+// export default EditItem;
