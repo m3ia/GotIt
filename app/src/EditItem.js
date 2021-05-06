@@ -49,7 +49,6 @@ const EditItem = ({ item }) => {
         <div
           className="item-row"
           id={`id${item.id}`}
-          // this is not currently working
           onClick={() => {
             onEditClick();
           }}
@@ -65,7 +64,7 @@ const EditItem = ({ item }) => {
         >
           <>
             {!editMode && name}
-            {/* onKeyPress:Enter => click submit button. */}
+            {/* onKeyPress:Enter => click Save button. */}
           </>
           <>
             {editMode && (

@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 
+import AddItem from "./AddItemForm";
 import EditItem from "./EditItem";
 import * as apiClient from "./apiClient";
 
@@ -30,12 +31,14 @@ const ListItems = () => {
 
   return (
     <>
-      {" "}
+      Add Item Bar goes here
+      <br />
+      <AddItem />
       <table className="table table-hover mt-5">
         <thead>
           <tr>
             <th>Complete</th>
-            <th>Description</th>
+            <th>Item</th>
             <th>Edit</th>
             <th>Frequency</th>
             <th>Delete</th>
@@ -81,7 +84,6 @@ const ListItems = () => {
           ))}
         </tbody>
       </table>
-      Add Item Bar goes here
       <br />
       Completed Dropdown goes here
     </>
