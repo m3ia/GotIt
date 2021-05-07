@@ -6,10 +6,6 @@
 }
 .add-item {
   width: 70rem;
-  h1 {
-    font-size: 20px;
-    margin: 0 0 1rem 0;
-  }
 }
 
 .add-item-box {
@@ -28,4 +24,9 @@
   width: 2rem;
   height: 2rem;
   margin : 0 0 0 0;
+}
+
+.item-div {
+  inline-size: 150px;
+  overflow-wrap: break-word;
 }

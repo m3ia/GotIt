@@ -4,7 +4,8 @@ import pgp from "pg-promise";
 const db = initDb();
 
 // gets all items from items
-export const getItems = async () => await db.any("SELECT * FROM items ORDER BY id");
+export const getItems = async () =>
+  await db.any("SELECT * FROM items ORDER BY id");
 
 // gets an item
 export const getItem = async (id) =>

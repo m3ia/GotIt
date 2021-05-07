@@ -3,14 +3,16 @@ import React, { useState, useEffect, useRef } from "react";
 
 import * as apiClient from "./apiClient";
 
-const AddItem = () => {
+const AddItem = ({ onAdd }) => {
   const inputItem = useRef();
   const [name, setName] = useState("");
   console.log(name);
 
   const addNewItem = async (name) => {
-    apiClient.addItem(name);
-    window.location = "/";
+    const response = await apiClient.addItem(name);
+    onAdd(response[0]);
+    // window.location = "/";
+    console.log(response);
   };
   // Clicking Edit/on the value activates editMode. User sees input bar and Submit button.
   const onEditClick = () => {
