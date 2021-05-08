@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import AddItem from "./AddItemForm";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
+import icon from "./checklist-icon.png";
 
 // This is view for one list.
 const ListItems = () => {
@@ -30,7 +31,9 @@ const ListItems = () => {
   return (
     <>
       <div className="body">
-        <h1>Main List</h1>
+        <img src={icon} className="app-icon" alt="checklist icon" />
+        <h1>Got It!</h1>
+        <h2>Main List</h2>
         <br />
         <AddItem onAdd={onAdd} />
         <table className="table table-hover mt-5">
