@@ -20,9 +20,11 @@ export const updateItem = async (newName, id) =>
   await db.any("UPDATE items SET name = $1 WHERE id = $2", [newName, id]);
 
 // deletes an item from db
-export const deleteItem = async (id) =>
+export const deleteItem = async (id) =>{
+  console.log("about to delete");
   await db.result("DELETE FROM items WHERE id = $1", [id]);
-
+  console.log("result done");
+}
 function initDb() {
   let connection;
 

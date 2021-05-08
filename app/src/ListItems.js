@@ -21,9 +21,11 @@ const ListItems = () => {
   // delete item function
   async function deleteItem(id) {
     apiClient.deleteItem(id);
-
+    console.log(items, id);
     // automatically update item view
-    setItems(items.filter((item) => item.id !== id));
+    const filterOut = items.filter((item) => item.id !== id);
+    setItems(filterOut);
+    console.log(filterOut);
   }
 
   const onAdd = (item) => setItems([...items, item]);
@@ -55,7 +57,7 @@ const ListItems = () => {
               </tr>
   */}
             {items.map((item) => (
-              <ItemRow item={item} deleteItem={deleteItem} />
+              <ItemRow item={item} deleteItem={deleteItem} key={item.id} />
             ))}
           </tbody>
         </table>
