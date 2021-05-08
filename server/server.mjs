@@ -13,7 +13,7 @@ const items = express.Router();
 items.get("/", async (request, response) => {
   const items = await db.getItems();
   console.log("hello test test");
-  response.status(201).json(items);
+  response.status(200).json(items);
 });
 
 // gets one item
@@ -21,7 +21,7 @@ items.get("/:id", async (request, response) => {
   const { id } = request.params;
   const item = await db.getItem(id);
   // response.json(items.rows[0]);
-  response.status(201).json(item);
+  response.status(200).json(item);
 });
 
 items.use(express.json());
@@ -51,7 +51,8 @@ items.put("/:id", async (request, response) => {
 items.delete("/:id", async (request, response) => {
   const { id } = request.params;
   await db.deleteItem(id);
-  response.status(201);
+  console.log("in delete", request.params);
+  response.status(200);
 });
 
 app.use("/api/items", items);

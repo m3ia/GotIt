@@ -4,7 +4,8 @@ import pgp from "pg-promise";
 const db = initDb();
 
 // gets all items from items
-export const getItems = async () => await db.any("SELECT * FROM items ORDER BY id");
+export const getItems = async () =>
+  await db.any("SELECT * FROM items ORDER BY id");
 
 // gets an item
 export const getItem = async (id) =>
@@ -19,9 +20,11 @@ export const updateItem = async (newName, id) =>
   await db.any("UPDATE items SET name = $1 WHERE id = $2", [newName, id]);
 
 // deletes an item from db
-export const deleteItem = async (id) =>
+export const deleteItem = async (id) =>{
+  console.log("about to delete");
   await db.result("DELETE FROM items WHERE id = $1", [id]);
-
+  console.log("result done");
+}
 function initDb() {
   let connection;
 

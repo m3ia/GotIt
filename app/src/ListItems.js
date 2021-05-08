@@ -1,18 +1,14 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import AddItem from "./AddItemForm";
-import EditItem from "./EditItem";
+import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
+import icon from "./checklist-icon.png";
 
 // This is view for one list.
 const ListItems = () => {
   const [items, setItems] = useState([]);
 
-  // const loadItems = async () => setItems(await apiClient.getItems());
-
-  // useEffect(() => {
-  //   loadItems();
-  // }, []);
   async function getItems() {
     const itemsArray = await apiClient.getItems();
 
@@ -21,20 +17,27 @@ const ListItems = () => {
   useEffect(() => {
     getItems();
   }, []);
+
   // delete item function
   async function deleteItem(id) {
     apiClient.deleteItem(id);
-
+    console.log(items, id);
     // automatically update item view
-    setItems(items.filter((item) => item.id !== id));
+    const filterOut = items.filter((item) => item.id !== id);
+    setItems(filterOut);
+    console.log(filterOut);
   }
+
+  const onAdd = (item) => setItems([...items, item]);
 
   return (
     <>
       <div className="body">
-        <h1>Main List</h1>
+        <img src={icon} className="app-icon" alt="checklist icon" />
+        <h1>Got It!</h1>
+        <h2>Main List</h2>
         <br />
-        <AddItem />
+        <AddItem onAdd={onAdd} />
         <table className="table table-hover mt-5">
           <thead>
             <tr className="header-row">
@@ -54,34 +57,7 @@ const ListItems = () => {
               </tr>
   */}
             {items.map((item) => (
-              <tr key={item.id} className="item-row">
-                <td>Checkbox</td>
-                <EditItem item={item} />
-                <td>Recurring Option</td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteItem(item.id)}
-                  >
-                    Delete
-                    {/* Delete icon. Removed since emojis are not ARIA - compliant. Tested and works.*/}
-                    {/* <span
-                    role="img"
-                    id={`id${item.id}`}
-                    aria-label="Delete item button"
-                    onClick={() => {
-                      deleteItem(item.id);
-                    }}
-                    onKeyPress={() => {
-                      deleteItem(item.id);
-                    }}
-                    aria-hidden="true"
-                  >
-                    &#10060;
-                  </span> */}
-                  </button>
-                </td>
-              </tr>
+              <ItemRow item={item} deleteItem={deleteItem} key={item.id} />
             ))}
           </tbody>
         </table>

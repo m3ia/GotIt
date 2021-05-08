@@ -21,10 +21,14 @@ export const addItem = async (name) => {
 // edit item function
 
 export const editItem = async (newName, id) => {
-  const body = { newName };
+  const body = {
+    newName,
+  };
   const response = await fetch(`/api/items/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(body),
   });
   return response.json();
