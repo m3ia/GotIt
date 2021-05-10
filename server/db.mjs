@@ -5,7 +5,7 @@ const db = initDb();
 
 // gets all items from items
 export const getItems = async () =>
-  await db.any("SELECT * FROM items ORDER BY id");
+  await db.any("SELECT * FROM items WHERE is_done = FALSE ORDER BY id");
 
 // gets an item
 export const getItem = async (id) =>
@@ -16,8 +16,24 @@ export const addItem = async (name) =>
   await db.any("INSERT INTO items (name) VALUES ($1) RETURNING *", [name]);
 
 // update an item
-export const updateItem = async (newName, id) =>
-  await db.any("UPDATE items SET name = $1 WHERE id = $2", [newName, id]);
+export const updateItem = async (item) => {
+  await db.any(
+    "UPDATE items SET name = $2, is_done = $3, recur_freq = $4,recur_start_date = $5, recur_end_date = $6, due_date = $7, url = $8, quantity = $9, description = $10, user_assigned = $11, date_updated = NOW() WHERE id = $1",
+    [
+      item.id,
+      item.name,
+      item.is_done,
+      item.recur_freq,
+      item.recur_start_date,
+      item.recur_end_date,
+      item.due_date,
+      item.url,
+      item.quantity,
+      item.description,
+      item.user_assigned,
+    ],
+  );
+};
 
 // deletes an item from db
 export const deleteItem = async (id) =>{

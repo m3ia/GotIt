@@ -40,10 +40,9 @@ items.post("/", async (request, response) => {
 
 // edits an item
 items.put("/:id", async (request, response) => {
-  const { id } = request.params;
-  const { newName } = request.body;
+  const item = request.body;
   response.json("Item was updated");
-  await db.updateItem(newName, id);
+  await db.updateItem(item);
   response.status(201);
 });
 

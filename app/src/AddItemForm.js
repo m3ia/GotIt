@@ -12,8 +12,6 @@ const AddItem = ({ onAdd }) => {
   const addNewItem = async (name) => {
     const response = await apiClient.addItem(name);
     onAdd(response[0]);
-    // window.location = "/";
-    console.log(response);
   };
   // Clicking Edit/on the value activates editMode. User sees input bar and Submit button.
   const onEditClick = () => {
@@ -27,7 +25,7 @@ const AddItem = ({ onAdd }) => {
     setEditMode(false);
   };
 
-  // Want: When user clicks out => setEditMode(false) => editMode === false, a line with original value.
+  // Want: When user clicks out of input box => setEditMode(false) => editMode === false, a line with original value.
   //   const cancelEdit = () => {
   //   setEditMode(false);
   // }

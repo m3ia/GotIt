@@ -2,7 +2,20 @@ import React, { useState, useEffect, useRef } from "react";
 
 import * as apiClient from "./apiClient";
 
-const Checkbox = () => {
+const Checkbox = ({ item }) => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const editItem = (updatedItem) => {
+    apiClient.editItem({ ...item, ...updatedItem });
+    window.location = "/"; // ensures you don't have to refresh again
+  };
+
+  const completeItem = (is_done) => {
+    editItem({ is_done });
+    setIsChecked(true);
+    console.log(item);
+  };
+
   return (
     <div class="form-check-inline">
       <label class="form-check-label">
@@ -10,12 +23,10 @@ const Checkbox = () => {
           type="checkbox"
           class="form-check-input"
           id="checkbox"
+          value={isChecked}
           name="{EditItem.name}"
-          value="something"
-          onClick={
-            console.log("hi")
-            // function to update the item in the db...filters item out from view
-          }
+          // function to update the item in the db...filters item out from view
+          onClick={() => completeItem(true)}
         />
       </label>
     </div>
@@ -29,8 +40,8 @@ const ItemRow = ({ item, deleteItem }) => {
   // const [name, setName] = useState(item.name);
   const [editMode, setEditMode] = useState(false);
 
-  const editText = async (id, newName) => {
-    apiClient.editItem(newName, id);
+  const editItem = (item, updatedItem) => {
+    apiClient.editItem({ ...item, ...updatedItem });
     // window.location = "/"; // ensures you don't have to refresh again
   };
 
@@ -44,7 +55,7 @@ const ItemRow = ({ item, deleteItem }) => {
   // Submit sets setEditMode(false). User sees value with submitted input item, Edit button.
   const onSaveClick = () => {
     setEditMode(false);
-    editText(item.id, name);
+    editItem(item, { name });
   };
   // Want: When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
   //   const cancelEdit = () => {
@@ -62,13 +73,12 @@ const ItemRow = ({ item, deleteItem }) => {
       inputItem.current.focus();
     }
   }, [editMode]);
-  console.log({ editMode });
 
   return (
     <>
       <tr key={item.id} className="item-row">
         <td>
-          <Checkbox />
+          <Checkbox item={item} />
         </td>
         <td>
           <div
