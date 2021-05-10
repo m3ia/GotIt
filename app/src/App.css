@@ -30,3 +30,20 @@
   inline-size: 150px;
   overflow-wrap: break-word;
 }
+
+#delete-button {
+  color:white;
+}
+
+#recur-button {
+  background-color: #FEB062;
+  color: #2B2B2B;
+  border: #FEB062;
+  /* color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px; */
+}

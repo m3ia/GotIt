@@ -2,6 +2,97 @@ import React, { useState, useEffect, useRef } from "react";
 
 import * as apiClient from "./apiClient";
 
+const RecurringSettings = () => {
+  return (
+    <div class="container">
+      <button
+        type="button"
+        id="recur-button"
+        class="btn btn-primary"
+        data-toggle="modal"
+        data-target="#recur-modal"
+      >
+        Recur
+      </button>
+      <div class="modal" id="recur-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Recurring Item Frequency</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+            {/* <!-- Modal body --> */}
+            <div class="modal-body">
+              <div class="dropdown">
+                <button
+                  type="button"
+                  class="btn btn-primary dropdown-toggle"
+                  data-toggle="dropdown"
+                >
+                  Pick a Frequency
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item">Every 2 minutes</a>
+                  <a class="dropdown-item">Daily</a>
+                  <a class="dropdown-item">Weekly</a>
+                  <a class="dropdown-item">Monthly</a>
+                </div>
+              </div>
+              <div class="date-input">
+                <label htmlFor="recur-start-date">
+                  <b>Recurring Start Date:</b>
+                </label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="recur-start-date"
+                ></input>
+                <input
+                  type="time"
+                  class="form-control"
+                  id="recur-start-time"
+                ></input>
+                <label htmlFor="recur-end-date">
+                  <b>Recurring End Date:</b>
+                </label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="recur-end-date"
+                ></input>
+                <input
+                  type="time"
+                  class="form-control"
+                  id="recur-end-time"
+                ></input>
+              </div>
+              {/* <!-- Modal footer --> */}
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Checkbox = ({ item }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -136,13 +227,16 @@ const ItemRow = ({ item, deleteItem }) => {
             )}
           </>
         </td>
-        <td>Recurring Option</td>
+        <td>
+          <RecurringSettings />
+        </td>
         <td>
           <button
-            className="btn btn-danger"
+            class="btn btn-danger"
+            id="delete-button"
             onClick={() => deleteItem(item.id)}
           >
-            Delete
+            &#10005;
           </button>
         </td>
       </tr>
