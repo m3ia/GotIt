@@ -58,7 +58,12 @@ const ListItems = () => {
               </tr>
   */}
             {items.map((item) => (
-              <ItemRow item={item} deleteItem={deleteItem} key={item.id} />
+              <ItemRow
+                item={item}
+                deleteItem={deleteItem}
+                key={item.id}
+                getItems={getItems}
+              />
             ))}
           </tbody>
         </table>
