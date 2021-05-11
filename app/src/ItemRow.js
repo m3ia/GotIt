@@ -26,19 +26,15 @@ const RecurringSettings = () => {
             {/* <!-- Modal body --> */}
             <div class="modal-body">
               <div class="dropdown">
-                <button
-                  type="button"
-                  class="btn btn-primary dropdown-toggle"
-                  data-toggle="dropdown"
-                >
-                  Pick a Frequency
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item">Every 2 minutes</a>
-                  <a class="dropdown-item">Daily</a>
-                  <a class="dropdown-item">Weekly</a>
-                  <a class="dropdown-item">Monthly</a>
-                </div>
+                <label htmlFor="recur-frequency-dropdown">
+                  Pick a Frequency:
+                </label>
+                <select name="options" id="recur-frequency-dropdown">
+                  <option value="every-two-min">Every 2 min</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
               </div>
               <div class="date-input">
                 <label htmlFor="recur-start-date">
