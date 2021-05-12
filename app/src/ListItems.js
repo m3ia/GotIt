@@ -18,7 +18,6 @@ const ListItems = () => {
     getItems();
   }, []);
 
-  // add check-for-recurring function here.
   // delete item function
   async function deleteItem(id) {
     apiClient.deleteItem(id);

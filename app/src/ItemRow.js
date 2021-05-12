@@ -1,8 +1,38 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import * as apiClient from "./apiClient";
 
-const RecurringSettings = () => {
+const moment = require("moment");
+
+const RecurringSettings = ({ item, editItem }) => {
+  const [recurFreq, setRecurFreq] = useState(item.recur_freq);
+  const [recurStartDate, setRecurStartDate] = useState("");
+  const [recurStartTime, setRecurStartTime] = useState("");
+  const [recurEndDate, setRecurEndDate] = useState("");
+  const [recurEndTime, setRecurEndTime] = useState("");
+
+  const [recurStartDT, setRecurStartDT] = useState(item.recur_start_date);
+  const [recurEndDT, setRecurEndDT] = useState(item.recur_end_date);
+
+  const onSaveRecur = () => {
+    setRecurStartDT(recurStartDate + recurStartTime);
+    setRecurEndDT(recurEndDate + recurEndTime);
+    setRecurFreq(recurFreq);
+
+    editItem({
+      ...item,
+      recur_freq: recurFreq,
+      recur_start_date: recurStartDate,
+      recur_end_date: recurEndDate,
+    });
+  };
+
+  // const [selectedDate, setSelectedDate]
+  console.log(item.recur_freq, recurFreq);
+
   return (
     <div class="container">
       <button
@@ -12,7 +42,9 @@ const RecurringSettings = () => {
         data-toggle="modal"
         data-target="#recur-modal"
       >
-        Recur
+        <span role="img" aria-label="Repeat">
+          &#10227;
+        </span>
       </button>
       <div class="modal" id="recur-modal">
         <div class="modal-dialog">
@@ -25,17 +57,28 @@ const RecurringSettings = () => {
             </div>
             {/* <!-- Modal body --> */}
             <div class="modal-body">
+              Pick your Frequency:
               <div class="dropdown">
-                <label htmlFor="recur-frequency-dropdown">
-                  Pick a Frequency:
-                </label>
-                <select name="options" id="recur-frequency-dropdown">
-                  <option value="every-two-min">Every 2 min</option>
-                  <option value="daily">Daily</option>
-                  <option value="weekly">Weekly</option>
-                  <option value="monthly">Monthly</option>
+                <select
+                  name="options"
+                  id="recur-freq"
+                  onBlur={(e) => {
+                    setRecurFreq(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                >
+                  <option value="daily" selected={recurFreq === "daily"}>
+                    Daily
+                  </option>
+                  <option value="weekly" selected={recurFreq === "weekly"}>
+                    Weekly
+                  </option>
+                  <option value="monthly" selected={recurFreq === "monthly"}>
+                    Monthly
+                  </option>
                 </select>
               </div>
+              {/* <DatePicker selected={} onChange{} /> */}
               <div class="date-input">
                 <label htmlFor="recur-start-date">
                   <b>Recurring Start Date:</b>
@@ -44,12 +87,16 @@ const RecurringSettings = () => {
                   type="date"
                   class="form-control"
                   id="recur-start-date"
+                  value={recurStartDate}
+                  onChange={(e) => setRecurStartDate(e.target.value)}
                 ></input>
-                <input
+                {/* <input
                   type="time"
                   class="form-control"
                   id="recur-start-time"
-                ></input>
+                  value={recurStartTime}
+                  onChange={(e) => setRecurStartTime(e.target.value)}
+                ></input> */}
                 <label htmlFor="recur-end-date">
                   <b>Recurring End Date:</b>
                 </label>
@@ -57,12 +104,16 @@ const RecurringSettings = () => {
                   type="date"
                   class="form-control"
                   id="recur-end-date"
+                  value={recurEndDate}
+                  onChange={(e) => setRecurEndDate(e.target.value)}
                 ></input>
-                <input
+                {/* <input
                   type="time"
                   class="form-control"
                   id="recur-end-time"
-                ></input>
+                  value={recurEndTime}
+                  onChange={(e) => setRecurEndTime(e.target.value)}
+                ></input> */}
               </div>
               {/* <!-- Modal footer --> */}
               <div class="modal-footer">
@@ -70,6 +121,7 @@ const RecurringSettings = () => {
                   type="button"
                   class="btn btn-primary"
                   data-dismiss="modal"
+                  onClick={onSaveRecur}
                 >
                   Save
                 </button>
@@ -111,7 +163,7 @@ const Checkbox = ({ item }) => {
           class="form-check-input"
           id="checkbox"
           value={isChecked}
-          name="{EditItem.name}"
+          name="{editItem.name}"
           // function to update the item in the db...filters item out from view
           onClick={() => completeItem(true)}
         />
@@ -224,7 +276,7 @@ const ItemRow = ({ item, deleteItem }) => {
           </>
         </td>
         <td>
-          <RecurringSettings />
+          <RecurringSettings item={item} editItem={editItem} />
         </td>
         <td>
           <button
