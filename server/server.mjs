@@ -41,9 +41,9 @@ items.post("/", async (request, response) => {
 // edits an item
 items.put("/:id", async (request, response) => {
   const item = request.body;
-  response.json("Item was updated");
   await db.updateItem(item);
   response.status(201);
+  response.json("Item was updated");
 });
 
 // http req to delete an item based on id
