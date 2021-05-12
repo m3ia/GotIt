@@ -8,7 +8,7 @@ import * as apiClient from "./apiClient";
 const moment = require("moment");
 
 const RecurringSettings = ({ item, editItem }) => {
-  const [recurFreq, setRecurFreq] = useState(item.recur_freq);
+  const [recurFreq, setRecurFreq] = useState(item.recur_freq?.trim());
   const [recurStartDate, setRecurStartDate] = useState("");
   const [recurStartTime, setRecurStartTime] = useState("");
   const [recurEndDate, setRecurEndDate] = useState("");
@@ -31,8 +31,7 @@ const RecurringSettings = ({ item, editItem }) => {
   };
 
   // const [selectedDate, setSelectedDate]
-  console.log(item.recur_freq, recurFreq);
-
+  console.log(recurFreq === "weekly", recurFreq, item.recur_freq, item);
   return (
     <div class="container">
       <button
@@ -57,7 +56,7 @@ const RecurringSettings = ({ item, editItem }) => {
             </div>
             {/* <!-- Modal body --> */}
             <div class="modal-body">
-              Pick your Frequency:
+              <b>Pick your Frequency:</b>
               <div class="dropdown">
                 <select
                   name="options"
@@ -66,6 +65,8 @@ const RecurringSettings = ({ item, editItem }) => {
                     setRecurFreq(e.target.value);
                     console.log(e.target.value);
                   }}
+                  // value={recurFreq}
+                  defaultValue={recurFreq}
                 >
                   <option value="daily" selected={recurFreq === "daily"}>
                     Daily
@@ -97,6 +98,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   value={recurStartTime}
                   onChange={(e) => setRecurStartTime(e.target.value)}
                 ></input> */}
+                {/* Can improve end date option in future */}
                 <label htmlFor="recur-end-date">
                   <b>Recurring End Date:</b>
                 </label>
@@ -114,6 +116,11 @@ const RecurringSettings = ({ item, editItem }) => {
                   value={recurEndTime}
                   onChange={(e) => setRecurEndTime(e.target.value)}
                 ></input> */}
+                <div>
+                  <b>Current Setting:</b>
+                  <span> {item.recur_freq} starting </span>
+                  <span>{item.recur_start_date}</span>
+                </div>
               </div>
               {/* <!-- Modal footer --> */}
               <div class="modal-footer">
