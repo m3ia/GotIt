@@ -6,7 +6,7 @@ const db = initDb();
 // gets all active items from items.
 // TODO: change getItems to getActiveItems
 export const getItems = async () =>
-  await db.any("SELECT * FROM items WHERE is_done = FALSE ORDER BY id");
+  await db.any("SELECT * FROM items ORDER BY id");
 
 // gets an item
 export const getItem = async (id) =>
