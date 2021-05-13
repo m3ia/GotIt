@@ -4,8 +4,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import * as apiClient from "./apiClient";
 
-const moment = require("moment");
-
 const RecurringSettings = ({ item, editItem }) => {
   const [recurFreq, setRecurFreq] = useState(item.recur_freq?.trim());
   const [recurStartDate, setRecurStartDate] = useState(item.recur_start_date);
