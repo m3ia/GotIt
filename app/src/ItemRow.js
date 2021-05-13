@@ -1,11 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import DatePicker from "react-datepicker";
+import DatePicker, { compareAsc } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import * as apiClient from "./apiClient";
 
 const moment = require("moment");
+
+// create a checkRecurring functional component to call in ListItems
+const CheckRecurring = ({ item }) => {
+  // upon opening, the list checks all items with an end date.
+  let today = new Date();
+  // if it has an end date, then check if current date is >= end date.
+  if (item.recur_end_date >= today) {
+    // if the so, then delete the item.
+    // if not, then if item.recur_freq === q2min/daily/weekly/monthly && checkbox
+    // setCheckBox(false), change start date, editItem (is_done) changes to false
+  }
+};
 
 const RecurringSettings = ({ item, editItem }) => {
   const [recurFreq, setRecurFreq] = useState(item.recur_freq?.trim());
@@ -28,6 +40,7 @@ const RecurringSettings = ({ item, editItem }) => {
       recur_start_date: recurStartDate,
       recur_end_date: recurEndDate,
     });
+    // window.location = "/";
   };
 
   // const [selectedDate, setSelectedDate]
@@ -66,11 +79,19 @@ const RecurringSettings = ({ item, editItem }) => {
                   id="recur-freq"
                   onBlur={(e) => {
                     setRecurFreq(e.target.value);
-                    console.log(e.target.value);
                   }}
                   // value={recurFreq}
                   defaultValue={recurFreq}
                 >
+                  <option value="select" selected={recurFreq === null}>
+                    Set Frequency
+                  </option>
+                  <option
+                    value="every-2-min"
+                    selected={recurFreq === "every-2-min"}
+                  >
+                    Every 2 minutes
+                  </option>
                   <option value="daily" selected={recurFreq === "daily"}>
                     Daily
                   </option>
@@ -146,19 +167,19 @@ const RecurringSettings = ({ item, editItem }) => {
   );
 };
 
-const Checkbox = ({ item }) => {
+const Checkbox = ({ onChange }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const editItem = (updatedItem) => {
-    apiClient.editItem({ ...item, ...updatedItem });
-    window.location = "/"; // ensures you don't have to refresh again
-  };
+  // const editItem = (updatedItem) => {
+  //   apiClient.editItem({ ...item, ...updatedItem });
+  //   window.location = "/"; // ensures you don't have to refresh again
+  // };
 
-  const completeItem = (is_done) => {
-    editItem({ is_done });
-    setIsChecked(true);
-    console.log(item);
-  };
+  // const completeItem = (is_done) => {
+  // editItem({ is_done });
+  // setIsChecked(true);
+  //   console.log(item);
+  // };
 
   return (
     <div class="form-check-inline">
@@ -168,9 +189,13 @@ const Checkbox = ({ item }) => {
           class="form-check-input"
           id="checkbox"
           value={isChecked}
-          name="{editItem.name}"
+          name="{item.name}"
           // function to update the item in the db...filters item out from view
-          onClick={() => completeItem(true)}
+          // onClick={() => completeItem(true)}
+          onClick={(e) => {
+            onChange(e.target.value);
+            setIsChecked(true);
+          }}
         />
       </label>
     </div>
@@ -178,7 +203,7 @@ const Checkbox = ({ item }) => {
 };
 
 // Item Row Component
-const ItemRow = ({ item, deleteItem }) => {
+const ItemRow = ({ item, deleteItem, updateItem }) => {
   const [name, setName] = useState(item.name);
 
   // const [name, setName] = useState(item.name);
@@ -186,7 +211,6 @@ const ItemRow = ({ item, deleteItem }) => {
 
   const editItem = (item, updatedItem) => {
     apiClient.editItem({ ...item, ...updatedItem });
-    // window.location = "/"; // ensures you don't have to refresh again
   };
 
   //useRef for focusing into input bar
@@ -222,7 +246,12 @@ const ItemRow = ({ item, deleteItem }) => {
     <>
       <tr key={item.id} className="item-row">
         <td>
-          <Checkbox item={item} />
+          <Checkbox
+            onChange={() => {
+              editItem(item, { is_done: true });
+              updateItem({ ...item, is_done: true });
+            }}
+          />
         </td>
         <td>
           <div

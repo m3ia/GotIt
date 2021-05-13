@@ -14,6 +14,18 @@ const ListItems = () => {
 
     setItems(itemsArray);
   }
+
+  const updateItem = (itemToUpdate) => {
+    const updatedItems = items.map((item) => {
+      if (item.id === itemToUpdate.id) {
+        return { ...itemToUpdate };
+      } else {
+        return item;
+      }
+    });
+    setItems(updatedItems.filter((item) => !item.is_done));
+  };
+
   useEffect(() => {
     getItems();
   }, []);
@@ -62,6 +74,7 @@ const ListItems = () => {
                 deleteItem={deleteItem}
                 key={item.id}
                 getItems={getItems}
+                updateItem={updateItem}
               />
             ))}
           </tbody>

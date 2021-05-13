@@ -3,7 +3,8 @@ import pgp from "pg-promise";
 
 const db = initDb();
 
-// gets all items from items
+// gets all active items from items.
+// TODO: change getItems to getActiveItems
 export const getItems = async () =>
   await db.any("SELECT * FROM items WHERE is_done = FALSE ORDER BY id");
 
