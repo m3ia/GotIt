@@ -10,16 +10,16 @@ const moment = require("moment");
 const RecurringSettings = ({ item, editItem }) => {
   const [recurFreq, setRecurFreq] = useState(item.recur_freq?.trim());
   const [recurStartDate, setRecurStartDate] = useState("");
-  const [recurStartTime, setRecurStartTime] = useState("");
+  // const [recurStartTime, setRecurStartTime] = useState("");
   const [recurEndDate, setRecurEndDate] = useState("");
-  const [recurEndTime, setRecurEndTime] = useState("");
+  // const [recurEndTime, setRecurEndTime] = useState("");
 
-  const [recurStartDT, setRecurStartDT] = useState(item.recur_start_date);
-  const [recurEndDT, setRecurEndDT] = useState(item.recur_end_date);
+  // const [recurStartDT, setRecurStartDT] = useState(item.recur_start_date);
+  // const [recurEndDT, setRecurEndDT] = useState(item.recur_end_date);
 
   const onSaveRecur = () => {
-    setRecurStartDT(recurStartDate + recurStartTime);
-    setRecurEndDT(recurEndDate + recurEndTime);
+    // setRecurStartDT(recurStartDate + recurStartTime);
+    // setRecurEndDT(recurEndDate + recurEndTime);
     setRecurFreq(recurFreq);
 
     editItem({
@@ -39,13 +39,16 @@ const RecurringSettings = ({ item, editItem }) => {
         id="recur-button"
         class="btn btn-primary"
         data-toggle="modal"
-        data-target="#recur-modal"
+        data-target={`#recur-modal-${item.id}`}
       >
-        <span role="img" aria-label="Repeat">
-          &#10227;
-        </span>
+        {item.recur_freq && (
+          <span role="img" aria-label="Repeat" id="freq-symbol">
+            &#10227;
+          </span>
+        )}
+        {!item.recur_freq && <span> Recur </span>}
       </button>
-      <div class="modal" id="recur-modal">
+      <div class="modal" id={`recur-modal-${item.id}`}>
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -88,7 +91,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   type="date"
                   class="form-control"
                   id="recur-start-date"
-                  value={recurStartDate}
+                  defaultValue={item.recur_start_date}
                   onChange={(e) => setRecurStartDate(e.target.value)}
                 ></input>
                 {/* <input
@@ -106,7 +109,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   type="date"
                   class="form-control"
                   id="recur-end-date"
-                  value={recurEndDate}
+                  defaultValue={item.recur_end_date}
                   onChange={(e) => setRecurEndDate(e.target.value)}
                 ></input>
                 {/* <input
@@ -116,11 +119,6 @@ const RecurringSettings = ({ item, editItem }) => {
                   value={recurEndTime}
                   onChange={(e) => setRecurEndTime(e.target.value)}
                 ></input> */}
-                <div>
-                  <b>Current Setting:</b>
-                  <span> {item.recur_freq} starting </span>
-                  <span>{item.recur_start_date}</span>
-                </div>
               </div>
               {/* <!-- Modal footer --> */}
               <div class="modal-footer">
