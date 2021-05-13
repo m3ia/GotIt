@@ -6,6 +6,7 @@
   "scripts": {
     "_db:delete": "rimraf .data/db",
     "_db:init": "docker-compose exec -u postgres db /var/tmp/pg/load-data.sh",
+    "test": "jest",
     "app:start": "cd app && npm start",
     "db:delete": "run-s db:stop _db:delete",
     "db:init": "run-s db:delete db:start _db:init",
@@ -39,5 +40,8 @@
     "react-click-to-edit": "^1.2.3",
     "react-datepicker": "^3.8.0",
     "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
