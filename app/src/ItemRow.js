@@ -1,29 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import DatePicker, { compareAsc } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import * as apiClient from "./apiClient";
 
 const moment = require("moment");
 
-// create a checkRecurring functional component to call in ListItems
-const CheckRecurring = ({ item }) => {
-  // upon opening, the list checks all items with an end date.
-  let today = new Date();
-  // if it has an end date, then check if current date is >= end date.
-  if (item.recur_end_date >= today) {
-    // if the so, then delete the item.
-    // if not, then if item.recur_freq === q2min/daily/weekly/monthly && checkbox
-    // setCheckBox(false), change start date, editItem (is_done) changes to false
-  }
-};
-
 const RecurringSettings = ({ item, editItem }) => {
   const [recurFreq, setRecurFreq] = useState(item.recur_freq?.trim());
-  const [recurStartDate, setRecurStartDate] = useState("");
+  const [recurStartDate, setRecurStartDate] = useState(item.recur_start_date);
   // const [recurStartTime, setRecurStartTime] = useState("");
-  const [recurEndDate, setRecurEndDate] = useState("");
+  const [recurEndDate, setRecurEndDate] = useState(item.recur_end_date);
   // const [recurEndTime, setRecurEndTime] = useState("");
 
   // const [recurStartDT, setRecurStartDT] = useState(item.recur_start_date);
@@ -40,7 +27,7 @@ const RecurringSettings = ({ item, editItem }) => {
       recur_start_date: recurStartDate,
       recur_end_date: recurEndDate,
     });
-    // window.location = "/";
+    window.location = "/";
   };
 
   // const [selectedDate, setSelectedDate]
@@ -112,7 +99,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   type="date"
                   class="form-control"
                   id="recur-start-date"
-                  defaultValue={item.recur_start_date}
+                  defaultValue={recurStartDate}
                   onChange={(e) => setRecurStartDate(e.target.value)}
                 ></input>
                 {/* <input
@@ -130,7 +117,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   type="date"
                   class="form-control"
                   id="recur-end-date"
-                  defaultValue={item.recur_end_date}
+                  defaultValue={recurEndDate}
                   onChange={(e) => setRecurEndDate(e.target.value)}
                 ></input>
                 {/* <input
@@ -167,19 +154,8 @@ const RecurringSettings = ({ item, editItem }) => {
   );
 };
 
-const Checkbox = ({ onChange }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  // const editItem = (updatedItem) => {
-  //   apiClient.editItem({ ...item, ...updatedItem });
-  //   window.location = "/"; // ensures you don't have to refresh again
-  // };
-
-  // const completeItem = (is_done) => {
-  // editItem({ is_done });
-  // setIsChecked(true);
-  //   console.log(item);
-  // };
+const Checkbox = ({ item, onChange }) => {
+  const [isChecked, setIsChecked] = useState(item.is_done);
 
   return (
     <div class="form-check-inline">
@@ -247,6 +223,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
       <tr key={item.id} className="item-row">
         <td>
           <Checkbox
+            item={item}
             onChange={() => {
               editItem(item, { is_done: true });
               updateItem({ ...item, is_done: true });
