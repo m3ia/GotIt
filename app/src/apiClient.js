@@ -1,6 +1,5 @@
 export const getItems = async () => {
   const response = await fetch("/api/items");
-  console.log(response.json);
   return response.json();
 };
 

@@ -20,9 +20,6 @@ const ListItems = () => {
     const itemsArray = await apiClient.getItems();
     setItems(itemsArray);
   }
-  useEffect(() => {
-    getItems();
-  }, []);
 
   // to instantly hide item after checkbox is checked
   const updateItem = (itemToUpdate) => {
@@ -36,6 +33,10 @@ const ListItems = () => {
     const newUpdItems = updatedItems.filter((item) => !item.is_done);
     setItems(newUpdItems);
   };
+
+  useEffect(() => {
+    getItems();
+  }, []);
 
   // delete item function
   function deleteItem(id) {
@@ -56,7 +57,8 @@ const ListItems = () => {
   const CheckRecurring = (items) => {
     // WORKS: loops through each item
     for (let i = 0; i < items.length; i++) {
-      let itemRecurEndDate = new Date(items[i].recur_end_date);
+      let itemRecurEndDate =
+        items[i].recur_end_date && new Date(items[i].recur_end_date);
       // WORKS: upon opening, the list checks for items with an end date.
       let today = new Date();
       // WORKS: if item has an end date, then check if current date is >= end date.
@@ -155,15 +157,17 @@ const ListItems = () => {
                 <td>john@example.com</td>
               </tr>
   */}
-            {items.map((item) => (
-              <ItemRow
-                item={item}
-                deleteItem={deleteItem}
-                key={item.id}
-                getItems={getItems}
-                updateItem={updateItem}
-              />
-            ))}
+            {items
+              .filter((item) => !item.is_done)
+              .map((item) => (
+                <ItemRow
+                  item={item}
+                  deleteItem={deleteItem}
+                  key={item.id}
+                  getItems={getItems}
+                  updateItem={updateItem}
+                />
+              ))}
           </tbody>
         </table>
         <br />

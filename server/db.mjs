@@ -37,7 +37,7 @@ export const updateItem = async (item) => {
 };
 
 // deletes an item from db
-export const deleteItem = async (id) =>{
+export const deleteItem = async (id) => {
   console.log("about to delete");
   await db.result("DELETE FROM items WHERE id = $1", [id]);
   console.log("result done");

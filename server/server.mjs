@@ -29,11 +29,10 @@ items.use(express.json());
 // adds an item
 items.post("/", async (request, response) => {
   const { name } = request.body;
-  // for future: const { name, dueDate } = request.body; // for multiple inputs
-  // console.log(request.body); // to test
   const item = await db.addItem(name);
   response.status(201).json(item);
   // alternatively: response.json(newItem.rows[0]);
+  console.log("i'm in post and item is: ", item); // to test
 });
 
 // write get, put, post, delete routes here with items.

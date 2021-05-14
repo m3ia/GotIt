@@ -7,7 +7,6 @@ import * as apiClient from "./apiClient";
 const AddItem = ({ onAdd }) => {
   const inputItem = useRef();
   const [name, setName] = useState("");
-  console.log(name);
 
   const addNewItem = async (name) => {
     const response = await apiClient.addItem(name);
