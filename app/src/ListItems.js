@@ -84,7 +84,7 @@ const ListItems = () => {
       // WORKS: loops through each item
       for (let i = 0; i < items.length; i++) {
         // handle every 5 seconds
-        if (items[i].recur_freq?.trim() === "every-5-sec") {
+        if (items[i].recur_freq?.trim() === "Every-5-sec") {
           //WORKS:
           console.log("Time to seriously edit");
           console.log("something should have returned! seconds");
@@ -105,7 +105,7 @@ const ListItems = () => {
           deleteItem(items[i].id);
         } else {
           // WORKS: if not, then if item.recur_freq === q2min/daily/weekly/monthly && checkbox...
-          if (items[i].recur_freq?.trim() === "daily") {
+          if (items[i].recur_freq?.trim() === "Daily") {
             let newStartDate = new Date(items[i].recur_start_date);
             console.log({
               today,
@@ -124,7 +124,7 @@ const ListItems = () => {
                 recur_start_date: newStartDate,
               });
             }
-          } else if (items[i].recur_freq?.trim() === "weekly") {
+          } else if (items[i].recur_freq?.trim() === "Weekly") {
             let newStartDate = new Date(items[i].recur_start_date);
             if (differenceInDays(today, newStartDate) >= 7) {
               while (addDays(newStartDate, 7) < today) {
@@ -138,7 +138,7 @@ const ListItems = () => {
                 recur_start_date: newStartDate,
               });
             }
-          } else if (items[i].recur_freq?.trim() === "monthly") {
+          } else if (items[i].recur_freq?.trim() === "Monthly") {
             let newStartDate = new Date(items[i].recur_start_date);
             if (differenceInMonths(today, newStartDate) >= 1) {
               while (addMonths(newStartDate, 1) < today) {
