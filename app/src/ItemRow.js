@@ -168,7 +168,8 @@ const Checkbox = ({ item, onChange }) => {
           type="checkbox"
           class="form-check-input"
           id="checkbox"
-          value={isChecked}
+          // value={isChecked}
+          checked={isChecked}
           name="{item.name}"
           // function to update the item in the db...filters item out from view
           // onClick={() => completeItem(true)}

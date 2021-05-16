@@ -207,7 +207,38 @@ const ListItems = () => {
           </tbody>
         </table>
         <br />
-        Completed Dropdown goes here
+        <h3>Completed Items</h3>
+        <table className="table table-hover mt-5">
+          <thead>
+            <tr className="header-row">
+              <th>Complete</th>
+              <th>Item</th>
+              <th>Edit</th>
+              <th>Frequency</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* 
+              <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+              </tr>
+  */}
+            {completedItems
+              // .filter((item) => !item.is_done)
+              .map((item) => (
+                <ItemRow
+                  item={item}
+                  deleteItem={deleteItem}
+                  key={item.id}
+                  getItems={getItems}
+                  updateItem={editItem}
+                />
+              ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
