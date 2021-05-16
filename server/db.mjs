@@ -1,5 +1,12 @@
 import dotenv from "dotenv";
+import pg from "pg";
+const { types } = pg;
 import pgp from "pg-promise";
+
+// pg-promise doesnt parse dates properly
+// handle that here.
+const TYPE_DATE = 1082;
+types.setTypeParser(TYPE_DATE, (date) => date);
 
 const db = initDb();
 
@@ -41,7 +48,7 @@ export const deleteItem = async (id) => {
   console.log("about to delete");
   await db.result("DELETE FROM items WHERE id = $1", [id]);
   console.log("result done");
-}
+};
 function initDb() {
   let connection;
 

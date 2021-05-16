@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import "react-datepicker/dist/react-datepicker.css";
-
-import * as apiClient from "./apiClient";
+// import { zonedTimeToUtc } from "date-fns-tz";
 
 const RecurringSettings = ({ item, editItem }) => {
   const [recurFreq, setRecurFreq] = useState(item.recur_freq?.trim());
@@ -15,7 +13,8 @@ const RecurringSettings = ({ item, editItem }) => {
   // const [recurEndDT, setRecurEndDT] = useState(item.recur_end_date);
 
   const onSaveRecur = () => {
-    // setRecurStartDT(recurStartDate + recurStartTime);
+    // const utcDate = zonedTimeToUtc(recurStartDate, "Europe/Berlin");
+    // setRecurStartDT(utcDate);
     // setRecurEndDT(recurEndDate + recurEndTime);
     setRecurFreq(recurFreq);
 
@@ -25,11 +24,18 @@ const RecurringSettings = ({ item, editItem }) => {
       recur_start_date: recurStartDate,
       recur_end_date: recurEndDate,
     });
-    window.location = "/";
+    // window.location = "/";
   };
 
   // const [selectedDate, setSelectedDate]
-  console.log(recurFreq === "weekly", recurFreq, item.recur_freq, item);
+  console.log(
+    recurFreq === "weekly",
+    recurFreq,
+    item.recur_freq,
+    item,
+    item.recur_start_date,
+    item.recur_end_date,
+  );
   return (
     <div class="container">
       <button
@@ -39,12 +45,12 @@ const RecurringSettings = ({ item, editItem }) => {
         data-toggle="modal"
         data-target={`#recur-modal-${item.id}`}
       >
-        {item.recur_freq && (
+        {item.recur_freq && <span> {item.recur_freq} </span>}
+        {!item.recur_freq && (
           <span role="img" aria-label="Repeat" id="freq-symbol">
             &#10227;
           </span>
         )}
-        {!item.recur_freq && <span> Recur </span>}
       </button>
       <div class="modal" id={`recur-modal-${item.id}`}>
         <div class="modal-dialog">
@@ -72,18 +78,18 @@ const RecurringSettings = ({ item, editItem }) => {
                     Set Frequency
                   </option>
                   <option
-                    value="every-2-min"
-                    selected={recurFreq === "every-2-min"}
+                    value="Every-5-sec"
+                    selected={recurFreq === "TEST: Every-5-sec"}
                   >
-                    Every 2 minutes
+                    Every 5 seconds
                   </option>
-                  <option value="daily" selected={recurFreq === "daily"}>
+                  <option value="Daily" selected={recurFreq === "Daily"}>
                     Daily
                   </option>
-                  <option value="weekly" selected={recurFreq === "weekly"}>
+                  <option value="Weekly" selected={recurFreq === "Weekly"}>
                     Weekly
                   </option>
-                  <option value="monthly" selected={recurFreq === "monthly"}>
+                  <option value="Monthly" selected={recurFreq === "Monthly"}>
                     Monthly
                   </option>
                 </select>
@@ -183,10 +189,6 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
   // const [name, setName] = useState(item.name);
   const [editMode, setEditMode] = useState(false);
 
-  const editItem = (item, updatedItem) => {
-    apiClient.editItem({ ...item, ...updatedItem });
-  };
-
   //useRef for focusing into input bar
   const inputItem = useRef();
 
@@ -197,7 +199,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
   // Submit sets setEditMode(false). User sees value with submitted input item, Edit button.
   const onSaveClick = () => {
     setEditMode(false);
-    editItem(item, { name });
+    updateItem({ ...item, name });
   };
   // Want: When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
   //   const cancelEdit = () => {
@@ -223,7 +225,6 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
           <Checkbox
             item={item}
             onChange={() => {
-              editItem(item, { is_done: true });
               updateItem({ ...item, is_done: true });
             }}
           />
@@ -285,7 +286,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
           </>
         </td>
         <td>
-          <RecurringSettings item={item} editItem={editItem} />
+          <RecurringSettings item={item} editItem={updateItem} />
         </td>
         <td>
           <button
