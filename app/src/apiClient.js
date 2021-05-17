@@ -1,5 +1,47 @@
+// get all lists
+export const getLists = async () => {
+  const response = await fetch("/api/lists");
+  return response.json();
+};
+
+// add list function
+export const addList = async (name) => {
+  const response = await fetch("/api/lists", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+    }),
+  });
+  return response.json();
+};
+
+// edit list function
+export const editList = async (list) => {
+  const body = list;
+  const response = await fetch(`/api/lists/${list.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  return response.json();
+};
+
+// delete list function
+export const deleteList = async (id) => {
+  const response = await fetch(`/api/lists/${id}`, {
+    method: "DELETE",
+  });
+  return response.json();
+};
+
+// get all items
 export const getItems = async () => {
-  const response = await fetch("/api/items");
+  const response = await fetch("/api/lists");
   return response.json();
 };
 
