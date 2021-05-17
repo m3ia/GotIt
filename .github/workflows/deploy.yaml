@@ -17,6 +17,9 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
+          docker_build_args: |
+            REACT_APP_API_KEY
+            REACT_APP_CLIENT_ID
         env:
+          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
           REACT_APP_GCAL_CLIENT_ID: ${{secrets.REACT_APP_GCAL_CLIENT_ID}}
-          REACT_APP_GCAL_CLIENT_SECRET: ${{secrets.REACT_APP_GCAL_CLIENT_SECRET}}
