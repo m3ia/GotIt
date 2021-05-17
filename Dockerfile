@@ -1,5 +1,7 @@
 FROM node:lts-alpine as app
 ARG NODE_ENV=production
+ARG GCAL_CLIENT_SECRET
+ARG GCAL_CLIENT_ID
 RUN npm install -g npm@latest
 WORKDIR /app
 COPY ./app .

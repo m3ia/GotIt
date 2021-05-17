@@ -17,3 +17,6 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
+        env:
+          GCAL_CLIENT_ID: ${{secrets.GCAL_CLIENT_ID}}
+          GCAL_CLIENT_SECRET: ${{secrets.GCAL_CLIENT_SECRET}}
