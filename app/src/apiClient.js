@@ -1,6 +1,5 @@
 export const getItems = async () => {
   const response = await fetch("/api/items");
-  console.log(response.json);
   return response.json();
 };
 
@@ -19,12 +18,9 @@ export const addItem = async (name) => {
 };
 
 // edit item function
-
-export const editItem = async (newName, id) => {
-  const body = {
-    newName,
-  };
-  const response = await fetch(`/api/items/${id}`, {
+export const editItem = async (item) => {
+  const body = item;
+  const response = await fetch(`/api/items/${item.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
