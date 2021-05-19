@@ -148,12 +148,12 @@ const ViewAllLists = ({ selectList }) => {
   }, []);
 
   // delete list function
-  // const deleteList = (id) => {
-  //   apiClient.deleteList(id);
-  //   // automatically update list view
-  //   const filterOut = lists.filter((list) => list.id !== id);
-  //   setLists(filterOut);
-  // };
+  const deleteList = (id) => {
+    apiClient.deleteList(id);
+    // automatically update list view
+    const filterOut = lists.filter((list) => list.id !== id);
+    setLists(filterOut);
+  };
 
   return (
     <>
@@ -187,6 +187,7 @@ const ViewAllLists = ({ selectList }) => {
                 type="button"
                 className="list-button btn btn-danger btn-sm"
                 id="delete-button"
+                onClick={() => deleteList(list.id)}
               >
                 Delete
               </button>
