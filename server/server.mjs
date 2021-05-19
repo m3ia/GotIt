@@ -54,7 +54,8 @@ lists.delete("/:id", async (request, response) => {
 
 // gets all items
 items.get("/", async (request, response) => {
-  const items = await db.getItems();
+  const { listId } = request.query;
+  const items = await db.getItems(listId);
   console.log("hello test test");
   response.status(200).json(items);
 });
@@ -71,8 +72,8 @@ items.use(express.json());
 
 // adds an item
 items.post("/", async (request, response) => {
-  const { name } = request.body;
-  const item = await db.addItem(name);
+  const { name, list_id } = request.body;
+  const item = await db.addItem(name, list_id);
   response.status(201).json(item);
   // alternatively: response.json(newItem.rows[0]);
   console.log("i'm in post and item is: ", item); // to test

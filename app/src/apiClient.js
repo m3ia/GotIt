@@ -39,13 +39,13 @@ export const deleteList = async (id) => {
 };
 
 // get all items
-export const getItems = async () => {
-  const response = await fetch("/api/lists");
+export const getItems = async (listId) => {
+  const response = await fetch(`/api/items?listId=${listId}`);
   return response.json();
 };
 
 // add item function
-export const addItem = async (name) => {
+export const addItem = async (name, listId) => {
   const response = await fetch("/api/items", {
     method: "POST",
     headers: {
@@ -53,6 +53,7 @@ export const addItem = async (name) => {
     },
     body: JSON.stringify({
       name,
+      list_id: listId,
     }),
   });
   return response.json();

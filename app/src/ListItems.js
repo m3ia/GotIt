@@ -26,15 +26,20 @@ import icon from "./checklist-icon.png";
 // };
 
 // This is view for one list.
-const ListItems = () => {
+const ListItems = ({ listId, back }) => {
   const [allItems, setItems] = useState([]);
   const items = allItems.filter((item) => !item.is_done);
   const completedItems = allItems.filter((item) => item.is_done);
 
-  async function getItems() {
-    const itemsArray = await apiClient.getItems();
+  async function getItems(listId) {
+    const itemsArray = await apiClient.getItems(listId);
     setItems(itemsArray);
   }
+
+  const addNewItem = async (name) => {
+    const response = await apiClient.addItem(name, listId);
+    onAdd(response[0]);
+  };
 
   // to instantly hide item after checkbox is checked
   const updateItem = useCallback(
@@ -53,8 +58,8 @@ const ListItems = () => {
   );
 
   useEffect(() => {
-    getItems();
-  }, []);
+    getItems(listId);
+  }, [listId]);
 
   // delete item function
   const deleteItem = useCallback(
@@ -170,11 +175,14 @@ const ListItems = () => {
   return (
     <>
       <div className="body" data-testid="test-1">
+        <button className="btn btn-secondary" onClick={back}>
+          Back
+        </button>
         <img src={icon} className="app-icon" alt="checklist icon" />
         <h1>Got It!</h1>
         <h2>Main List</h2>
         <br />
-        <AddItem onAdd={onAdd} />
+        <AddItem addNewItem={addNewItem} />
         <table className="table table-hover mt-5">
           <thead>
             <tr className="header-row">

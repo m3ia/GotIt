@@ -2,16 +2,15 @@ import "./App.css";
 
 import React, { useState, useEffect, useRef } from "react";
 
-import * as apiClient from "./apiClient";
-
-const AddItem = ({ onAdd }) => {
+const AddItem = ({ addNewItem }) => {
   const inputItem = useRef();
   const [name, setName] = useState("");
 
-  const addNewItem = async (name) => {
-    const response = await apiClient.addItem(name);
-    onAdd(response[0]);
-  };
+  // const addNewItem = async (name) => {
+  //   const response = await apiClient.addItem(name);
+  //   onAdd(response[0]);
+  // };
+
   // Clicking Edit/on the value activates editMode. User sees input bar and Submit button.
   const onEditClick = () => {
     setEditMode(true);

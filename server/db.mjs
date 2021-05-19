@@ -43,15 +43,18 @@ export const deleteList = async (id) => {
 // gets all active items from items.
 // TODO: change getItems to get items from specific lists
 export const getItems = async (listId) =>
-  await db.any("SELECT * FROM items ORDER BY id WHERE list_id = $1", [listId]);
+  await db.any("SELECT * FROM items WHERE list_id = $1 ORDER BY id", [listId]);
 
 // gets certain items
 export const getItem = async (id) =>
   await db.any("SELECT * FROM items WHERE id = $1", [id]);
 
 // adds a created item to items db
-export const addItem = async (name) =>
-  await db.any("INSERT INTO items (name) VALUES ($1) RETURNING *", [name]);
+export const addItem = async (name, list_id) =>
+  await db.any(
+    "INSERT INTO items (name, list_id) VALUES ($1, $2) RETURNING *",
+    [name, list_id],
+  );
 
 // update an item
 export const updateItem = async (item) => {

@@ -122,7 +122,7 @@ const CreateNewList = ({ onAdd, updateList, setLists }) => {
   );
 };
 
-const ViewAllLists = () => {
+const ViewAllLists = ({ selectList }) => {
   const [lists, setLists] = useState([]);
 
   async function getLists() {
@@ -189,6 +189,7 @@ const ViewAllLists = () => {
                 type="button"
                 className="list-button btn btn-secondary btn-sm"
                 id="view-button"
+                onClick={() => selectList(list)}
               >
                 View
               </button>

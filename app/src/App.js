@@ -10,6 +10,10 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
   const [page, setPage] = useState("home");
   const [selectedListId, setSelectedListId] = useState(null);
+  const back = () => {
+    setPage("home");
+    setSelectedListId(null);
+  };
 
   useEffect(() => {
     gcal.onLoad(() => {
@@ -24,13 +28,15 @@ const App = () => {
       <div className="container">
         {page === "home" && (
           <ViewAllLists
-            clickList={(list) => {
+            selectList={(list) => {
               setPage("listItems");
               setSelectedListId(list.id);
             }}
           />
         )}
-        {page === "listItems" && <ListItems listId={selectedListId} />}
+        {page === "listItems" && (
+          <ListItems listId={selectedListId} back={back} />
+        )}
       </div>
     </Fragment>
   );
