@@ -49,7 +49,7 @@ const AddItem = ({ addNewItem }) => {
     <>
       {!editMode && (
         <div
-          className="add-item-row"
+          className="add-item-section"
           onClick={() => {
             onEditClick();
           }}
@@ -61,7 +61,7 @@ const AddItem = ({ addNewItem }) => {
           aria-pressed="false"
         >
           <br />
-          Click here to add an item.
+          <span className="add-item-row">Click here to add an item.</span>
         </div>
       )}
 

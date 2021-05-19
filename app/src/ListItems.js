@@ -27,7 +27,7 @@ import icon from "./checklist-icon.png";
 // };
 
 // This is view for one list.
-const ListItems = ({ listId, back }) => {
+const ListItems = ({ listId, back, list }) => {
   const [allItems, setItems] = useState([]);
   const items = allItems.filter((item) => !item.is_done);
   const completedItems = allItems.filter((item) => item.is_done);
@@ -175,13 +175,11 @@ const ListItems = ({ listId, back }) => {
 
   return (
     <>
-      <div className="body" data-testid="test-1">
-        <button className="btn btn-secondary" onClick={back}>
-          Back
+      <div className="items-body rounded" data-testid="test-1">
+        <button className="btn btn-secondary float-right" onClick={back}>
+          Back To All Lists
         </button>
-        <img src={icon} className="app-icon" alt="checklist icon" />
-        <h1>Got It!</h1>
-        <h2>Main List</h2>
+        <h2>{list.name}</h2>
         <br />
         <AddItem addNewItem={addNewItem} />
         <table className="table table-hover mt-5">

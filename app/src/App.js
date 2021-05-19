@@ -9,6 +9,7 @@ import logo from "./got-it-logo1.png";
 const App = () => {
   const [page, setPage] = useState("home");
   const [selectedListId, setSelectedListId] = useState(null);
+  const [list, setList] = useState({});
   const back = () => {
     setPage("home");
     setSelectedListId(null);
@@ -34,11 +35,12 @@ const App = () => {
             selectList={(list) => {
               setPage("listItems");
               setSelectedListId(list.id);
+              setList(list);
             }}
           />
         )}
         {page === "listItems" && (
-          <ListItems listId={selectedListId} back={back} />
+          <ListItems listId={selectedListId} back={back} list={list} />
         )}
       </div>
     </Fragment>
