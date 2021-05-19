@@ -88,6 +88,56 @@ SELECT pg_catalog.setval('public.items_id_seq', 5, true);
 ALTER TABLE ONLY public.items
     ADD CONSTRAINT items_pkey PRIMARY KEY (id);
 
+ALTER TABLE items
+ADD COLUMN is_done BOOLEAN DEFAULT FALSE,
+ADD COLUMN recur_freq CHAR (20),
+ADD COLUMN recur_start_date DATE,
+ADD COLUMN recur_end_date DATE,
+ADD COLUMN due_date DATE,
+ADD COLUMN url VARCHAR (1000),
+ADD COLUMN quantity INT DEFAULT 1,
+ADD COLUMN description VARCHAR (500),
+ADD COLUMN user_assigned INT,
+ADD COLUMN date_created TIMESTAMPTZ DEFAULT Now(),
+ADD COLUMN date_updated TIMESTAMPTZ DEFAULT Now();
+
+CREATE TABLE lists(
+  id SERIAL PRIMARY KEY, 
+  name VARCHAR(255),
+  -- owner INT,
+  due_date DATE,
+  date_created TIMESTAMPTZ DEFAULT Now()
+);
+
+ALTER TABLE items
+  ADD COLUMN list_id INT;
+
+ALTER TABLE items
+ADD CONSTRAINT fk_list
+FOREIGN KEY (list_id)
+REFERENCES lists(id);
+
+
+
+CREATE TABLE users(
+  id SERIAL PRIMARY KEY, 
+  first_name VARCHAR(25),
+  last_name VARCHAR(25),
+  email CHAR(50),
+  password CHAR(50),
+  date_created TIMESTAMPTZ DEFAULT Now(),
+  date_updated TIMESTAMPTZ DEFAULT Now()
+);
+
+ALTER TABLE lists
+  ADD COLUMN owner_id INT;
+
+ALTER TABLE lists
+ADD CONSTRAINT fk_user
+FOREIGN KEY (owner_id)
+REFERENCES users(id);
+
+-- NEED TO ADD TO SEED FILE AND HEROKU DB
 
 --
 -- PostgreSQL database dump complete
