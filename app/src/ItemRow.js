@@ -165,7 +165,7 @@ const Checkbox = ({ item, onChange }) => {
           // onClick={() => completeItem(true)}
           onClick={(e) => {
             onChange(e.target.value);
-            setIsChecked(true);
+            !isChecked ? setIsChecked(true) : setIsChecked(false);
           }}
         />
       </label>
@@ -216,7 +216,10 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
           <Checkbox
             item={item}
             onChange={() => {
-              updateItem({ ...item, is_done: true });
+              !item.is_done
+                ? updateItem({ ...item, is_done: true })
+                : updateItem({ ...item, is_done: false });
+              // updateItem({ ...item, is_done: true });
             }}
           />
         </td>
