@@ -8,6 +8,8 @@ import ViewAllLists from "./ViewAllLists";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
+  const [page, setPage] = useState("home");
+  const [selectedListId, setSelectedListId] = useState(null);
 
   useEffect(() => {
     gcal.onLoad(() => {
@@ -20,8 +22,15 @@ const App = () => {
       <Login {...{ isAuthenticated }} />
       {isAuthenticated ? <Events /> : null}
       <div className="container">
-        <ViewAllLists />
-        <ListItems />
+        {page === "home" && (
+          <ViewAllLists
+            clickList={(list) => {
+              setPage("listItems");
+              setSelectedListId(list.id);
+            }}
+          />
+        )}
+        {page === "listItems" && <ListItems listId={selectedListId} />}
       </div>
     </Fragment>
   );

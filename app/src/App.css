@@ -47,3 +47,22 @@
   font-size: 16px;
   margin: 4px 2px; */
 }
+
+.list-container {
+  display: flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+}
+
+.list-element {
+  padding: 40px;
+}
+
+.list-button {
+  margin: 2px;
+}
+
+.list-name {
+  font-weight: bold;
+  text-align: center;
+}

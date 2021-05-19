@@ -104,7 +104,7 @@ const ListItems = () => {
           // WORKS: if the so, then delete the item.
           deleteItem(items[i].id);
         } else {
-          // WORKS: if not, then if item.recur_freq === q2min/daily/weekly/monthly && checkbox...
+          // WORKS: if not, then if item.recur_freq === q2min/daily/weekly/ nthly && checkbox...
           if (items[i].recur_freq?.trim() === "Daily") {
             let newStartDate = new Date(items[i].recur_start_date);
             console.log({
@@ -166,13 +166,13 @@ const ListItems = () => {
       clearInterval(checkRecurringInternal);
     };
   }, [completedItems, CheckRecurring]);
+
   return (
     <>
       <div className="body" data-testid="test-1">
         <img src={icon} className="app-icon" alt="checklist icon" />
         <h1>Got It!</h1>
         <h2>Main List</h2>
-        {/* <CurrentDate /> */}
         <br />
         <AddItem onAdd={onAdd} />
         <table className="table table-hover mt-5">

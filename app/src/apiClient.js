@@ -5,15 +5,14 @@ export const getLists = async () => {
 };
 
 // add list function
-export const addList = async (name) => {
+export const addList = async (payload) => {
+  console.log(payload);
   const response = await fetch("/api/lists", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      name,
-    }),
+    body: JSON.stringify(payload),
   });
   return response.json();
 };

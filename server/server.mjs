@@ -29,8 +29,8 @@ lists.use(express.json());
 
 // adds an list
 lists.post("/", async (request, response) => {
-  const { name } = request.body;
-  const list = await db.addList(name);
+  const payload = request.body;
+  const list = await db.addList(payload);
   response.status(201).json(list);
   // alternatively: response.json(newItem.rows[0]);
   console.log("i'm in post and item is: ", list); // to test

@@ -24,24 +24,14 @@ const RecurringSettings = ({ item, editItem }) => {
       recur_start_date: recurStartDate,
       recur_end_date: recurEndDate,
     });
-    // window.location = "/";
   };
 
-  // const [selectedDate, setSelectedDate]
-  console.log(
-    recurFreq === "weekly",
-    recurFreq,
-    item.recur_freq,
-    item,
-    item.recur_start_date,
-    item.recur_end_date,
-  );
   return (
-    <div class="container">
+    <div className="container">
       <button
         type="button"
         id="recur-button"
-        class="btn btn-primary"
+        className="btn btn-primary"
         data-toggle="modal"
         data-target={`#recur-modal-${item.id}`}
       >
@@ -52,19 +42,19 @@ const RecurringSettings = ({ item, editItem }) => {
           </span>
         )}
       </button>
-      <div class="modal" id={`recur-modal-${item.id}`}>
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Recurring Item Frequency</h4>
-              <button type="button" class="close" data-dismiss="modal">
+      <div className="modal" id={`recur-modal-${item.id}`}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">Recurring Item Frequency</h4>
+              <button type="button" className="close" data-dismiss="modal">
                 &times;
               </button>
             </div>
             {/* <!-- Modal body --> */}
-            <div class="modal-body">
+            <div className="modal-body">
               <b>Pick your Frequency:</b>
-              <div class="dropdown">
+              <div className="dropdown">
                 <select
                   name="options"
                   id="recur-freq"
@@ -95,20 +85,20 @@ const RecurringSettings = ({ item, editItem }) => {
                 </select>
               </div>
               {/* <DatePicker selected={} onChange{} /> */}
-              <div class="date-input">
+              <div className="date-input">
                 <label htmlFor="recur-start-date">
                   <b>Recurring Start Date:</b>
                 </label>
                 <input
                   type="date"
-                  class="form-control"
+                  className="form-control"
                   id="recur-start-date"
                   defaultValue={recurStartDate}
                   onChange={(e) => setRecurStartDate(e.target.value)}
                 ></input>
                 {/* <input
                   type="time"
-                  class="form-control"
+                  className="form-control"
                   id="recur-start-time"
                   value={recurStartTime}
                   onChange={(e) => setRecurStartTime(e.target.value)}
@@ -119,24 +109,24 @@ const RecurringSettings = ({ item, editItem }) => {
                 </label>
                 <input
                   type="date"
-                  class="form-control"
+                  className="form-control"
                   id="recur-end-date"
                   defaultValue={recurEndDate}
                   onChange={(e) => setRecurEndDate(e.target.value)}
                 ></input>
                 {/* <input
                   type="time"
-                  class="form-control"
+                  className="form-control"
                   id="recur-end-time"
                   value={recurEndTime}
                   onChange={(e) => setRecurEndTime(e.target.value)}
                 ></input> */}
               </div>
               {/* <!-- Modal footer --> */}
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   data-dismiss="modal"
                   onClick={onSaveRecur}
                 >
@@ -144,7 +134,7 @@ const RecurringSettings = ({ item, editItem }) => {
                 </button>
                 <button
                   type="button"
-                  class="btn btn-danger"
+                  className="btn btn-danger"
                   data-dismiss="modal"
                 >
                   Close
@@ -162,11 +152,11 @@ const Checkbox = ({ item, onChange }) => {
   const [isChecked, setIsChecked] = useState(item.is_done);
 
   return (
-    <div class="form-check-inline">
-      <label class="form-check-label">
+    <div className="form-check-inline">
+      <label className="form-check-label">
         <input
           type="checkbox"
-          class="form-check-input"
+          className="form-check-input"
           id="checkbox"
           // value={isChecked}
           checked={isChecked}
@@ -262,7 +252,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
           <>
             {!editMode && (
               <button
-                class="btn btn-warning"
+                className="btn btn-warning"
                 type="button"
                 // className="edit-button"
                 data-target={`#id${item.id}`}
@@ -277,9 +267,8 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
             {editMode && (
               <button
                 onClick={onSaveClick}
-                className="save-button"
                 type="submit"
-                class="btn btn-primary"
+                className="btn btn-primary save-button"
               >
                 Save
               </button>
@@ -291,7 +280,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
         </td>
         <td>
           <button
-            class="btn btn-danger"
+            className="btn btn-danger"
             id="delete-button"
             onClick={() => deleteItem(item.id)}
           >

@@ -10,12 +10,42 @@ types.setTypeParser(TYPE_DATE, (date) => date);
 
 const db = initDb();
 
-// gets all active items from items.
-// TODO: change getItems to getActiveItems
-export const getItems = async () =>
-  await db.any("SELECT * FROM items ORDER BY id");
+// gets all active lists from lists.
+// TODO: change getItems to get items from specific lists
+export const getLists = async () =>
+  await db.any("SELECT * FROM lists ORDER BY id");
 
-// gets an item
+// gets a list
+export const getList = async (id) =>
+  await db.any("SELECT * FROM lists WHERE id = $1", [id]);
+
+// adds a created list to lists db
+export const addList = async ({ name, due_date }) =>
+  await db.any(
+    "INSERT INTO lists (name, due_date) VALUES ($1,$2) RETURNING *",
+    [name, due_date],
+  );
+
+// update an list
+export const updateList = async (list) => {
+  await db.any("UPDATE lists SET name = $2, due_date = $3 WHERE id = $1", [
+    list.id,
+    list.name,
+    list.due_date,
+  ]);
+};
+
+// deletes a list from db
+export const deleteList = async (id) => {
+  await db.result("DELETE FROM lists WHERE id = $1", [id]);
+};
+
+// gets all active items from items.
+// TODO: change getItems to get items from specific lists
+export const getItems = async (listId) =>
+  await db.any("SELECT * FROM items ORDER BY id WHERE list_id = $1", [listId]);
+
+// gets certain items
 export const getItem = async (id) =>
   await db.any("SELECT * FROM items WHERE id = $1", [id]);
 
@@ -49,6 +79,7 @@ export const deleteItem = async (id) => {
   await db.result("DELETE FROM items WHERE id = $1", [id]);
   console.log("result done");
 };
+
 function initDb() {
   let connection;
 
