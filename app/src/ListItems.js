@@ -6,6 +6,7 @@ import differenceInDays from "date-fns/differenceInDays";
 import differenceInMonths from "date-fns/differenceInMonths";
 
 import AddItem from "./AddItemForm";
+import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
 import icon from "./checklist-icon.png";
@@ -30,6 +31,8 @@ const ListItems = ({ listId, back }) => {
   const [allItems, setItems] = useState([]);
   const items = allItems.filter((item) => !item.is_done);
   const completedItems = allItems.filter((item) => item.is_done);
+  // gcal
+  const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
 
   async function getItems(listId) {
     const itemsArray = await apiClient.getItems(listId);
@@ -163,6 +166,13 @@ const ListItems = ({ listId, back }) => {
     };
   }, [completedItems, CheckRecurring]);
 
+  useEffect(() => {
+    gcal.onLoad(() => {
+      setIsAuthenticated(gcal.gapi.auth2.getAuthInstance().isSignedIn.get());
+      gcal.listenSign((sign) => setIsAuthenticated(sign));
+    });
+  }, []);
+
   return (
     <>
       <div className="body" data-testid="test-1">
@@ -238,8 +248,36 @@ const ListItems = ({ listId, back }) => {
               ))}
           </tbody>
         </table>
+        <Login {...{ isAuthenticated }} />
+        {isAuthenticated ? <Events /> : null}
       </div>
     </>
+  );
+};
+
+// GCal Sign In
+const Login = ({ isAuthenticated }) =>
+  isAuthenticated ? (
+    <button onClick={gcal.handleSignoutClick}>Log out</button>
+  ) : (
+    <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
+  );
+
+const Events = () => {
+  const [events, setEvents] = React.useState([]);
+
+  React.useEffect(() => {
+    gcal
+      .listUpcomingEvents(10)
+      .then(({ result: { items } }) => setEvents(items));
+  }, []);
+
+  return events.length === 0 ? null : (
+    <ul>
+      {events.map((event) => (
+        <li key={event.id}>{event.summary}</li>
+      ))}
+    </ul>
   );
 };
 

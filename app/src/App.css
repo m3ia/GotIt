@@ -66,3 +66,33 @@
   font-weight: bold;
   text-align: center;
 }
+
+.logo, .description  { 
+  background-color: white;
+  max-width: 75%;
+  display: flex;
+  justify-content:right;
+  padding: 10px;
+}
+
+.jumbotron {
+  background-color:#FFF;
+}
+
+footer {
+  background-color:#FEB062;
+  /* padding: 5px 5px 5px 5px; */
+}
+
+.orange-background {
+  color: #131313; 
+  background-color: #FEB062;
+}
+
+a {
+  color: #277967;
+  }
+
+a:hover {
+  color:white;
+}

@@ -38,6 +38,7 @@
     "react-google-calendar-api": "^1.4.0",
     "react-scripts": "4.0.3",
     "reactjs-google-calendar": "^2.1.4",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {

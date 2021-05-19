@@ -157,21 +157,11 @@ const ViewAllLists = ({ selectList }) => {
 
   return (
     <>
-      <div className="logo-icon">
-        <img
-          src={icon}
-          className="app-icon"
-          alt="checklist icon"
-          width="10px"
-        />
-        <h1>Got It!</h1>
-        <br />
-        <CreateNewList
-          onAdd={onAdd}
-          updateList={updateList}
-          setLists={setLists}
-        />
-      </div>
+      <CreateNewList
+        onAdd={onAdd}
+        updateList={updateList}
+        setLists={setLists}
+      />
       <div className="list-container">
         {lists.map((list) => (
           <div key={list.id} className="list-element">
