@@ -89,10 +89,8 @@ const ListItems = ({ listId, back }) => {
       // WORKS: loops through each item
       for (let i = 0; i < items.length; i++) {
         // handle every 5 seconds
-        if (items[i].recur_freq?.trim() === "Every-5-sec") {
+        if (items[i].recur_freq?.trim() === "DEMO: Every-5-sec") {
           //WORKS:
-          console.log("Time to seriously edit");
-          console.log("something should have returned! seconds");
           //changes start date in db --> sets checkBox(true) to be unfiltered
           //WORKS:
           editItem({
@@ -109,19 +107,13 @@ const ListItems = ({ listId, back }) => {
           // WORKS: if the so, then delete the item.
           deleteItem(items[i].id);
         } else {
-          // WORKS: if not, then if item.recur_freq === q2min/daily/weekly/ nthly && checkbox...
+          // WORKS: if not, then if item.recur_freq === q2min/daily/weekly/monthly && checkbox...
           if (items[i].recur_freq?.trim() === "Daily") {
             let newStartDate = new Date(items[i].recur_start_date);
-            console.log({
-              today,
-              newStartDate,
-              diff: differenceInDays(today, newStartDate),
-            });
             if (differenceInDays(today, newStartDate) >= 1) {
               while (addDays(newStartDate, 1) < today) {
                 newStartDate = addDays(newStartDate, 1);
               }
-              console.log("something should have returned! days", newStartDate);
               //changes start date in db --> sets checkBox(true) to be unfiltered
               editItem({
                 ...items[i],
@@ -135,7 +127,6 @@ const ListItems = ({ listId, back }) => {
               while (addDays(newStartDate, 7) < today) {
                 newStartDate = addDays(newStartDate, 7);
               }
-              console.log("something should have returned! weeks");
               //changes start date in db --> sets checkBox(true) to be unfiltered
               editItem({
                 ...items[i],

@@ -13,8 +13,6 @@
 
 //Credit: https://github.com/Kubessandra/react-google-calendar-api
 const CLIENT_ID = process.env.REACT_APP_GCAL_CLIENT_ID;
-console.log("client id is", CLIENT_ID);
-console.log("sillytestvar", process.env.SILLYTESTVAR);
 const API_KEY = process.env.REACT_APP_API_KEY;
 const Config = {
   clientId: CLIENT_ID,
