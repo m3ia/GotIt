@@ -31,7 +31,7 @@ const RecurringSettings = ({ item, editItem }) => {
       <button
         type="button"
         id="recur-button"
-        className="btn btn-primary"
+        className="btn btn-primary btn-sm"
         data-toggle="modal"
         data-target={`#recur-modal-${item.id}`}
       >
@@ -274,7 +274,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
           <>
             {!editMode && (
               <button
-                className="btn btn-warning"
+                className="btn btn-warning btn-sm"
                 type="button"
                 // className="edit-button"
                 data-target={`#id${item.id}`}
@@ -290,7 +290,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
               <button
                 onClick={onSaveClick}
                 type="submit"
-                className="btn btn-primary save-button"
+                className="btn btn-primary save-button btn-sm"
               >
                 Save
               </button>
@@ -302,7 +302,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
         </td>
         <td>
           <button
-            className="btn btn-danger"
+            className="btn btn-danger btn-sm"
             id="delete-button"
             onClick={() => deleteItem(item.id)}
           >
