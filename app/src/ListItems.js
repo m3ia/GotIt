@@ -4,6 +4,7 @@ import AddItem from "./AddItemForm";
 import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
+<<<<<<< HEAD
 
 // GCal Sign In
 const Login = ({ isAuthenticated }) =>
@@ -30,6 +31,8 @@ const Events = () => {
     </ul>
   );
 };
+=======
+>>>>>>> 9589895b1867ee5b75e67513597e47ac421895af
 
 // This is view for one list.
 const ListItems = ({ listId, back, list }) => {

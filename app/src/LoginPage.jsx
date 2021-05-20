@@ -18,7 +18,6 @@ const LoginPage = () => {
           type="text"
           value={signInEmail}
           onChange={(e) => setSignInEmail(e.target.value)}
-          style={item.is_done ? { color: "blue" } : { color: "black" }}
         />
         {userId && <App userId={userId} />}
       </div>
