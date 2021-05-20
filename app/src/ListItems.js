@@ -5,6 +5,32 @@ import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
 
+// GCal Sign In
+const Login = ({ isAuthenticated }) =>
+  isAuthenticated ? (
+    <button onClick={gcal.handleSignoutClick}>Log out</button>
+  ) : (
+    <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
+  );
+
+const Events = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    gcal
+      .listUpcomingEvents(10)
+      .then(({ result: { items } }) => setEvents(items));
+  }, []);
+
+  return events.length === 0 ? null : (
+    <ul>
+      {events.map((event) => (
+        <li key={event.id}>{event.summary}</li>
+      ))}
+    </ul>
+  );
+};
+
 // This is view for one list.
 const ListItems = ({ listId, back, list }) => {
   const [allItems, setItems] = useState([]);
@@ -206,36 +232,13 @@ const ListItems = ({ listId, back, list }) => {
             )}
           </div>
           <Login {...{ isAuthenticated }} />
-          {isAuthenticated ? <Events /> : null}
+          {isAuthenticated ? <Events /> : "Couldn't sign in."}
         </div>
       </div>
+      <div className="my-calendar">
+        <Events />
+      </div>
     </>
-  );
-};
-
-// GCal Sign In
-const Login = ({ isAuthenticated }) =>
-  isAuthenticated ? (
-    <button onClick={gcal.handleSignoutClick}>Log out</button>
-  ) : (
-    <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
-  );
-
-const Events = () => {
-  const [events, setEvents] = React.useState([]);
-
-  React.useEffect(() => {
-    gcal
-      .listUpcomingEvents(10)
-      .then(({ result: { items } }) => setEvents(items));
-  }, []);
-
-  return events.length === 0 ? null : (
-    <ul>
-      {events.map((event) => (
-        <li key={event.id}>{event.summary}</li>
-      ))}
-    </ul>
   );
 };
 

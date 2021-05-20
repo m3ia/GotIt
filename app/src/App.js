@@ -6,7 +6,7 @@ import ViewAllLists from "./ViewAllLists";
 import logo from "./got-it-logo1.png";
 // import * as apiClient from "./apiClient";
 
-const App = () => {
+const App = ({ userId }) => {
   const [page, setPage] = useState("home");
   const [selectedListId, setSelectedListId] = useState(null);
   const [list, setList] = useState({});
@@ -38,6 +38,7 @@ const App = () => {
                 setSelectedListId(list.id);
                 setList(list);
               }}
+              userId={userId}
             />
           )}
           {page === "listItems" && (
