@@ -87,9 +87,23 @@
   background-color:#FFF;
 }
 
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
 footer {
+  left: 0;
+  bottom: 0;
+  right: 0;
   background-color:#FEB062;
   /* padding: 5px 5px 5px 5px; */
+  text-overflow: wrap;  
+  position:inherit;
 }
 
 .orange-background {

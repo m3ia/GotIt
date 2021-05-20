@@ -173,6 +173,20 @@ const Checkbox = ({ item, onChange }) => {
   );
 };
 
+function useOutsideAlerter(ref, exitEdit) {
+  useEffect(() => {
+    // Function for click event
+    function handleOutsideClick(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        exitEdit();
+      }
+    }
+
+    // Adding click event listener
+    document.addEventListener("click", handleOutsideClick, true);
+  }, [ref, exitEdit]);
+}
+
 // Item Row Component
 const ItemRow = ({ item, deleteItem, updateItem }) => {
   const [name, setName] = useState(item.name);
@@ -181,7 +195,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
   const [editMode, setEditMode] = useState(false);
 
   //useRef for focusing into input bar
-  const inputItem = useRef();
+  const inputItem = useRef(null);
 
   // Clicking Edit/on the value activates editMode. User sees input and Submit button.
   const onEditClick = () => {
@@ -192,10 +206,15 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
     setEditMode(false);
     updateItem({ ...item, name });
   };
-  // Want: When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
-  //   const cancelEdit = () => {
-  //   setEditMode(false);
-  // }
+
+  // When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
+  const cancelEdit = () => {
+    setEditMode(false);
+    setName(item.name);
+  };
+  useOutsideAlerter(inputItem, () => {
+    if (editMode) cancelEdit();
+  });
 
   // When user clicks Enter on Edit Mode, onSubmitClick is processed.
   const handleKeyDown = (e) => {

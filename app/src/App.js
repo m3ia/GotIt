@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <Fragment>
-      <div className="jumbotron">
+      <div>
         <div className="logo">
           <img src={logo} className="logo" alt="Got It Logo" width="75%" />
         </div>
@@ -29,19 +29,21 @@ const App = () => {
           </p>
         </div>
       </div>
-      <div className="container">
-        {page === "home" && (
-          <ViewAllLists
-            selectList={(list) => {
-              setPage("listItems");
-              setSelectedListId(list.id);
-              setList(list);
-            }}
-          />
-        )}
-        {page === "listItems" && (
-          <ListItems listId={selectedListId} back={back} list={list} />
-        )}
+      <div className="page-container">
+        <div id="content-wrap">
+          {page === "home" && (
+            <ViewAllLists
+              selectList={(list) => {
+                setPage("listItems");
+                setSelectedListId(list.id);
+                setList(list);
+              }}
+            />
+          )}
+          {page === "listItems" && (
+            <ListItems listId={selectedListId} back={back} list={list} />
+          )}
+        </div>
       </div>
     </Fragment>
   );

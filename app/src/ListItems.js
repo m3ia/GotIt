@@ -175,79 +175,67 @@ const ListItems = ({ listId, back, list }) => {
 
   return (
     <>
-      <div className="items-body rounded" data-testid="test-1">
-        <button className="btn btn-secondary float-right" onClick={back}>
-          Back To All Lists
-        </button>
-        <h2>{list.name}</h2>
-        <br />
-        <AddItem addNewItem={addNewItem} />
-        <table className="table table-hover mt-5">
-          <thead>
-            <tr className="header-row">
-              <th>Complete</th>
-              <th>Item</th>
-              <th>Edit</th>
-              <th>Frequency</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* 
-              <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
+      <div data-testid="test-1">
+        <div className="items-table container-fluid">
+          <button className="btn btn-secondary float-right" onClick={back}>
+            Back To All Lists
+          </button>
+          <h2>{list.name}</h2>
+          <br />
+          <AddItem addNewItem={addNewItem} />
+          <table className="table table-hover mt-5">
+            <thead>
+              <tr className="header-row">
+                <th>Complete</th>
+                <th>Item</th>
+                <th>Edit</th>
+                <th>Frequency</th>
+                <th>Delete</th>
               </tr>
-  */}
-            {items
-              // .filter((item) => !item.is_done)
-              .map((item) => (
-                <ItemRow
-                  item={item}
-                  deleteItem={deleteItem}
-                  key={item.id}
-                  getItems={getItems}
-                  updateItem={editItem}
-                />
-              ))}
-          </tbody>
-        </table>
-        <br />
-        <h3>Completed Items</h3>
-        <table className="table table-hover mt-5">
-          <thead>
-            <tr className="header-row">
-              <th>Complete</th>
-              <th>Item</th>
-              <th>Edit</th>
-              <th>Frequency</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* 
-              <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
+            </thead>
+            <tbody>
+              {items
+                // .filter((item) => !item.is_done)
+                .map((item) => (
+                  <ItemRow
+                    item={item}
+                    deleteItem={deleteItem}
+                    key={item.id}
+                    getItems={getItems}
+                    updateItem={editItem}
+                  />
+                ))}
+            </tbody>
+          </table>
+          <br />
+          <h3>Completed Items</h3>
+          <table className="table table-hover mt-5">
+            <thead>
+              <tr className="header-row">
+                <th>Complete</th>
+                <th>Item</th>
+                <th>Edit</th>
+                <th>Frequency</th>
+                <th>Delete</th>
               </tr>
-  */}
-            {completedItems
-              // .filter((item) => !item.is_done)
-              .map((item) => (
-                <ItemRow
-                  item={item}
-                  deleteItem={deleteItem}
-                  key={item.id}
-                  getItems={getItems}
-                  updateItem={editItem}
-                />
-              ))}
-          </tbody>
-        </table>
-        <Login {...{ isAuthenticated }} />
-        {isAuthenticated ? <Events /> : null}
+            </thead>
+            <tbody>
+              {completedItems
+                // .filter((item) => !item.is_done)
+                .map((item) => (
+                  <ItemRow
+                    item={item}
+                    deleteItem={deleteItem}
+                    key={item.id}
+                    getItems={getItems}
+                    updateItem={editItem}
+                  />
+                ))}
+            </tbody>
+          </table>
+          <Login {...{ isAuthenticated }} />
+          {isAuthenticated ? <Events /> : null}
+        </div>
       </div>
     </>
   );
