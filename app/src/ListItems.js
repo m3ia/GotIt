@@ -92,7 +92,7 @@ const ListItems = ({ listId, back, list }) => {
       // WORKS: loops through each item
       for (let i = 0; i < items.length; i++) {
         // handle every 5 seconds
-        if (items[i].recur_freq?.trim() === "DEMO: Every-5-sec") {
+        if (items[i].recur_freq?.trim() === "DEMO") {
           //WORKS:
           //changes start date in db --> sets checkBox(true) to be unfiltered
           //WORKS:

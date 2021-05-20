@@ -67,11 +67,8 @@ const RecurringSettings = ({ item, editItem }) => {
                   <option value="select" selected={recurFreq === null}>
                     Set Frequency
                   </option>
-                  <option
-                    value="DEMO: Every-5-sec"
-                    selected={recurFreq === "DEMO: Every-5-sec"}
-                  >
-                    DEMO: Every 5 seconds
+                  <option value="DEMO" selected={recurFreq === "DEMO"}>
+                    DEMO
                   </option>
                   <option value="Daily" selected={recurFreq === "Daily"}>
                     Daily
