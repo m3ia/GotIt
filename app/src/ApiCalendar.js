@@ -1,6 +1,6 @@
-// require("dotenv").config();
-// const dotenv = require("dotenv");
-// const result = dotenv.config();
+import dotenv from "dotenv";
+require("dotenv").config();
+const result = dotenv.config();
 
 // if (result.error) {
 //   throw result.error;

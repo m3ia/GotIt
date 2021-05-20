@@ -20,7 +20,7 @@ import listIcon from "./list-icon.png";
 //   );
 // };
 
-const CreateNewList = ({ onAdd, updateList, setLists }) => {
+const CreateNewList = ({ onAdd, updateList, setLists, isAuthenticated }) => {
   const [name, setName] = useState("");
   const [dueDate, setDueDate] = useState("");
 

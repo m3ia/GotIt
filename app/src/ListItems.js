@@ -1,30 +1,35 @@
 import React, { useCallback, useState, useEffect } from "react";
 
-import addDays from "date-fns/addDays";
-import addMonths from "date-fns/addMonths";
-import differenceInDays from "date-fns/differenceInDays";
-import differenceInMonths from "date-fns/differenceInMonths";
-
 import AddItem from "./AddItemForm";
 import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
-import icon from "./checklist-icon.png";
 
-// const CurrentDate = () => {
-//   const dateVar = new Date();
-//   const [currTime, setCurrTime] = useState(dateVar);
+// GCal Sign In
+const Login = ({ isAuthenticated }) =>
+  isAuthenticated ? (
+    <button onClick={gcal.handleSignoutClick}>Log out</button>
+  ) : (
+    <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
+  );
 
-//   const returnTime = () => {
-//     setCurrTime(dateVar.toLocaleTimeString());
-//   };
+const Events = () => {
+  const [events, setEvents] = useState([]);
 
-//   setInterval(() => {
-//     returnTime();
-//   }, 1000);
+  useEffect(() => {
+    gcal
+      .listUpcomingEvents(10)
+      .then(({ result: { items } }) => setEvents(items));
+  }, []);
 
-//   return currTime;
-// };
+  return events.length === 0 ? null : (
+    <ul>
+      {events.map((event) => (
+        <li key={event.id}>{event.summary}</li>
+      ))}
+    </ul>
+  );
+};
 
 // This is view for one list.
 const ListItems = ({ listId, back, list }) => {
@@ -227,36 +232,13 @@ const ListItems = ({ listId, back, list }) => {
             )}
           </div>
           <Login {...{ isAuthenticated }} />
-          {isAuthenticated ? <Events /> : null}
+          {isAuthenticated ? <Events /> : "Couldn't sign in."}
         </div>
       </div>
+      <div className="my-calendar">
+        <Events />
+      </div>
     </>
-  );
-};
-
-// GCal Sign In
-const Login = ({ isAuthenticated }) =>
-  isAuthenticated ? (
-    <button onClick={gcal.handleSignoutClick}>Log out</button>
-  ) : (
-    <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
-  );
-
-const Events = () => {
-  const [events, setEvents] = React.useState([]);
-
-  React.useEffect(() => {
-    gcal
-      .listUpcomingEvents(10)
-      .then(({ result: { items } }) => setEvents(items));
-  }, []);
-
-  return events.length === 0 ? null : (
-    <ul>
-      {events.map((event) => (
-        <li key={event.id}>{event.summary}</li>
-      ))}
-    </ul>
   );
 };
 
