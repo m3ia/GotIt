@@ -12,8 +12,10 @@ const result = dotenv.config();
 // import env from "react-dotenv";
 
 //Credit: https://github.com/Kubessandra/react-google-calendar-api
-const CLIENT_ID = process.env.REACT_APP_GCAL_CLIENT_ID;
-const API_KEY = process.env.REACT_APP_API_KEY;
+const CLIENT_ID =
+  "60497895153-iiq79i18jc265rme5l0ojvagac8c622e.apps.googleusercontent.com";
+const API_KEY = "AIzaSyC5l6zqOjiHW5f1p5lp3A196lcWHtbokI8";
+
 const Config = {
   clientId: CLIENT_ID,
   apiKey: API_KEY,
@@ -174,7 +176,12 @@ class ApiCalendar {
   listEvents(queryOptions, calendarId = this.calendar) {
     if (this.gapi) {
       return this.gapi.client.calendar.events.list(
-        Object.assign({ calendarId }, queryOptions),
+        Object.assign(
+          {
+            calendarId,
+          },
+          queryOptions,
+        ),
       );
     } else {
       console.log("Error: this.gapi not loaded");
