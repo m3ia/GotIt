@@ -98,7 +98,7 @@ class ApiCalendar {
    * Sign in Google user account
    */
   handleAuthClick() {
-    if (this.gapi) {
+    if (this.gapi && this.gapi.auth2) {
       this.gapi.auth2.getAuthInstance().signIn();
     } else {
       console.log("Error: this.gapi not loaded");
