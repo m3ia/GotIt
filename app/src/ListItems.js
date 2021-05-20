@@ -1,30 +1,9 @@
 import React, { useCallback, useState, useEffect } from "react";
 
-import addDays from "date-fns/addDays";
-import addMonths from "date-fns/addMonths";
-import differenceInDays from "date-fns/differenceInDays";
-import differenceInMonths from "date-fns/differenceInMonths";
-
 import AddItem from "./AddItemForm";
 import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
-import icon from "./checklist-icon.png";
-
-// const CurrentDate = () => {
-//   const dateVar = new Date();
-//   const [currTime, setCurrTime] = useState(dateVar);
-
-//   const returnTime = () => {
-//     setCurrTime(dateVar.toLocaleTimeString());
-//   };
-
-//   setInterval(() => {
-//     returnTime();
-//   }, 1000);
-
-//   return currTime;
-// };
 
 // This is view for one list.
 const ListItems = ({ listId, back, list }) => {
