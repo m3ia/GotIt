@@ -168,8 +168,12 @@ const ListItems = ({ listId, back, list }) => {
 
   useEffect(() => {
     gcal.onLoad(() => {
-      setIsAuthenticated(gcal.gapi.auth2.getAuthInstance().isSignedIn.get());
-      gcal.listenSign((sign) => setIsAuthenticated(sign));
+      try {
+        setIsAuthenticated(gcal.gapi.auth2.getAuthInstance().isSignedIn.get());
+        gcal.listenSign((sign) => setIsAuthenticated(sign));
+      } catch {
+        setIsAuthenticated(gcal.sign);
+      }
     });
   }, []);
 
