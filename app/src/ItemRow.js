@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import addDays from "date-fns/addDays";
+import addMonths from "date-fns/addMonths";
+
 // import { zonedTimeToUtc } from "date-fns-tz";
 
 const RecurringSettings = ({ item, editItem }) => {
@@ -184,6 +187,32 @@ function useOutsideAlerter(ref, exitEdit) {
   }, [ref, exitEdit]);
 }
 
+function getNextStartDate(item) {
+  const now = new Date();
+  let newStartDate = new Date(item.recur_start_date);
+  let adder = addDays;
+  let amountToAdd = 1;
+
+  if (item.recur_freq === "Weekly") {
+    amountToAdd = 7;
+  } else if (item.recur_freq === "Monthly") {
+    adder = addMonths;
+  } else if (item.recur_freq === "DEMO") {
+    // doesn't matter
+    return now;
+  } else if (!item.recur_freq) {
+    // not recurring
+    return null;
+  }
+
+  // find the next closest of that window
+  while (adder(newStartDate, amountToAdd) < now) {
+    newStartDate = addDays(newStartDate, 1);
+  }
+  newStartDate = adder(newStartDate, amountToAdd);
+  return newStartDate;
+}
+
 // Item Row Component
 const ItemRow = ({ item, deleteItem, updateItem }) => {
   const [name, setName] = useState(item.name);
@@ -233,7 +262,11 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
             item={item}
             onChange={() => {
               !item.is_done
-                ? updateItem({ ...item, is_done: true })
+                ? updateItem({
+                    ...item,
+                    is_done: true,
+                    recur_start_date: getNextStartDate(item),
+                  })
                 : updateItem({ ...item, is_done: false });
               // updateItem({ ...item, is_done: true });
             }}
@@ -262,6 +295,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  style={item.is_done ? { color: "blue" } : { color: "black" }}
                 />
               )}
             </>
