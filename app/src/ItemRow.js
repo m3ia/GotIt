@@ -84,6 +84,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   </option>
                 </select>
               </div>
+              {/* Recurring Algo */}
               {/* <DatePicker selected={} onChange{} /> */}
               <div className="date-input">
                 <label htmlFor="recur-start-date">
