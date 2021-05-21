@@ -36,7 +36,8 @@ If you'd like to quickly install and run this app locally, please install the pr
 12. `npm db:init` 
 13. `npm start`
 14. Open http://localhost/3000 to view
-Optional: To open the console to the database, open a terminal window and run `npm run psql` 
+
+Optional: To view the database in your console, open a terminal window and run `npm run psql` 
 
 For optimal debugging/reviewing code, follow these instructions:  
 1. Have Docker and Node.js installed
@@ -52,7 +53,6 @@ For optimal debugging/reviewing code, follow these instructions:
 11. `cd app`
 12. `npm start`
 13. Open http://localhost/3000 to view
-Optional: To open the console to the database, open a terminal window and run `npm run psql` 
 
 For ongoing development (without reinstalling), follow these instructions:
 1. Have Docker and Node.js installed
@@ -62,11 +62,13 @@ For ongoing development (without reinstalling), follow these instructions:
 5. In a new terminal tab: `cd server && nodemon server.mjs`
 9. In another new terminal tab: `cd app && npm start`
 12. Open http://localhost/3000 to view
+
 Optional: To open the console to the database, open a terminal window and run `npm run psql` 
+
 To check the Heroku database, open a terminal window and run `heroku psql --app got-it-app`
 
 # How To Close App
-1. Run `ctrl + C` in "GotIt" directory.
+1. Run `ctrl + C` in "GotIt" directory. (If you opened the app following the instructions for debugging/reviewing code, you'll have to run `ctrl + C` in the app and  server directories instead of the project root directory).
 
 ## Database Schema
 <img src="https://github.com/m3ia/GotIt/blob/main/images/schema.png" alt="A screenshot of the DB schema" width="600" border="1" />
@@ -82,7 +84,7 @@ To check the Heroku database, open a terminal window and run `heroku psql --app 
 <img src="https://github.com/m3ia/GotIt/blob/main/images/add-details.png" alt="A screenshot to view details of an item" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/main/images/add-freq.png" alt="A screenshot to show how to adjust frequency of a list" width="300" border="1" />
 <img src="https://github.com/m3ia/GotIt/blob/main/images/cross-item.png" alt="A screenshot to show updated recurring list" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/main/images/show-recurred-list.png" alt="A screenshot to show recurred item on list" width="300" border="1" />
 
-# Risks
+# Known Risks
 - Getting sign-in with OAuth2 in time with Google API
 - Getting verified by Google to allow non-test users for sign in in time for demonstration
 
