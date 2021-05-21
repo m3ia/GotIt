@@ -232,7 +232,15 @@ const ListItems = ({ listId, back, list }) => {
           </div>
         </div>
       </div>
-      <div className="my-calendar">{isAuthenticated ? <Events /> : null}</div>
+      <div className="my-calendar">
+        {isAuthenticated ? (
+          <>
+            <br />
+            <h6>My Upcoming Events on Google Calendar: </h6>
+            <Events />
+          </>
+        ) : null}
+      </div>
     </>
   );
 };
