@@ -6,6 +6,7 @@
 **Got It** has a recurring list feature where you can stay on top of your recurring shopping lists on a regular basis. Save in time and energy as **Got It** makes regular shopping simple and more efficient for both individuals and groups by use of its shareable lists feature.
 
 [https://got-it-app.herokuapp.com/](https://got-it-app.herokuapp.com/)
+
 **Note: To sign into Got It, you need to use a valid Gmail account.** While this application is currently awaiting authentication verification from Google, only authorized test users may sign in. For demonstration purposes, please sign in using gmail account **TesterGotIt@gmail.com** with the password being the name of the program this final project is for in lowecase letters. 
 
 # Technologies
