@@ -35,7 +35,10 @@ const App = ({ user }) => {
 
   const Login = ({ isAuthenticated }) =>
     isAuthenticated ? (
-      <button onClick={gcal.handleSignoutClick} className="btn btn-primary">
+      <button
+        onClick={gcal.handleSignoutClick}
+        className="btn btn-primary btn-outline-dark"
+      >
         Log out
       </button>
     ) : (
@@ -59,34 +62,40 @@ const App = ({ user }) => {
 
   return (
     <Fragment>
-      <div>
-        <div className="logo">
-          <img src={logo2} className="logo" alt="Got It Logo" />
-        </div>
-        <div className="description">
-          <p>
-            Got It! is the recurring checklist for anyone who loves to prep and
-            plan on the daily, weekly, or monthly basis! With shareable lists,
-            Got It was made with families, friends, and collectives in mind.
-          </p>
-        </div>
-        <Login isAuthenticated={isAuthenticated} />
-      </div>
-      <div className="page-container">
-        <div id="content-wrap">
-          {page === "home" && (
-            <ViewAllLists
-              selectList={(list) => {
-                setPage("listItems");
-                setSelectedListId(list.id);
-                setList(list);
-              }}
-              userId={user.id}
-            />
-          )}
-          {page === "listItems" && (
-            <ListItems listId={selectedListId} back={back} list={list} />
-          )}
+      <div className="header-body">
+        <div className="app-wrapper">
+          <div>
+            <div className="logo">
+              <img src={logo2} className="logo" alt="Got It Logo" />
+            </div>
+            <div className="description">
+              <p>
+                Got It! is the recurring checklist for anyone who loves to prep
+                and plan on the daily, weekly, or monthly basis! With shareable
+                lists, Got It was made with families, friends, and collectives
+                in mind.
+              </p>
+            </div>
+            <Login isAuthenticated={isAuthenticated} />
+          </div>
+          <div className="page-container">
+            <div id="content-wrap">
+              {page === "home" && (
+                <ViewAllLists
+                  selectList={(list) => {
+                    setPage("listItems");
+                    setSelectedListId(list.id);
+                    setList(list);
+                  }}
+                  userId={user.id}
+                  user={user}
+                />
+              )}
+              {page === "listItems" && (
+                <ListItems listId={selectedListId} back={back} list={list} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
       {/* Footer */}

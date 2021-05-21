@@ -98,7 +98,6 @@ lists.post("/", async (request, response) => {
   const list = await db.addList(payload);
   response.status(201).json(list);
   // alternatively: response.json(newItem.rows[0]);
-  console.log("i'm in post and item is: ", list); // to test
 });
 
 // edits a list

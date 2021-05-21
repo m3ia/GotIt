@@ -174,19 +174,19 @@ const Checkbox = ({ item, onChange }) => {
   );
 };
 
-function useOutsideAlerter(ref, exitEdit) {
-  useEffect(() => {
-    // Function for click event
-    function handleOutsideClick(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        exitEdit();
-      }
-    }
+// function useOutsideAlerter(ref, exitEdit) {
+//   useEffect(() => {
+//     // Function for click event
+//     function handleOutsideClick(event) {
+//       if (ref.current && !ref.current.contains(event.target)) {
+//         exitEdit();
+//       }
+//     }
 
-    // Adding click event listener
-    document.addEventListener("click", handleOutsideClick, true);
-  }, [ref, exitEdit]);
-}
+//     // Adding click event listener
+//     document.addEventListener("click", handleOutsideClick, true);
+//   }, [ref, exitEdit]);
+// }
 
 function getNextStartDate(item) {
   const now = new Date();
@@ -235,13 +235,13 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
   };
 
   // When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
-  const cancelEdit = () => {
-    setEditMode(false);
-    setName(item.name);
-  };
-  useOutsideAlerter(inputItem, () => {
-    if (editMode) cancelEdit();
-  });
+  // const cancelEdit = () => {
+  //   setEditMode(false);
+  //   setName(item.name);
+  // };
+  // useOutsideAlerter(inputItem, () => {
+  //   if (editMode) cancelEdit();
+  // });
 
   // When user clicks Enter on Edit Mode, onSubmitClick is processed.
   const handleKeyDown = (e) => {

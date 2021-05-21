@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
 import pg from "pg";
-const {
-  types
-} = pg;
+const { types } = pg;
 import pgp from "pg-promise";
 
 // pg-promise doesnt parse dates properly
@@ -27,11 +25,7 @@ export const getUser = async (email) =>
   await db.one("SELECT * FROM users WHERE email = $1", [email]);
 
 // adds a created user to users db
-export const addUser = async ({
-    first_name,
-    last_name,
-    email
-  }) =>
+export const addUser = async ({ first_name, last_name, email }) =>
   await db.any(
     "INSERT INTO users (first_name, last_name, email) VALUES ($1,$2, $3) RETURNING *",
     [first_name, last_name, email],
@@ -62,13 +56,10 @@ export const getList = async (id) =>
   await db.any("SELECT * FROM lists WHERE id = $1", [id]);
 
 // adds a created list to lists db
-export const addList = async ({
-    name,
-    due_date
-  }) =>
+export const addList = async ({ name, due_date, owner_id }) =>
   await db.any(
-    "INSERT INTO lists (name, due_date) VALUES ($1,$2) RETURNING *",
-    [name, due_date],
+    "INSERT INTO lists (name, due_date, owner_id) VALUES ($1,$2, $3) RETURNING *",
+    [name, due_date, owner_id],
   );
 
 // update an list

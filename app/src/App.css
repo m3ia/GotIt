@@ -76,9 +76,9 @@
 }
 
 .logo  { 
-  max-width: 70%;
-  display: flex;
-  justify-content:right;
+  max-width: 65%;
+  display: flex; 
+  justify-content:right; 
   padding: 10px;
 }
 
@@ -94,10 +94,6 @@
 }
 
 .page-container {
-  position: relative;
-  min-height: 100vh;
-}
-#page-container {
   position: relative;
   min-height: 100vh;
 }
@@ -137,7 +133,7 @@ a:hover {
   display: flex;
   justify-content: space-around;
   background-color: white;
-    text-align: center;
+  text-align: center;
 }
 .sign-in-box {
   display: flex;
@@ -158,4 +154,24 @@ a:hover {
   display: flex;
   flex-direction: row-reverse;
 
+}
+
+.header-body {
+  display: flex;
+  /* padding-left: 150px;
+  padding-right: 150px; */
+  justify-content: center;
+}
+
+.app-wrapper {
+  max-width: 75%;
+}
+
+.create-new-list-button {
+  display: flex;
+  margin-right: 100px;
+}
+
+.items-container {
+  padding-top: 15px;
 }

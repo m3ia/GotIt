@@ -137,12 +137,12 @@ const ListItems = ({ listId, back, list }) => {
   return (
     <>
       <div data-testid="test-1">
-        <div className="items-table container-fluid">
+        <div className="items-table container-fluid items-container">
           <button className="btn btn-secondary float-right" onClick={back}>
             Back To All Lists
           </button>
-          <h2>{list.name}</h2>
           <br />
+          <h2>{list.name}</h2>
           <AddItem addNewItem={addNewItem} />
           <div
             style={{

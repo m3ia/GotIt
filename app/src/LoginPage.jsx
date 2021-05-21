@@ -36,13 +36,19 @@ const LoginPage = () => {
   // GCal Sign In
   const Login = ({ isAuthenticated }) =>
     isAuthenticated ? (
-      <button onClick={gcal.handleSignoutClick} className="btn btn-primary">
+      <button
+        onClick={gcal.handleSignoutClick}
+        className="btn btn-outline-dark"
+      >
         Log out
       </button>
     ) : (
       <>
         <h5>Log in via Gmail</h5>
-        <button onClick={gcal.handleAuthClick} className="btn btn-primary">
+        <button
+          onClick={gcal.handleAuthClick}
+          className="btn btn-outline-light"
+        >
           Log In
         </button>
       </>
