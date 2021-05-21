@@ -37,7 +37,7 @@ const App = ({ user }) => {
     isAuthenticated ? (
       <button
         onClick={gcal.handleSignoutClick}
-        className="btn btn-primary btn-outline-dark float-right"
+        className="btn btn-primary btn-outline-dark float-right mt-2"
       >
         Log out
       </button>
@@ -45,7 +45,7 @@ const App = ({ user }) => {
       <>
         <button
           onClick={gcal.handleAuthClick}
-          className="btn btn-primary float-right"
+          className="btn btn-primary float-right mt-2"
         >
           Log In
         </button>
