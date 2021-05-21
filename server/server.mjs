@@ -65,7 +65,7 @@ users.put("/:id", async (request, response) => {
 users.delete("/:id", async (request, response) => {
   const { id } = request.params;
   await db.deleteUser(id);
-  response.status(200);
+  response.status(200).json("user deleted");
 });
 
 // gets all lists
@@ -105,8 +105,7 @@ lists.put("/:id", async (request, response) => {
 lists.delete("/:id", async (request, response) => {
   const { id } = request.params;
   await db.deleteList(id);
-  console.log("in delete", request.params);
-  response.status(200);
+  response.status(200).json("list deleted");
 });
 
 // gets all items
@@ -151,7 +150,7 @@ items.delete("/:id", async (request, response) => {
   const { id } = request.params;
   await db.deleteItem(id);
   console.log("in delete", request.params);
-  response.status(200);
+  response.status(200).json("item was deleted");
 });
 
 app.use("/api/lists", lists);
