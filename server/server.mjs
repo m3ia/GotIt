@@ -19,12 +19,17 @@ const users = express.Router();
 
 app.post("/api/v1/auth/google", async (req, res) => {
   const { token } = req.body;
+  console.log("We got a token", token);
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.CLIENT_ID,
   });
   const { email } = ticket.getPayload();
-  const { user } = await db.loginUser(email);
+  console.log("We got the user verified email", email);
+  let { user } = await db.loginUser(email);
+  if (!user) {
+    user = await db.getUser(email);
+  }
   console.log("we got em", { user });
   res.status(201);
   res.json(user);
@@ -70,7 +75,10 @@ users.delete("/:id", async (request, response) => {
 
 // gets all lists
 lists.get("/", async (request, response) => {
-  const lists = await db.getLists();
+  console.log(request.query);
+  const { userId } = request.query;
+  console.log("got a user", userId);
+  const lists = await db.getLists(userId);
   response.status(200).json(lists);
 });
 

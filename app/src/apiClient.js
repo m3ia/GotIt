@@ -1,6 +1,6 @@
 // get all lists
-export const getLists = async () => {
-  const response = await fetch("/api/lists");
+export const getLists = async (userId) => {
+  const response = await fetch(`/api/lists?userId=${userId}`);
   return response.json();
 };
 

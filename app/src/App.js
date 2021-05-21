@@ -12,7 +12,7 @@ import logo2 from "./got-it-logo1-removebg-preview.png";
 // import logo from "./got-it-logo1.png";
 // import * as apiClient from "./apiClient";
 
-const App = ({ userId }) => {
+const App = ({ user }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
   const [page, setPage] = useState("home");
   const [selectedListId, setSelectedListId] = useState(null);
@@ -81,7 +81,7 @@ const App = ({ userId }) => {
                 setSelectedListId(list.id);
                 setList(list);
               }}
-              userId={userId}
+              userId={user.id}
             />
           )}
           {page === "listItems" && (

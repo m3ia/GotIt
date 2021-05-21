@@ -122,12 +122,13 @@ const CreateNewList = ({ onAdd, updateList, setLists, isAuthenticated }) => {
   );
 };
 
-const ViewAllLists = ({ selectList }) => {
+const ViewAllLists = ({ selectList, userId }) => {
   const [lists, setLists] = useState([]);
 
-  async function getLists() {
-    const listsArray = await apiClient.getLists();
+  async function getLists(userId) {
+    const listsArray = await apiClient.getLists(userId);
     setLists(listsArray);
+    console.log("in getlists", userId);
   }
 
   const onAdd = (list) => setLists([...lists, list]);
@@ -144,8 +145,8 @@ const ViewAllLists = ({ selectList }) => {
   };
 
   useEffect(() => {
-    getLists();
-  }, []);
+    getLists(userId);
+  }, [userId]);
 
   // delete list function
   const deleteList = (id) => {

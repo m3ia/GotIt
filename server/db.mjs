@@ -23,8 +23,8 @@ export const getUsers = async () =>
   await db.any("SELECT * FROM users ORDER BY id");
 
 // gets a user
-export const getUser = async (id) =>
-  await db.any("SELECT * FROM users WHERE id = $1", [id]);
+export const getUser = async (email) =>
+  await db.one("SELECT * FROM users WHERE email = $1", [email]);
 
 // adds a created user to users db
 export const addUser = async ({
@@ -53,10 +53,11 @@ export const deleteUser = async (id) => {
 // LISTS
 // gets all active lists from lists.
 // TODO: change getItems to get items from specific lists
-export const getLists = async () =>
-  await db.any("SELECT * FROM lists ORDER BY id");
+export const getLists = async (userId) =>
+  await db.any("SELECT * FROM lists WHERE owner_id = $1 ORDER BY id", [userId]);
 
 // gets a list
+
 export const getList = async (id) =>
   await db.any("SELECT * FROM lists WHERE id = $1", [id]);
 

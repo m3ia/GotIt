@@ -8,7 +8,7 @@ import logo from "./got-it-logo1.png";
 
 const LoginPage = () => {
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleGoogleAuth = async (isSignedIn) => {
     console.log("Are we here?", isSignedIn);
@@ -50,17 +50,19 @@ const LoginPage = () => {
   useEffect(() => {
     gcal.onLoad(() => {
       try {
-        setIsAuthenticated(gcal.gapi.auth2.getAuthInstance().isSignedIn.get());
+        handleGoogleAuth(gcal.gapi.auth2.getAuthInstance().isSignedIn.get());
         gcal.listenSign(handleGoogleAuth);
       } catch {
-        setIsAuthenticated(gcal.sign);
+        setIsAuthenticated(false);
       }
     });
   }, []);
+
+  console.log("this is user", user);
   return (
     <>
       {isAuthenticated ? (
-        <App />
+        <App user={user} />
       ) : (
         <div className="sign-in-wrapper">
           <div className="sign-in-box container">
