@@ -7,7 +7,7 @@
 
 [https://got-it-app.herokuapp.com/](https://got-it-app.herokuapp.com/)
 
-**Note: To sign into Got It, you need to use a valid Gmail account.** While this application is currently awaiting authentication verification from Google, only authorized test users may sign in. For demonstration purposes, please sign in using gmail account **TesterGotIt@gmail.com** with the password being the name of the program this final project is for in lowecase letters. 
+**Note: To sign into Got It, you need to use a valid Gmail account.** While this application is currently awaiting authentication verification from Google, only authorized test users may sign in. For demonstration purposes, please sign in using gmail account **TesterGotIt@gmail.com** with the password being the name of the program this final project is for in lowercase letters. 
 
 # Technologies
 1. HTML
@@ -17,6 +17,9 @@
 5. Express.js
 6. React.js
 7. Node.js
+8. Google Cal API
+9. Google OAuth2
+10. Bootstrap
 
 # How To Install & Run
 Got It! is currently hosted on [Heroku](https://got-it-app.herokuapp.com/).
