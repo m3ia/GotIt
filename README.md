@@ -7,7 +7,7 @@
 
 [https://got-it-app.herokuapp.com/](https://got-it-app.herokuapp.com/)
 
-**Note: To sign into Got It, you need to use a valid Gmail account.** While this application is currently awaiting authentication verification from Google, only authorized test users may sign in. For demonstration purposes, please sign in using gmail account **TesterGotIt@gmail.com** with the password being the name of the program this final project is for in lowercase letters. 
+**Note: To sign into Got It, you need to use a valid Gmail account.** While this application is currently awaiting authentication verification from Google, only authorized test users may sign in. For demonstration purposes, please sign in using gmail account **TesterGotIt@gmail.com** with the password being the name of the program this final project is for in lowercase letters. Please allow pop-ups for this app.
 
 # Technologies
 1. HTML
