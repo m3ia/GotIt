@@ -6,12 +6,56 @@ import * as db from "./db.mjs";
 const app = express();
 const port = process.env.PORT || 4000;
 
+// router instance for lists
+const lists = express.Router();
 // items defines the routes
 const items = express.Router();
 
+// gets all lists
+lists.get("/", async (request, response) => {
+  const lists = await db.getLists();
+  response.status(200).json(lists);
+});
+
+// gets one list
+lists.get("/:id", async (request, response) => {
+  const { id } = request.params;
+  const list = await db.getList(id);
+  // response.json(items.rows[0]);
+  response.status(200).json(list);
+});
+
+lists.use(express.json());
+
+// adds an list
+lists.post("/", async (request, response) => {
+  const payload = request.body;
+  const list = await db.addList(payload);
+  response.status(201).json(list);
+  // alternatively: response.json(newItem.rows[0]);
+  console.log("i'm in post and item is: ", list); // to test
+});
+
+// edits a list
+lists.put("/:id", async (request, response) => {
+  const list = request.body;
+  await db.updateList(list);
+  response.status(201);
+  response.json("List was updated");
+});
+
+// http req to delete a list based on id
+lists.delete("/:id", async (request, response) => {
+  const { id } = request.params;
+  await db.deleteList(id);
+  console.log("in delete", request.params);
+  response.status(200);
+});
+
 // gets all items
 items.get("/", async (request, response) => {
-  const items = await db.getItems();
+  const { listId } = request.query;
+  const items = await db.getItems(listId);
   console.log("hello test test");
   response.status(200).json(items);
 });
@@ -28,8 +72,8 @@ items.use(express.json());
 
 // adds an item
 items.post("/", async (request, response) => {
-  const { name } = request.body;
-  const item = await db.addItem(name);
+  const { name, list_id } = request.body;
+  const item = await db.addItem(name, list_id);
   response.status(201).json(item);
   // alternatively: response.json(newItem.rows[0]);
   console.log("i'm in post and item is: ", item); // to test
@@ -53,7 +97,10 @@ items.delete("/:id", async (request, response) => {
   response.status(200);
 });
 
+app.use("/api/lists", lists);
 app.use("/api/items", items);
+
+app.use(express.static("public"));
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(

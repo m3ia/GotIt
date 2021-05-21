@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import addDays from "date-fns/addDays";
+import addMonths from "date-fns/addMonths";
+
 // import { zonedTimeToUtc } from "date-fns-tz";
 
 const RecurringSettings = ({ item, editItem }) => {
@@ -24,24 +27,14 @@ const RecurringSettings = ({ item, editItem }) => {
       recur_start_date: recurStartDate,
       recur_end_date: recurEndDate,
     });
-    // window.location = "/";
   };
 
-  // const [selectedDate, setSelectedDate]
-  console.log(
-    recurFreq === "weekly",
-    recurFreq,
-    item.recur_freq,
-    item,
-    item.recur_start_date,
-    item.recur_end_date,
-  );
   return (
-    <div class="container">
+    <div className="container">
       <button
         type="button"
         id="recur-button"
-        class="btn btn-primary"
+        className="btn btn-primary btn-sm"
         data-toggle="modal"
         data-target={`#recur-modal-${item.id}`}
       >
@@ -52,19 +45,19 @@ const RecurringSettings = ({ item, editItem }) => {
           </span>
         )}
       </button>
-      <div class="modal" id={`recur-modal-${item.id}`}>
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Recurring Item Frequency</h4>
-              <button type="button" class="close" data-dismiss="modal">
+      <div className="modal" id={`recur-modal-${item.id}`}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">Recurring Item Frequency</h4>
+              <button type="button" className="close" data-dismiss="modal">
                 &times;
               </button>
             </div>
             {/* <!-- Modal body --> */}
-            <div class="modal-body">
+            <div className="modal-body">
               <b>Pick your Frequency:</b>
-              <div class="dropdown">
+              <div className="dropdown">
                 <select
                   name="options"
                   id="recur-freq"
@@ -77,11 +70,8 @@ const RecurringSettings = ({ item, editItem }) => {
                   <option value="select" selected={recurFreq === null}>
                     Set Frequency
                   </option>
-                  <option
-                    value="Every-5-sec"
-                    selected={recurFreq === "TEST: Every-5-sec"}
-                  >
-                    Every 5 seconds
+                  <option value="DEMO" selected={recurFreq === "DEMO"}>
+                    DEMO
                   </option>
                   <option value="Daily" selected={recurFreq === "Daily"}>
                     Daily
@@ -95,20 +85,20 @@ const RecurringSettings = ({ item, editItem }) => {
                 </select>
               </div>
               {/* <DatePicker selected={} onChange{} /> */}
-              <div class="date-input">
+              <div className="date-input">
                 <label htmlFor="recur-start-date">
                   <b>Recurring Start Date:</b>
                 </label>
                 <input
                   type="date"
-                  class="form-control"
+                  className="form-control"
                   id="recur-start-date"
                   defaultValue={recurStartDate}
                   onChange={(e) => setRecurStartDate(e.target.value)}
                 ></input>
                 {/* <input
                   type="time"
-                  class="form-control"
+                  className="form-control"
                   id="recur-start-time"
                   value={recurStartTime}
                   onChange={(e) => setRecurStartTime(e.target.value)}
@@ -119,24 +109,24 @@ const RecurringSettings = ({ item, editItem }) => {
                 </label>
                 <input
                   type="date"
-                  class="form-control"
+                  className="form-control"
                   id="recur-end-date"
                   defaultValue={recurEndDate}
                   onChange={(e) => setRecurEndDate(e.target.value)}
                 ></input>
                 {/* <input
                   type="time"
-                  class="form-control"
+                  className="form-control"
                   id="recur-end-time"
                   value={recurEndTime}
                   onChange={(e) => setRecurEndTime(e.target.value)}
                 ></input> */}
               </div>
               {/* <!-- Modal footer --> */}
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   data-dismiss="modal"
                   onClick={onSaveRecur}
                 >
@@ -144,7 +134,7 @@ const RecurringSettings = ({ item, editItem }) => {
                 </button>
                 <button
                   type="button"
-                  class="btn btn-danger"
+                  className="btn btn-danger"
                   data-dismiss="modal"
                 >
                   Close
@@ -162,25 +152,66 @@ const Checkbox = ({ item, onChange }) => {
   const [isChecked, setIsChecked] = useState(item.is_done);
 
   return (
-    <div class="form-check-inline">
-      <label class="form-check-label">
+    <div className="form-check-inline">
+      <label className="form-check-label">
         <input
           type="checkbox"
-          class="form-check-input"
+          className="form-check-input"
           id="checkbox"
-          value={isChecked}
+          // value={isChecked}
+          checked={isChecked}
           name="{item.name}"
           // function to update the item in the db...filters item out from view
           // onClick={() => completeItem(true)}
           onClick={(e) => {
             onChange(e.target.value);
-            setIsChecked(true);
+            !isChecked ? setIsChecked(true) : setIsChecked(false);
           }}
         />
       </label>
     </div>
   );
 };
+
+function useOutsideAlerter(ref, exitEdit) {
+  useEffect(() => {
+    // Function for click event
+    function handleOutsideClick(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        exitEdit();
+      }
+    }
+
+    // Adding click event listener
+    document.addEventListener("click", handleOutsideClick, true);
+  }, [ref, exitEdit]);
+}
+
+function getNextStartDate(item) {
+  const now = new Date();
+  let newStartDate = new Date(item.recur_start_date);
+  let adder = addDays;
+  let amountToAdd = 1;
+
+  if (item.recur_freq === "Weekly") {
+    amountToAdd = 7;
+  } else if (item.recur_freq === "Monthly") {
+    adder = addMonths;
+  } else if (item.recur_freq === "DEMO") {
+    // doesn't matter
+    return now;
+  } else if (!item.recur_freq) {
+    // not recurring
+    return null;
+  }
+
+  // find the next closest of that window
+  while (adder(newStartDate, amountToAdd) < now) {
+    newStartDate = addDays(newStartDate, 1);
+  }
+  newStartDate = adder(newStartDate, amountToAdd);
+  return newStartDate;
+}
 
 // Item Row Component
 const ItemRow = ({ item, deleteItem, updateItem }) => {
@@ -190,7 +221,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
   const [editMode, setEditMode] = useState(false);
 
   //useRef for focusing into input bar
-  const inputItem = useRef();
+  const inputItem = useRef(null);
 
   // Clicking Edit/on the value activates editMode. User sees input and Submit button.
   const onEditClick = () => {
@@ -201,10 +232,15 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
     setEditMode(false);
     updateItem({ ...item, name });
   };
-  // Want: When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
-  //   const cancelEdit = () => {
-  //   setEditMode(false);
-  // }
+
+  // When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
+  const cancelEdit = () => {
+    setEditMode(false);
+    setName(item.name);
+  };
+  useOutsideAlerter(inputItem, () => {
+    if (editMode) cancelEdit();
+  });
 
   // When user clicks Enter on Edit Mode, onSubmitClick is processed.
   const handleKeyDown = (e) => {
@@ -225,7 +261,14 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
           <Checkbox
             item={item}
             onChange={() => {
-              updateItem({ ...item, is_done: true });
+              !item.is_done
+                ? updateItem({
+                    ...item,
+                    is_done: true,
+                    recur_start_date: getNextStartDate(item),
+                  })
+                : updateItem({ ...item, is_done: false });
+              // updateItem({ ...item, is_done: true });
             }}
           />
         </td>
@@ -252,6 +295,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  style={item.is_done ? { color: "blue" } : { color: "black" }}
                 />
               )}
             </>
@@ -261,7 +305,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
           <>
             {!editMode && (
               <button
-                class="btn btn-warning"
+                className="btn btn-warning btn-sm"
                 type="button"
                 // className="edit-button"
                 data-target={`#id${item.id}`}
@@ -276,9 +320,8 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
             {editMode && (
               <button
                 onClick={onSaveClick}
-                className="save-button"
                 type="submit"
-                class="btn btn-primary"
+                className="btn btn-primary save-button btn-sm"
               >
                 Save
               </button>
@@ -290,7 +333,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
         </td>
         <td>
           <button
-            class="btn btn-danger"
+            className="btn btn-danger btn-sm"
             id="delete-button"
             onClick={() => deleteItem(item.id)}
           >

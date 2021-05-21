@@ -1,40 +1,54 @@
 import React, { useCallback, useState, useEffect } from "react";
 
-import addDays from "date-fns/addDays";
-import addMonths from "date-fns/addMonths";
-import differenceInDays from "date-fns/differenceInDays";
-import differenceInMonths from "date-fns/differenceInMonths";
-
 import AddItem from "./AddItemForm";
+import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
-import icon from "./checklist-icon.png";
 
-// const CurrentDate = () => {
-//   const dateVar = new Date();
-//   const [currTime, setCurrTime] = useState(dateVar);
+// GCal Sign In
+const Login = ({ isAuthenticated }) =>
+  isAuthenticated ? (
+    <button onClick={gcal.handleSignoutClick}>Log out</button>
+  ) : (
+    <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
+  );
 
-//   const returnTime = () => {
-//     setCurrTime(dateVar.toLocaleTimeString());
-//   };
+const Events = () => {
+  const [events, setEvents] = useState([]);
 
-//   setInterval(() => {
-//     returnTime();
-//   }, 1000);
+  useEffect(() => {
+    gcal
+      .listUpcomingEvents(10)
+      .then(({ result: { items } }) => setEvents(items));
+  }, []);
 
-//   return currTime;
-// };
+  return events.length === 0 ? null : (
+    <ul>
+      {events.map((event) => (
+        <li key={event.id}>{event.summary}</li>
+      ))}
+    </ul>
+  );
+};
 
 // This is view for one list.
-const ListItems = () => {
+const ListItems = ({ listId, back, list }) => {
   const [allItems, setItems] = useState([]);
+  const [showCompletedItems, setShowCompletedItems] = useState(false);
   const items = allItems.filter((item) => !item.is_done);
   const completedItems = allItems.filter((item) => item.is_done);
+  // gcal
+  const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
 
-  async function getItems() {
-    const itemsArray = await apiClient.getItems();
+  async function getItems(listId) {
+    const itemsArray = await apiClient.getItems(listId);
     setItems(itemsArray);
   }
+
+  const addNewItem = async (name) => {
+    const response = await apiClient.addItem(name, listId);
+    onAdd(response[0]);
+  };
 
   // to instantly hide item after checkbox is checked
   const updateItem = useCallback(
@@ -53,8 +67,8 @@ const ListItems = () => {
   );
 
   useEffect(() => {
-    getItems();
-  }, []);
+    getItems(listId);
+  }, [listId]);
 
   // delete item function
   const deleteItem = useCallback(
@@ -81,82 +95,25 @@ const ListItems = () => {
   // create a checkRecurring functional component to call in ListItems
   const CheckRecurring = useCallback(
     (items) => {
+      const today = new Date();
       // WORKS: loops through each item
-      for (let i = 0; i < items.length; i++) {
-        // handle every 5 seconds
-        if (items[i].recur_freq?.trim() === "Every-5-sec") {
-          //WORKS:
-          console.log("Time to seriously edit");
-          console.log("something should have returned! seconds");
-          //changes start date in db --> sets checkBox(true) to be unfiltered
-          //WORKS:
+      items.forEach((item) => {
+        const itemRecurEndDate =
+          item.recur_end_date && new Date(item.recur_end_date);
+        if (itemRecurEndDate && itemRecurEndDate <= today) {
+          // WORKS: if the so, then delete the item.
+          deleteItem(item.id);
+        } else if (today >= item.recur_start_date) {
           editItem({
-            ...items[i],
+            ...item,
             is_done: false,
           });
         }
-        let itemRecurEndDate =
-          items[i].recur_end_date && new Date(items[i].recur_end_date);
-        // WORKS: upon opening, the list checks for items with an end date.
-        let today = new Date();
-        // WORKS: if item has an end date, then check if current date is >= end date.
-        if (itemRecurEndDate && itemRecurEndDate <= today) {
-          // WORKS: if the so, then delete the item.
-          deleteItem(items[i].id);
-        } else {
-          // WORKS: if not, then if item.recur_freq === q2min/daily/weekly/monthly && checkbox...
-          if (items[i].recur_freq?.trim() === "Daily") {
-            let newStartDate = new Date(items[i].recur_start_date);
-            console.log({
-              today,
-              newStartDate,
-              diff: differenceInDays(today, newStartDate),
-            });
-            if (differenceInDays(today, newStartDate) >= 1) {
-              while (addDays(newStartDate, 1) < today) {
-                newStartDate = addDays(newStartDate, 1);
-              }
-              console.log("something should have returned! days", newStartDate);
-              //changes start date in db --> sets checkBox(true) to be unfiltered
-              editItem({
-                ...items[i],
-                is_done: false,
-                recur_start_date: newStartDate,
-              });
-            }
-          } else if (items[i].recur_freq?.trim() === "Weekly") {
-            let newStartDate = new Date(items[i].recur_start_date);
-            if (differenceInDays(today, newStartDate) >= 7) {
-              while (addDays(newStartDate, 7) < today) {
-                newStartDate = addDays(newStartDate, 7);
-              }
-              console.log("something should have returned! weeks");
-              //changes start date in db --> sets checkBox(true) to be unfiltered
-              editItem({
-                ...items[i],
-                is_done: false,
-                recur_start_date: newStartDate,
-              });
-            }
-          } else if (items[i].recur_freq?.trim() === "Monthly") {
-            let newStartDate = new Date(items[i].recur_start_date);
-            if (differenceInMonths(today, newStartDate) >= 1) {
-              while (addMonths(newStartDate, 1) < today) {
-                newStartDate = addDays(newStartDate, 1);
-              }
-              //changes start date in db --> sets checkBox(true) to be unfiltered
-              editItem({
-                ...items[i],
-                is_done: false,
-                recur_start_date: newStartDate,
-              });
-            }
-          }
-        }
-      }
+      });
     },
     [deleteItem, editItem],
   );
+
   useEffect(() => {
     const checkRecurringInternal = setInterval(() => {
       CheckRecurring(completedItems);
@@ -166,48 +123,120 @@ const ListItems = () => {
       clearInterval(checkRecurringInternal);
     };
   }, [completedItems, CheckRecurring]);
+
+  useEffect(() => {
+    gcal.onLoad(() => {
+      try {
+        setIsAuthenticated(gcal.gapi.auth2.getAuthInstance().isSignedIn.get());
+        gcal.listenSign((sign) => setIsAuthenticated(sign));
+      } catch {
+        setIsAuthenticated(gcal.sign);
+      }
+    });
+  }, []);
+
   return (
     <>
-      <div className="body" data-testid="test-1">
-        <img src={icon} className="app-icon" alt="checklist icon" />
-        <h1>Got It!</h1>
-        <h2>Main List</h2>
-        {/* <CurrentDate /> */}
-        <br />
-        <AddItem onAdd={onAdd} />
-        <table className="table table-hover mt-5">
-          <thead>
-            <tr className="header-row">
-              <th>Complete</th>
-              <th>Item</th>
-              <th>Edit</th>
-              <th>Frequency</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* 
-              <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-              </tr>
-  */}
-            {items
-              // .filter((item) => !item.is_done)
-              .map((item) => (
-                <ItemRow
-                  item={item}
-                  deleteItem={deleteItem}
-                  key={item.id}
-                  getItems={getItems}
-                  updateItem={editItem}
-                />
-              ))}
-          </tbody>
-        </table>
-        <br />
-        Completed Dropdown goes here
+      <div data-testid="test-1">
+        <div className="items-table container-fluid">
+          <button className="btn btn-secondary float-right" onClick={back}>
+            Back To All Lists
+          </button>
+          <h2>{list.name}</h2>
+          <br />
+          <AddItem addNewItem={addNewItem} />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              maxWidth: "75%",
+              alignItems: "center",
+            }}
+          >
+            <table
+              className="table table-hover mt-5"
+              style={{ maxWidth: "75%" }}
+            >
+              <thead>
+                <tr className="header-row">
+                  <th>Complete</th>
+                  <th>Item</th>
+                  <th>Edit</th>
+                  <th>Frequency</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items
+                  // .filter((item) => !item.is_done)
+                  .map((item) => (
+                    <ItemRow
+                      item={item}
+                      deleteItem={deleteItem}
+                      key={item.id}
+                      getItems={getItems}
+                      updateItem={editItem}
+                    />
+                  ))}
+              </tbody>
+            </table>
+            <br />
+            <button
+              className="show-completed-toggle btn-primary"
+              onClick={() => setShowCompletedItems(!showCompletedItems)}
+            >
+              {showCompletedItems
+                ? "Hide Completed Items"
+                : "Show Completed Items"}
+            </button>
+            {showCompletedItems && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  maxWidth: "75%",
+                  alignItems: "center",
+                }}
+              >
+                <h3>Completed Items</h3>
+                <table
+                  className="table table-hover mt-5"
+                  style={{ maxWidth: "75%" }}
+                >
+                  <thead>
+                    <tr className="header-row">
+                      <th>Complete</th>
+                      <th>Item</th>
+                      <th>Edit</th>
+                      <th>Frequency</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {completedItems
+                      // .filter((item) => !item.is_done)
+                      .map((item) => (
+                        <ItemRow
+                          item={item}
+                          deleteItem={deleteItem}
+                          key={item.id}
+                          getItems={getItems}
+                          updateItem={editItem}
+                        />
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+          <Login {...{ isAuthenticated }} />
+          {isAuthenticated ? <Events /> : "Couldn't sign in."}
+        </div>
+      </div>
+      <div className="my-calendar">
+        <Events />
       </div>
     </>
   );

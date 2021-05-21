@@ -4,3 +4,4 @@
 !app/src
 !server/*.mjs
 !server/package*.json
+!server/public/*.html
