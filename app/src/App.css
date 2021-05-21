@@ -75,8 +75,15 @@
   text-align: center;
 }
 
-.logo, .description  { 
-  max-width: 50%;
+.logo  { 
+  max-width: 70%;
+  display: flex;
+  justify-content:right;
+  padding: 10px;
+}
+
+.description  { 
+  max-width: 60%;
   display: flex;
   justify-content:right;
   padding: 10px;

@@ -7,9 +7,31 @@ import * as apiClient from "./apiClient";
 import logo from "./got-it-logo1.png";
 
 const LoginPage = () => {
-  const [userId, setUserId] = useState(0);
-  const [signInEmail, setSignInEmail] = useState("");
+  const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
+
+  const handleGoogleAuth = async (isSignedIn) => {
+    console.log("Are we here?", isSignedIn);
+    if (!isSignedIn) {
+      setIsAuthenticated(false);
+      setUser(null);
+      return;
+    }
+    console.log("About to send to backend", gcal.getIdToken());
+    const response = await fetch("/api/v1/auth/google", {
+      method: "POST",
+      body: JSON.stringify({
+        token: gcal.getIdToken(),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const user = await response.json();
+    console.log("WE MADE IT!", { user });
+    setUser(user);
+    setIsAuthenticated(true);
+  };
 
   // GCal Sign In
   const Login = ({ isAuthenticated }) =>
@@ -25,18 +47,16 @@ const LoginPage = () => {
         </button>
       </>
     );
-
   useEffect(() => {
     gcal.onLoad(() => {
       try {
         setIsAuthenticated(gcal.gapi.auth2.getAuthInstance().isSignedIn.get());
-        gcal.listenSign((sign) => setIsAuthenticated(sign));
+        gcal.listenSign(handleGoogleAuth);
       } catch {
         setIsAuthenticated(gcal.sign);
       }
     });
   }, []);
-
   return (
     <>
       {isAuthenticated ? (
@@ -44,12 +64,21 @@ const LoginPage = () => {
       ) : (
         <div className="sign-in-wrapper">
           <div className="sign-in-box container">
-            <Login />{" "}
+            <Login />
+            <img src={logo} className="logo" alt="Got It Logo" width="15%" />
           </div>
         </div>
       )}
     </>
   );
 };
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log("Name: " + profile.getName());
+  console.log("Image URL: " + profile.getImageUrl());
+  console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
 
 export default LoginPage;

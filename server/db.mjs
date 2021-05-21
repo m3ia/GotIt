@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import pg from "pg";
-const { types } = pg;
+const {
+  types
+} = pg;
 import pgp from "pg-promise";
 
 // pg-promise doesnt parse dates properly
@@ -10,6 +12,45 @@ types.setTypeParser(TYPE_DATE, (date) => date);
 
 const db = initDb();
 
+export const loginUser = async (email) =>
+  await db.one(
+    "INSERT INTO users (email) VALUES ($1) ON CONFLICT ON CONSTRAINT unique_user_email DO UPDATE SET date_updated = NOW() RETURNING *",
+    [email],
+  );
+
+// USERS
+export const getUsers = async () =>
+  await db.any("SELECT * FROM users ORDER BY id");
+
+// gets a user
+export const getUser = async (id) =>
+  await db.any("SELECT * FROM users WHERE id = $1", [id]);
+
+// adds a created user to users db
+export const addUser = async ({
+    first_name,
+    last_name,
+    email
+  }) =>
+  await db.any(
+    "INSERT INTO users (first_name, last_name, email) VALUES ($1,$2, $3) RETURNING *",
+    [first_name, last_name, email],
+  );
+
+// update an user
+export const updateUser = async (user) => {
+  await db.any(
+    "UPDATE users SET first_name = $2, last_name = $3, email = $4 WHERE id = $1",
+    [user.id, user.first_name, user.last_name, user.email],
+  );
+};
+
+// deletes a user from db
+export const deleteUser = async (id) => {
+  await db.result("DELETE FROM users WHERE id = $1", [id]);
+};
+
+// LISTS
 // gets all active lists from lists.
 // TODO: change getItems to get items from specific lists
 export const getLists = async () =>
@@ -20,7 +61,10 @@ export const getList = async (id) =>
   await db.any("SELECT * FROM lists WHERE id = $1", [id]);
 
 // adds a created list to lists db
-export const addList = async ({ name, due_date }) =>
+export const addList = async ({
+    name,
+    due_date
+  }) =>
   await db.any(
     "INSERT INTO lists (name, due_date) VALUES ($1,$2) RETURNING *",
     [name, due_date],
@@ -40,7 +84,7 @@ export const deleteList = async (id) => {
   await db.result("DELETE FROM lists WHERE id = $1", [id]);
 };
 
-// gets all active items from items.
+// ITEMS
 // TODO: change getItems to get items from specific lists
 export const getItems = async (listId) =>
   await db.any("SELECT * FROM items WHERE list_id = $1 ORDER BY id", [listId]);

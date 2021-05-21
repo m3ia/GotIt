@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 require("dotenv").config();
-const result = dotenv.config();
+// const result = dotenv.config();
 
 // if (result.error) {
 //   throw result.error;
@@ -261,6 +261,18 @@ class ApiCalendar {
         .getAuthInstance()
         .currentUser.get()
         .getBasicProfile();
+    } else {
+      console.log("Error: gapi is not loaded use onLoad before please.");
+      return null;
+    }
+  }
+
+  getIdToken() {
+    if (this.gapi) {
+      return this.gapi.auth2
+        .getAuthInstance()
+        .currentUser.get()
+        .getAuthResponse().id_token;
     } else {
       console.log("Error: gapi is not loaded use onLoad before please.");
       return null;

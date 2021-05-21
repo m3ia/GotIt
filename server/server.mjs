@@ -1,15 +1,72 @@
 import express from "express";
+import { OAuth2Client } from "google-auth-library";
 import mime from "mime-types";
+const client = new OAuth2Client(process.env.REACT_APP_GCAL_CLIENT_ID);
 
 import * as db from "./db.mjs";
 
 const app = express();
+app.use(express.json());
+
 const port = process.env.PORT || 4000;
 
 // router instance for lists
 const lists = express.Router();
 // items defines the routes
 const items = express.Router();
+// router instance for users
+const users = express.Router();
+
+app.post("/api/v1/auth/google", async (req, res) => {
+  const { token } = req.body;
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.CLIENT_ID,
+  });
+  const { email } = ticket.getPayload();
+  const { user } = await db.loginUser(email);
+  console.log("we got em", { user });
+  res.status(201);
+  res.json(user);
+});
+
+// gets all users
+users.get("/", async (request, response) => {
+  const users = await db.getUsers();
+  response.status(200).json(users);
+});
+
+// gets one user
+users.get("/:id", async (request, response) => {
+  const { id } = request.params;
+  const user = await db.getUser(id);
+  response.status(200).json(user);
+});
+
+users.use(express.json());
+
+// adds an user
+users.post("/", async (request, response) => {
+  const payload = request.body;
+  const user = await db.addUser(payload);
+  response.status(201).json(user);
+  // alternatively: response.json(newItem.rows[0]);
+});
+
+// edits a user
+users.put("/:id", async (request, response) => {
+  const user = request.body;
+  await db.updateUser(user);
+  response.status(201);
+  response.json("User was updated");
+});
+
+// http req to delete a user based on id
+users.delete("/:id", async (request, response) => {
+  const { id } = request.params;
+  await db.deleteUser(id);
+  response.status(200);
+});
 
 // gets all lists
 lists.get("/", async (request, response) => {
@@ -99,6 +156,7 @@ items.delete("/:id", async (request, response) => {
 
 app.use("/api/lists", lists);
 app.use("/api/items", items);
+app.use("/api/users", users);
 
 app.use(express.static("public"));
 
