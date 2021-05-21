@@ -37,13 +37,16 @@ const App = ({ user }) => {
     isAuthenticated ? (
       <button
         onClick={gcal.handleSignoutClick}
-        className="btn btn-primary btn-outline-dark"
+        className="btn btn-primary btn-outline-dark float-right"
       >
         Log out
       </button>
     ) : (
       <>
-        <button onClick={gcal.handleAuthClick} className="btn btn-primary">
+        <button
+          onClick={gcal.handleAuthClick}
+          className="btn btn-primary float-right"
+        >
           Log In
         </button>
       </>
@@ -65,6 +68,7 @@ const App = ({ user }) => {
       <div className="header-body">
         <div className="app-wrapper">
           <div>
+            <Login isAuthenticated={isAuthenticated} />
             <div className="logo">
               <img src={logo2} className="logo" alt="Got It Logo" />
             </div>
@@ -76,7 +80,6 @@ const App = ({ user }) => {
                 in mind.
               </p>
             </div>
-            <Login isAuthenticated={isAuthenticated} />
           </div>
           <div className="page-container">
             <div id="content-wrap">

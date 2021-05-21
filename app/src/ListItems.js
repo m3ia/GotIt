@@ -164,7 +164,7 @@ const ListItems = ({ listId, back, list }) => {
             }}
           >
             <table
-              className="table table-hover mt-5"
+              className="SM table table-hover mt-5"
               style={{ maxWidth: "75%" }}
             >
               <thead>
