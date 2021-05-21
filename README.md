@@ -6,6 +6,7 @@
 **Got It** has a recurring list feature where you can stay on top of your recurring shopping lists on a regular basis. Save in time and energy as **Got It** makes regular shopping simple and more efficient for both individuals and groups by use of its shareable lists feature.
 
 [https://got-it-app.herokuapp.com/](https://got-it-app.herokuapp.com/)
+**Note: To sign into Got It, you need to use a valid Gmail account.** While this application is currently awaiting authentication verification from Google, only authorized test users may sign in. For demonstration purposes, please sign in using gmail account **TesterGotIt@gmail.com** with the password being the name of the program this final project is for in lowecase letters. 
 
 # Technologies
 1. HTML
@@ -77,8 +78,10 @@ To check the Heroku database, open a terminal window and run `heroku psql --app 
 <img src="https://github.com/m3ia/GotIt/blob/main/images/add-details.png" alt="A screenshot to view details of an item" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/main/images/add-freq.png" alt="A screenshot to show how to adjust frequency of a list" width="300" border="1" />
 <img src="https://github.com/m3ia/GotIt/blob/main/images/cross-item.png" alt="A screenshot to show updated recurring list" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/main/images/show-recurred-list.png" alt="A screenshot to show recurred item on list" width="300" border="1" />
 
-# Remaining Issues
-I need to build the app!
+# Risks
+- Getting sign-in with OAuth2 in time with Google API
+- Getting verified by Google to allow non-test users for sign in in time for demonstration
 
 # Future Development
-More to come!
+- Capability to share lists with other users and/or non-users (with passwords)
+- Inventory feature where users can track items they have and re-add needed items to lists
