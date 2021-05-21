@@ -18,6 +18,7 @@ const items = express.Router();
 const users = express.Router();
 
 app.post("/api/v1/auth/google", async (req, res) => {
+  console.log("made it to google post");
   const { token } = req.body;
   console.log("We got a token", token);
   const ticket = await client.verifyIdToken({

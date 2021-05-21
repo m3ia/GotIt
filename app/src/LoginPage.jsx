@@ -17,7 +17,6 @@ const LoginPage = () => {
       setUser(null);
       return;
     }
-    console.log("About to send to backend", gcal.getIdToken());
     const response = await fetch("/api/v1/auth/google", {
       method: "POST",
       body: JSON.stringify({

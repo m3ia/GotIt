@@ -70,9 +70,15 @@
   margin: 2px;
 }
 
+.list-title {
+  text-align: center;
+  max-width: 100px;
+  text-overflow: wrap;
+}
+
+
 .list-name {
   font-weight: bold;
-  text-align: center;
 }
 
 .logo  { 
@@ -174,4 +180,10 @@ a:hover {
 
 .items-container {
   padding-top: 15px;
+}
+
+.due-date-title {
+  color: #277967;
+  font-style: italic;
+  font-size: 12px;
 }

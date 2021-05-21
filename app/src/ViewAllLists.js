@@ -171,10 +171,22 @@ const ViewAllLists = ({ selectList, userId, user }) => {
         setLists={setLists}
         user={user}
       />
+      <br />
+      <br />
       <div className="list-container">
         {lists.map((list) => (
           <div key={list.id} className="list-element">
-            <div className="list-name">{list.name}</div>
+            <div className="list-title">
+              <span className="list-name">{list.name}</span>
+              {list.due_date ? (
+                <>
+                  <br />
+                  <div className="due-date-title">
+                    <span>List Due Date: {list.due_date}</span>
+                  </div>
+                </>
+              ) : null}
+            </div>
 
             <img
               src={listIcon}

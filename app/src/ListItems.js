@@ -142,7 +142,17 @@ const ListItems = ({ listId, back, list }) => {
             Back To All Lists
           </button>
           <br />
-          <h2>{list.name}</h2>
+          <h2>
+            {list.name}
+            {list.due_date ? (
+              <>
+                <br />
+                <div className="due-date-title">
+                  <h6>List Due Date: {list.due_date}</h6>
+                </div>
+              </>
+            ) : null}
+          </h2>
           <AddItem addNewItem={addNewItem} />
           <div
             style={{
