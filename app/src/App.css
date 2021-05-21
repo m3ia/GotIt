@@ -76,8 +76,7 @@
 }
 
 .logo, .description  { 
-  background-color: white;
-  max-width: 75%;
+  max-width: 50%;
   display: flex;
   justify-content:right;
   padding: 10px;
@@ -124,4 +123,32 @@ a:hover {
   border:solid;
   border-color: #FEB062;
   background-color: white;
+}
+
+
+.sign-in-wrapper {
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+    text-align: center;
+}
+.sign-in-box {
+  display: flex;
+  background-color: #FEB062;
+  flex-direction: column;
+  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+  width: 35rem;
+  margin: 40px;
+  line-height: 75px;
+  font-size: 30px;
+  height: 10rem;
+
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+
 }

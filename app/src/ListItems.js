@@ -5,13 +5,14 @@ import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
 
-// GCal Sign In
-const Login = ({ isAuthenticated }) =>
-  isAuthenticated ? (
-    <button onClick={gcal.handleSignoutClick}>Log out</button>
-  ) : (
-    <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
-  );
+// TODO: remove once this works on log-in
+// // GCal Sign In
+// const Login = ({ isAuthenticated }) =>
+//   isAuthenticated ? (
+//     <button onClick={gcal.handleSignoutClick}>Log out</button>
+//   ) : (
+//     <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
+//   );
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -60,7 +61,6 @@ const ListItems = ({ listId, back, list }) => {
           return item;
         }
       });
-      console.log("===We're about to update item", itemToUpdate);
       setItems(updatedItems);
     },
     [allItems],
@@ -87,7 +87,6 @@ const ListItems = ({ listId, back, list }) => {
     (updatedItem) => {
       apiClient.editItem(updatedItem);
       updateItem(updatedItem);
-      // window.location = "/"; // ensures you don't have to refresh again
     },
     [updateItem],
   );
@@ -96,12 +95,12 @@ const ListItems = ({ listId, back, list }) => {
   const CheckRecurring = useCallback(
     (items) => {
       const today = new Date();
-      // WORKS: loops through each item
+      // TESTED: loops through each item
       items.forEach((item) => {
         const itemRecurEndDate =
           item.recur_end_date && new Date(item.recur_end_date);
         if (itemRecurEndDate && itemRecurEndDate <= today) {
-          // WORKS: if the so, then delete the item.
+          // TESTED: if the so, then delete the item.
           deleteItem(item.id);
         } else if (today >= item.recur_start_date) {
           editItem({
@@ -231,13 +230,9 @@ const ListItems = ({ listId, back, list }) => {
               </div>
             )}
           </div>
-          <Login {...{ isAuthenticated }} />
-          {isAuthenticated ? <Events /> : "Couldn't sign in."}
         </div>
       </div>
-      <div className="my-calendar">
-        <Events />
-      </div>
+      <div className="my-calendar">{isAuthenticated ? <Events /> : null}</div>
     </>
   );
 };
