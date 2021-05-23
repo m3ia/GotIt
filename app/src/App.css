@@ -237,16 +237,16 @@ td, th {
 
 .list-name {
   font-weight: bold;
-  max-height: 20px;
+  /* max-height: 20px; */
   max-width: 100px;
   overflow: hidden;  
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space:normal;
 }
 
 .list-name:hover {
   overflow: visible;
-
+  overflow-wrap:break-word;
 }
 
 .log-out-button {
@@ -283,4 +283,9 @@ input.add-item-box {
 
 .list-items-header {
   margin-bottom: 15px;
+}
+
+.list-name:hover {
+  /* overflow: visible; */
+  white-space: normal;
 }
