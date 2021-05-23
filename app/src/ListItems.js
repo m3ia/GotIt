@@ -148,7 +148,7 @@ const ListItems = ({ listId, back, list }) => {
               <>
                 <br />
                 <div className="due-date-title">
-                  <h6>List Due Date: {list.due_date}</h6>
+                  <h6>Due: {list.due_date}</h6>
                 </div>
               </>
             ) : null}

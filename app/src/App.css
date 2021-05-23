@@ -169,22 +169,49 @@ a:hover {
 
 .items-container {
   padding-top: 15px;
+  width: 100%; 
+  border-collapse: collapse; 
 }
+
+td, th { 
+  padding: 6px; 
+  border: 1pxsolid transparent; 
+  text-align: left; 
+}
+
+
 
 .due-date-title {
   color: #277967;
   font-style: italic;
   font-size: 12px;
+  max-height: 20px;
+  min-height: 20px;
 }
 
 .list-title {
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
   text-align: center;
-  max-width: 100px;
-  text-overflow: wrap;
   font-size:14px;
 }
 
 
 .list-name {
   font-weight: bold;
+  max-height: 20px;
+  max-width: 100px;
+  overflow: hidden;  
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-name:hover {
+  overflow: visible;
+
+}
+
+.log-out-button {
+  background-color: #FEB062;
 }
