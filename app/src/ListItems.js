@@ -198,17 +198,17 @@ const ListItems = ({ listId, back, list }) => {
           // Open for Completed Items container
           <div
             className="completed-items-container"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              maxWidth: "75%",
-              alignItems: "center",
-            }}
+            // style={{
+            //   display: "flex",
+            //   flexDirection: "column",
+            //   justifyContent: "center",
+            //   maxWidth: "75%",
+            //   alignItems: "center",
+            // }}
           >
             <h3>Completed Items</h3>
             {/* Open for completed item row */}
-            <div className="item-row">
+            <div className="items-row-container">
               {completedItems
                 // .filter((item) => !item.is_done)
                 .map((item) => (

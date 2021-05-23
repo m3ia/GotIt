@@ -65,8 +65,8 @@ const RecurringSettings = ({ item, editItem }) => {
                   <option value="select" selected={recurFreq === null}>
                     Set Frequency
                   </option>
-                  <option value="DEMO" selected={recurFreq === "DEMO"}>
-                    DEMO
+                  <option value="5s" selected={recurFreq === "5s"}>
+                    5s
                   </option>
                   <option value="Daily" selected={recurFreq === "Daily"}>
                     Daily
@@ -173,11 +173,13 @@ function getNextStartDate(item) {
   let adder = addDays;
   let amountToAdd = 1;
 
+  console.log("testing. item.recur_start_date: ", item.recur_start_date);
+
   if (item.recur_freq === "Weekly") {
     amountToAdd = 7;
   } else if (item.recur_freq === "Monthly") {
     adder = addMonths;
-  } else if (item.recur_freq === "DEMO") {
+  } else if (item.recur_freq === "5s") {
     // doesn't matter
     return now;
   } else if (!item.recur_freq) {
@@ -186,11 +188,27 @@ function getNextStartDate(item) {
   }
 
   // find the next closest of that window
-  while (adder(newStartDate, amountToAdd) < now) {
-    newStartDate = addDays(newStartDate, 1);
+  console.log(
+    "is adder current date plus amount to add greater than or equal to now? ",
+    "newstartdate: ",
+    newStartDate,
+    "now: ",
+    now,
+    "item sd: ",
+    new Date(item.recur_start_date),
+    adder(newStartDate, amountToAdd),
+    adder(newStartDate, amountToAdd) >= now,
+  );
+  if (adder(newStartDate, amountToAdd) >= now) {
+    newStartDate = new Date(item.recur_start_date);
+    return newStartDate;
+  } else {
+    while (adder(newStartDate, amountToAdd) < now) {
+      newStartDate = addDays(newStartDate, 1);
+    }
+    newStartDate = adder(newStartDate, amountToAdd);
+    return newStartDate;
   }
-  newStartDate = adder(newStartDate, amountToAdd);
-  return newStartDate;
 }
 
 // Item Row Component
@@ -253,7 +271,11 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
                           is_done: true,
                           recur_start_date: getNextStartDate(item),
                         })
-                      : updateItem({ ...item, is_done: false });
+                      : updateItem({
+                          ...item,
+                          is_done: false,
+                          recur_start_date: getNextStartDate(item),
+                        });
                     // updateItem({ ...item, is_done: true });
                   }}
                 />
