@@ -189,7 +189,7 @@ const ListItems = ({ listId, back, list }) => {
         </div>
         {/* Closure for active items container */}
         <button
-          className="show-completed-toggle btn-primary"
+          className="show-completed-toggle btn btn-primary"
           onClick={() => setShowCompletedItems(!showCompletedItems)}
         >
           {showCompletedItems ? "Hide Completed Items" : "Show Completed Items"}

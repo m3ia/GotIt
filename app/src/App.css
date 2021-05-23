@@ -46,7 +46,7 @@ li {
 
 .item-row .action-button {
   padding: 1px;
-  /* visibility:hidden; */
+  visibility:hidden;
 }
 
 .item-row:hover .action-button
