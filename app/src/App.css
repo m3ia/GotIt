@@ -5,9 +5,6 @@
   place-items: center;
 
 }
-.add-item {
-  width: 70rem;
-}
 
 .add-item-row {
   border: 1px solid;
@@ -16,7 +13,6 @@
 }
 
 .add-item-box {
-  width: 25rem;
   height: 2rem;
   margin : 0 1rem 0 0;
   place-items: center;
@@ -48,8 +44,14 @@ li {
   /* justify-content:space-between; */
 }
 
-.action-button {
+.item-row .action-button {
   padding: 1px;
+  /* visibility:hidden; */
+}
+
+.item-row:hover .action-button
+{
+  visibility:visible;
 }
 
 #edit-button {
@@ -59,7 +61,6 @@ li {
 #save-button {
   color: #0070b8;
 }
-
 
 #delete-button {
   color: red;
@@ -83,10 +84,10 @@ li {
 }
 
 .item-name-div {
-  /* inline-size: 75%; */
+  inline-size: 75%;
   overflow-wrap: break-word;
-  min-width: 370px;
-  max-width: 60%;
+  /* min-width: 300px; */
+  max-width: 63%;
   padding: 1px;
 }
 
@@ -250,4 +251,36 @@ td, th {
 
 .log-out-button {
   background-color: #FEB062;
+}
+
+/* Edit later */
+.add-item {
+  display: flex;
+}
+
+input.add-item-box {
+  flex: 1;
+}
+
+.items-container {
+  max-width: 600px;
+}
+
+.add-item-section {
+  margin-bottom: 15px;
+}
+
+.list-items-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-item {
+  align-items: center;
+}
+
+.list-items-header {
+  margin-bottom: 15px;
 }

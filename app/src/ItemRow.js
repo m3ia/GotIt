@@ -254,129 +254,127 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
 
   return (
     <>
-      <ul class="no-bullets">
-        {/* Open for item row container */}
-        <div key={item.id} className="item-row-container">
-          {/* Open for item row */}
-          <div className="item-row">
-            <li>
-              {/* Open for checkbox */}
-              <span className="checkbox">
-                <Checkbox
-                  item={item}
-                  onChange={() => {
-                    !item.is_done
-                      ? updateItem({
-                          ...item,
-                          is_done: true,
-                          recur_start_date: getNextStartDate(item),
-                        })
-                      : updateItem({
-                          ...item,
-                          is_done: false,
-                          recur_start_date: getNextStartDate(item),
-                        });
-                    // updateItem({ ...item, is_done: true });
-                  }}
+      {/* <ul class="no-bullets"> */}
+      {/* Open for item row container */}
+      <div key={item.id} className="item-row-container">
+        {/* Open for item row */}
+        <div className="item-row">
+          {/* <li> */}
+          {/* Open for checkbox */}
+          <span className="checkbox">
+            <Checkbox
+              item={item}
+              onChange={() => {
+                !item.is_done
+                  ? updateItem({
+                      ...item,
+                      is_done: true,
+                      recur_start_date: getNextStartDate(item),
+                    })
+                  : updateItem({
+                      ...item,
+                      is_done: false,
+                      recur_start_date: getNextStartDate(item),
+                    });
+                // updateItem({ ...item, is_done: true });
+              }}
+            />
+          </span>
+          {/* Close for checkbox */}
+          {/* Open for item name */}
+          <span
+            className="item-name-div"
+            id={`id${item.id}`}
+            onClick={() => {
+              onEditClick();
+            }}
+            onKeyPress={() => {
+              onEditClick();
+            }}
+            tabIndex={0}
+            role="button"
+            aria-pressed="false"
+          >
+            <>{!editMode && name}</>
+            <>
+              {editMode && (
+                <input
+                  type="text"
+                  ref={inputItem}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  style={item.is_done ? { color: "blue" } : { color: "black" }}
                 />
-              </span>
-              {/* Close for checkbox */}
-              {/* Open for item name */}
-              <span
-                className="item-name-div"
-                id={`id${item.id}`}
-                onClick={() => {
-                  onEditClick();
-                }}
-                onKeyPress={() => {
-                  onEditClick();
-                }}
-                tabIndex={0}
-                role="button"
-                aria-pressed="false"
-              >
-                <>{!editMode && name}</>
-                <>
-                  {editMode && (
-                    <input
-                      type="text"
-                      ref={inputItem}
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      style={
-                        item.is_done ? { color: "blue" } : { color: "black" }
-                      }
-                    />
-                  )}
-                </>
-                {item.recur_freq && (
-                  <div>
-                    <span className="recur-info">
-                      <i>Recurs {item.recur_freq}</i>
-                    </span>
-                  </div>
-                )}
-              </span>
-              {/* Close for item name */}
-              {/* Open for item action buttons */}
-              <div className="item-action-buttons float-right">
-                <>
-                  {!editMode && (
-                    <span
-                      className="action-button"
-                      id="edit-button"
-                      type="button"
-                      data-target={`#id${item.id}`}
-                      onClick={onEditClick}
-                      role="button"
-                      aria-pressed="false"
-                      aria-hidden="true"
-                      tabIndex={0}
-                    >
-                      <EditRoundedIcon />
-                    </span>
-                  )}
-                  {/*in editMode, user sees input with submitted input item as a placeholder, Submit button.*/}
-                </>
-                <>
-                  {editMode && (
-                    <span
-                      onClick={onSaveClick}
-                      type="submit"
-                      id="save-button"
-                      className="btn action-button"
-                      role="button"
-                      aria-pressed="false"
-                      aria-hidden="true"
-                      tabIndex={0}
-                    >
-                      <SaveIcon />
-                    </span>
-                  )}
-                </>
-                <RecurringSettings item={item} editItem={updateItem} />
-                {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+              )}
+            </>
+            {item.recur_freq && (
+              <div>
+                <span className="recur-info">
+                  <i>Recurs {item.recur_freq}</i>
+                </span>
+              </div>
+            )}
+          </span>
+          {/* Close for item name */}
+          {/* Open for item action buttons */}
+          <div className="item-action-buttons float-right">
+            <>
+              {!editMode && (
                 <span
                   className="action-button"
-                  id="delete-button"
-                  onClick={() => deleteItem(item.id)}
+                  id="edit-button"
+                  type="button"
+                  data-target={`#id${item.id}`}
+                  onClick={onEditClick}
                   role="button"
                   aria-pressed="false"
                   aria-hidden="true"
                   tabIndex={0}
                 >
-                  <DeleteForeverIcon />
+                  <EditRoundedIcon />
                 </span>
-              </div>
-              {/* Close for item action buttons */}
-            </li>
-            <br />
+              )}
+              {/*in editMode, user sees input with submitted input item as a placeholder, Submit button.*/}
+            </>
+            <>
+              {editMode && (
+                <span
+                  onClick={onSaveClick}
+                  type="submit"
+                  id="save-button"
+                  className="btn action-button"
+                  role="button"
+                  aria-pressed="false"
+                  aria-hidden="true"
+                  tabIndex={0}
+                >
+                  <SaveIcon />
+                </span>
+              )}
+            </>
+            <RecurringSettings item={item} editItem={updateItem} />
+            {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+            <span
+              className="action-button"
+              id="delete-button"
+              onClick={() => deleteItem(item.id)}
+              role="button"
+              aria-pressed="false"
+              aria-hidden="true"
+              tabIndex={0}
+            >
+              <DeleteForeverIcon />
+            </span>
           </div>
-          {/* Close for item row */}
+          {/* Close for item action buttons */}
+          {/* </li> */}
+          <br />
         </div>
-        {/* Close for item row container*/}
-      </ul>
+        {/* Close for item row */}
+      </div>
+      {/* Close for item row container*/}
+      {/* </ul> */}
     </>
   );
 };

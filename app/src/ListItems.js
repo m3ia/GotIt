@@ -140,28 +140,29 @@ const ListItems = ({ listId, back, list }) => {
       <div data-testid="test-1">
         {/* Open for Active Items Container */}
         <div className="items-container">
-          <button
-            className="btn btn-secondary float-right back-button"
-            onClick={back}
-          >
-            Back To All Lists
-          </button>
           {/* Open for item title */}
-          <div className="list-items-item-title">
-            <br />
-            <h2>
-              {list.name}
-              {list.due_date ? (
-                <>
-                  <br />
-                  {/* Open for due date */}
-                  <div className="due-date-title">
-                    <h6>Due: {list.due_date}</h6>
-                  </div>
-                  {/* Close for due date */}
-                </>
-              ) : null}
-            </h2>
+          <div className="list-items-header">
+            <div className="list-items-title">
+              <h2>
+                {list.name}
+                {list.due_date ? (
+                  <>
+                    <br />
+                    {/* Open for due date */}
+                    <div className="due-date-title">
+                      <h6>Due: {list.due_date}</h6>
+                    </div>
+                    {/* Close for due date */}
+                  </>
+                ) : null}
+              </h2>
+            </div>
+            <button
+              className="btn btn-secondary float-right back-button"
+              onClick={back}
+            >
+              Back To All Lists
+            </button>
           </div>
           {/* Close for item title */}
           {/* Open for section to add item */}
