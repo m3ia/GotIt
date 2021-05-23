@@ -164,10 +164,13 @@ const ListItems = ({ listId, back, list }) => {
             </h2>
           </div>
           {/* Close for item title */}
-
-          <AddItem addNewItem={addNewItem} />
+          {/* Open for section to add item */}
+          <div className="add-item-section">
+            <AddItem addNewItem={addNewItem} />
+          </div>
+          {/* Close for section to add item */}
           {/* Open for active item row */}
-          <div className="item-row">
+          <div className="item-row-container">
             {items
               // .filter((item) => !item.is_done)
               .map((item) => (

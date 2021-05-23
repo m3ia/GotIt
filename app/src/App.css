@@ -22,38 +22,83 @@
   place-items: center;
 
 }
+.item-row-container {
+  /* max-width: 50%; */
+  display:flex;
+  flex-direction: column;
 
-.header-row, .item-row {
-  width: 25rem;
+}
+.item-row {
+  display: flex;
+  flex-direction: row;
+  min-width: 50%;
+  justify-content:space-between;
+
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  /* max-width: 25%; */
+}
+
+.item-action-buttons {
+  display: flex;
+  flex-direction: row;
+  /* justify-content:space-between; */
+}
+
+.action-button {
+  padding: 1px;
+}
+
+#edit-button {
+  color: gold;
+}
+
+#save-button {
+  color: #0070b8;
+}
+
+
+#delete-button {
+  color: red;
+  background-color: white;
+  padding: 1 1 1 1;
+  border-color: white;
+}
+.no-bullets {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .form-check-input {
+  display: flex;
+  align-self: center;
   place-items: center;
   width: 2rem;
   height: 2rem;
   margin : 0 0 0 0;
 }
 
-.item-div {
-  inline-size: 150px;
+.item-name-div {
+  /* inline-size: 75%; */
   overflow-wrap: break-word;
+  min-width: 370px;
+  max-width: 60%;
+  padding: 1px;
 }
 
-#delete-button {
-  color:white;
+.recur-info {
+  font-size: 12px;
+  font-style: italic;
+  color: #FEB062;
 }
 
 #recur-button {
-  background-color: #FEB062;
-  color: #2B2B2B;
-  border: #FEB062;
+  color: #FEB062;
   display: center;
-  /* color: white;
-  padding: 20px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  margin: 4px 2px; */
 }
 
 .list-container {
@@ -82,10 +127,6 @@
   display: flex;
   justify-content:right;
   padding: 10px;
-}
-
-.jumbotron {
-  background-color:#FFF;
 }
 
 .page-container {

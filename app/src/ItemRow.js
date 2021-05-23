@@ -1,24 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import SaveIcon from "@material-ui/icons/Save";
+import TodayIcon from "@material-ui/icons/Today";
+import ViewWeekIcon from "@material-ui/icons/ViewWeek";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
-
-// import { zonedTimeToUtc } from "date-fns-tz";
 
 const RecurringSettings = ({ item, editItem }) => {
   const [recurFreq, setRecurFreq] = useState(item.recur_freq?.trim());
   const [recurStartDate, setRecurStartDate] = useState(item.recur_start_date);
-  // const [recurStartTime, setRecurStartTime] = useState("");
   const [recurEndDate, setRecurEndDate] = useState(item.recur_end_date);
-  // const [recurEndTime, setRecurEndTime] = useState("");
-
-  // const [recurStartDT, setRecurStartDT] = useState(item.recur_start_date);
-  // const [recurEndDT, setRecurEndDT] = useState(item.recur_end_date);
 
   const onSaveRecur = () => {
-    // const utcDate = zonedTimeToUtc(recurStartDate, "Europe/Berlin");
-    // setRecurStartDT(utcDate);
-    // setRecurEndDT(recurEndDate + recurEndTime);
     setRecurFreq(recurFreq);
 
     editItem({
@@ -30,21 +27,19 @@ const RecurringSettings = ({ item, editItem }) => {
   };
 
   return (
-    <div className="container">
-      <button
-        type="button"
+    <div className="recurring-modal-container">
+      <span
         id="recur-button"
-        className="btn btn-primary btn-sm"
+        className="btn action-button"
         data-toggle="modal"
         data-target={`#recur-modal-${item.id}`}
+        role="button"
+        aria-pressed="false"
+        aria-hidden="true"
+        tabIndex={0}
       >
-        {item.recur_freq && <span> {item.recur_freq} </span>}
-        {!item.recur_freq && (
-          <span role="img" aria-label="Repeat" id="freq-symbol">
-            &#10227;
-          </span>
-        )}
-      </button>
+        <RefreshIcon />
+      </span>
       <div className="modal" id={`recur-modal-${item.id}`}>
         <div className="modal-dialog">
           <div className="modal-content">
@@ -85,7 +80,6 @@ const RecurringSettings = ({ item, editItem }) => {
                 </select>
               </div>
               {/* Recurring Algo */}
-              {/* <DatePicker selected={} onChange{} /> */}
               <div className="date-input">
                 <label htmlFor="recur-start-date">
                   <b>Recurring Start Date:</b>
@@ -97,13 +91,6 @@ const RecurringSettings = ({ item, editItem }) => {
                   defaultValue={recurStartDate}
                   onChange={(e) => setRecurStartDate(e.target.value)}
                 ></input>
-                {/* <input
-                  type="time"
-                  className="form-control"
-                  id="recur-start-time"
-                  value={recurStartTime}
-                  onChange={(e) => setRecurStartTime(e.target.value)}
-                ></input> */}
                 {/* Can improve end date option in future */}
                 <label htmlFor="recur-end-date">
                   <b>Recurring End Date:</b>
@@ -115,13 +102,6 @@ const RecurringSettings = ({ item, editItem }) => {
                   defaultValue={recurEndDate}
                   onChange={(e) => setRecurEndDate(e.target.value)}
                 ></input>
-                {/* <input
-                  type="time"
-                  className="form-control"
-                  id="recur-end-time"
-                  value={recurEndTime}
-                  onChange={(e) => setRecurEndTime(e.target.value)}
-                ></input> */}
               </div>
               {/* <!-- Modal footer --> */}
               <div className="modal-footer">
@@ -162,8 +142,6 @@ const Checkbox = ({ item, onChange }) => {
           // value={isChecked}
           checked={isChecked}
           name="{item.name}"
-          // function to update the item in the db...filters item out from view
-          // onClick={() => completeItem(true)}
           onClick={(e) => {
             onChange(e.target.value);
             !isChecked ? setIsChecked(true) : setIsChecked(false);
@@ -174,6 +152,7 @@ const Checkbox = ({ item, onChange }) => {
   );
 };
 
+// TODO: Improve capability for clicking-out to exit editing (part 1)
 // function useOutsideAlerter(ref, exitEdit) {
 //   useEffect(() => {
 //     // Function for click event
@@ -234,7 +213,7 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
     updateItem({ ...item, name });
   };
 
-  // When user clicks out => setEditMode(false) => editMode === false, a line with original value, and a view of the edit button.
+  // TODO: Improve capability for clicking-out to exit editing (part 2)
   // const cancelEdit = () => {
   //   setEditMode(false);
   //   setName(item.name);
@@ -257,91 +236,125 @@ const ItemRow = ({ item, deleteItem, updateItem }) => {
 
   return (
     <>
-      <tr key={item.id} className="item-row">
-        <td>
-          <Checkbox
-            item={item}
-            onChange={() => {
-              !item.is_done
-                ? updateItem({
-                    ...item,
-                    is_done: true,
-                    recur_start_date: getNextStartDate(item),
-                  })
-                : updateItem({ ...item, is_done: false });
-              // updateItem({ ...item, is_done: true });
-            }}
-          />
-        </td>
-        <td>
-          <div
-            className="item-div"
-            id={`id${item.id}`}
-            onClick={() => {
-              onEditClick();
-            }}
-            onKeyPress={() => {
-              onEditClick();
-            }}
-            tabIndex={0}
-            role="button"
-            aria-pressed="false"
-          >
-            <>{!editMode && name}</>
-            <>
-              {editMode && (
-                <input
-                  type="text"
-                  ref={inputItem}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  style={item.is_done ? { color: "blue" } : { color: "black" }}
+      <ul class="no-bullets">
+        {/* Open for item row container */}
+        <div key={item.id} className="item-row-container">
+          {/* Open for item row */}
+          <div className="item-row">
+            <li>
+              {/* Open for checkbox */}
+              <span className="checkbox">
+                <Checkbox
+                  item={item}
+                  onChange={() => {
+                    !item.is_done
+                      ? updateItem({
+                          ...item,
+                          is_done: true,
+                          recur_start_date: getNextStartDate(item),
+                        })
+                      : updateItem({ ...item, is_done: false });
+                    // updateItem({ ...item, is_done: true });
+                  }}
                 />
-              )}
-            </>
+              </span>
+              {/* Close for checkbox */}
+              {/* Open for item name */}
+              <span
+                className="item-name-div"
+                id={`id${item.id}`}
+                onClick={() => {
+                  onEditClick();
+                }}
+                onKeyPress={() => {
+                  onEditClick();
+                }}
+                tabIndex={0}
+                role="button"
+                aria-pressed="false"
+              >
+                <>{!editMode && name}</>
+                <>
+                  {editMode && (
+                    <input
+                      type="text"
+                      ref={inputItem}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      style={
+                        item.is_done ? { color: "blue" } : { color: "black" }
+                      }
+                    />
+                  )}
+                </>
+                {item.recur_freq && (
+                  <div>
+                    <span className="recur-info">
+                      <i>Recurs {item.recur_freq}</i>
+                    </span>
+                  </div>
+                )}
+              </span>
+              {/* Close for item name */}
+              {/* Open for item action buttons */}
+              <div className="item-action-buttons float-right">
+                <>
+                  {!editMode && (
+                    <span
+                      className="action-button"
+                      id="edit-button"
+                      type="button"
+                      data-target={`#id${item.id}`}
+                      onClick={onEditClick}
+                      role="button"
+                      aria-pressed="false"
+                      aria-hidden="true"
+                      tabIndex={0}
+                    >
+                      <EditRoundedIcon />
+                    </span>
+                  )}
+                  {/*in editMode, user sees input with submitted input item as a placeholder, Submit button.*/}
+                </>
+                <>
+                  {editMode && (
+                    <span
+                      onClick={onSaveClick}
+                      type="submit"
+                      id="save-button"
+                      className="btn action-button"
+                      role="button"
+                      aria-pressed="false"
+                      aria-hidden="true"
+                      tabIndex={0}
+                    >
+                      <SaveIcon />
+                    </span>
+                  )}
+                </>
+                <RecurringSettings item={item} editItem={updateItem} />
+                {/* // eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+                <span
+                  className="action-button"
+                  id="delete-button"
+                  onClick={() => deleteItem(item.id)}
+                  role="button"
+                  aria-pressed="false"
+                  aria-hidden="true"
+                  tabIndex={0}
+                >
+                  <DeleteForeverIcon />
+                </span>
+              </div>
+              {/* Close for item action buttons */}
+            </li>
+            <br />
           </div>
-        </td>
-        <td>
-          <>
-            {!editMode && (
-              <button
-                className="btn btn-warning btn-sm"
-                type="button"
-                // className="edit-button"
-                data-target={`#id${item.id}`}
-                onClick={onEditClick}
-              >
-                Edit
-              </button>
-            )}
-            {/*in editMode, user sees input with submitted input item as a placeholder, Submit button.*/}
-          </>
-          <>
-            {editMode && (
-              <button
-                onClick={onSaveClick}
-                type="submit"
-                className="btn btn-primary save-button btn-sm"
-              >
-                Save
-              </button>
-            )}
-          </>
-        </td>
-        <td>
-          <RecurringSettings item={item} editItem={updateItem} />
-        </td>
-        <td>
-          <button
-            className="btn btn-danger btn-sm"
-            id="delete-button"
-            onClick={() => deleteItem(item.id)}
-          >
-            &#10005;
-          </button>
-        </td>
-      </tr>
+          {/* Close for item row */}
+        </div>
+        {/* Close for item row container*/}
+      </ul>
     </>
   );
 };
