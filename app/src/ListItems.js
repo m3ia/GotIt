@@ -5,13 +5,14 @@ import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
 
-// GCal Sign In
-const Login = ({ isAuthenticated }) =>
-  isAuthenticated ? (
-    <button onClick={gcal.handleSignoutClick}>Log out</button>
-  ) : (
-    <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
-  );
+// TODO: remove once this works on log-in
+// // GCal Sign In
+// const Login = ({ isAuthenticated }) =>
+//   isAuthenticated ? (
+//     <button onClick={gcal.handleSignoutClick}>Log out</button>
+//   ) : (
+//     <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
+//   );
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -60,7 +61,6 @@ const ListItems = ({ listId, back, list }) => {
           return item;
         }
       });
-      console.log("===We're about to update item", itemToUpdate);
       setItems(updatedItems);
     },
     [allItems],
@@ -87,7 +87,6 @@ const ListItems = ({ listId, back, list }) => {
     (updatedItem) => {
       apiClient.editItem(updatedItem);
       updateItem(updatedItem);
-      // window.location = "/"; // ensures you don't have to refresh again
     },
     [updateItem],
   );
@@ -96,14 +95,14 @@ const ListItems = ({ listId, back, list }) => {
   const CheckRecurring = useCallback(
     (items) => {
       const today = new Date();
-      // WORKS: loops through each item
+      // TESTED: loops through each item
       items.forEach((item) => {
         const itemRecurEndDate =
           item.recur_end_date && new Date(item.recur_end_date);
         if (itemRecurEndDate && itemRecurEndDate <= today) {
-          // WORKS: if the so, then delete the item.
+          // TESTED: if the so, then delete the item.
           deleteItem(item.id);
-        } else if (today >= item.recur_start_date) {
+        } else if (item.recur_start_date && today >= item.recur_start_date) {
           editItem({
             ...item,
             is_done: false,
@@ -138,12 +137,22 @@ const ListItems = ({ listId, back, list }) => {
   return (
     <>
       <div data-testid="test-1">
-        <div className="items-table container-fluid">
+        <div className="items-table container-fluid items-container">
           <button className="btn btn-secondary float-right" onClick={back}>
             Back To All Lists
           </button>
-          <h2>{list.name}</h2>
           <br />
+          <h2>
+            {list.name}
+            {list.due_date ? (
+              <>
+                <br />
+                <div className="due-date-title">
+                  <h6>List Due Date: {list.due_date}</h6>
+                </div>
+              </>
+            ) : null}
+          </h2>
           <AddItem addNewItem={addNewItem} />
           <div
             style={{
@@ -155,7 +164,7 @@ const ListItems = ({ listId, back, list }) => {
             }}
           >
             <table
-              className="table table-hover mt-5"
+              className="SM table table-hover mt-5"
               style={{ maxWidth: "75%" }}
             >
               <thead>
@@ -231,12 +240,16 @@ const ListItems = ({ listId, back, list }) => {
               </div>
             )}
           </div>
-          <Login {...{ isAuthenticated }} />
-          {isAuthenticated ? <Events /> : "Couldn't sign in."}
         </div>
       </div>
       <div className="my-calendar">
-        <Events />
+        {isAuthenticated ? (
+          <>
+            <br />
+            <h6>My Upcoming Events on Google Calendar: </h6>
+            <Events />
+          </>
+        ) : null}
       </div>
     </>
   );

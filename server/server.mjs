@@ -1,19 +1,85 @@
 import express from "express";
+import { OAuth2Client } from "google-auth-library";
 import mime from "mime-types";
+const client = new OAuth2Client(process.env.REACT_APP_GCAL_CLIENT_ID);
 
 import * as db from "./db.mjs";
 
 const app = express();
+app.use(express.json());
+
 const port = process.env.PORT || 4000;
 
 // router instance for lists
 const lists = express.Router();
 // items defines the routes
 const items = express.Router();
+// router instance for users
+const users = express.Router();
+
+app.post("/api/v1/auth/google", async (req, res) => {
+  console.log("made it to google post");
+  const { token } = req.body;
+  console.log("We got a token", token);
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.CLIENT_ID,
+  });
+  const { email } = ticket.getPayload();
+  console.log("We got the user verified email", email);
+  let { user } = await db.loginUser(email);
+  if (!user) {
+    user = await db.getUser(email);
+  }
+  console.log("we got em", { user });
+  res.status(201);
+  res.json(user);
+});
+
+// gets all users
+users.get("/", async (request, response) => {
+  const users = await db.getUsers();
+  response.status(200).json(users);
+});
+
+// gets one user
+users.get("/:id", async (request, response) => {
+  const { id } = request.params;
+  const user = await db.getUser(id);
+  response.status(200).json(user);
+});
+
+users.use(express.json());
+
+// adds an user
+users.post("/", async (request, response) => {
+  const payload = request.body;
+  const user = await db.addUser(payload);
+  response.status(201).json(user);
+  // alternatively: response.json(newItem.rows[0]);
+});
+
+// edits a user
+users.put("/:id", async (request, response) => {
+  const user = request.body;
+  await db.updateUser(user);
+  response.status(201);
+  response.json("User was updated");
+});
+
+// http req to delete a user based on id
+users.delete("/:id", async (request, response) => {
+  const { id } = request.params;
+  await db.deleteUser(id);
+  response.status(200).json("user deleted");
+});
 
 // gets all lists
 lists.get("/", async (request, response) => {
-  const lists = await db.getLists();
+  console.log(request.query);
+  const { userId } = request.query;
+  console.log("got a user", userId);
+  const lists = await db.getLists(userId);
   response.status(200).json(lists);
 });
 
@@ -33,7 +99,6 @@ lists.post("/", async (request, response) => {
   const list = await db.addList(payload);
   response.status(201).json(list);
   // alternatively: response.json(newItem.rows[0]);
-  console.log("i'm in post and item is: ", list); // to test
 });
 
 // edits a list
@@ -48,8 +113,7 @@ lists.put("/:id", async (request, response) => {
 lists.delete("/:id", async (request, response) => {
   const { id } = request.params;
   await db.deleteList(id);
-  console.log("in delete", request.params);
-  response.status(200);
+  response.status(200).json("list deleted");
 });
 
 // gets all items
@@ -94,11 +158,12 @@ items.delete("/:id", async (request, response) => {
   const { id } = request.params;
   await db.deleteItem(id);
   console.log("in delete", request.params);
-  response.status(200);
+  response.status(200).json("item was deleted");
 });
 
 app.use("/api/lists", lists);
 app.use("/api/items", items);
+app.use("/api/users", users);
 
 app.use(express.static("public"));
 

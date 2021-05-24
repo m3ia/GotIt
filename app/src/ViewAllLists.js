@@ -20,12 +20,19 @@ import listIcon from "./list-icon.png";
 //   );
 // };
 
-const CreateNewList = ({ onAdd, updateList, setLists, isAuthenticated }) => {
+const CreateNewList = ({
+  onAdd,
+  updateList,
+  setLists,
+  isAuthenticated,
+  user,
+}) => {
   const [name, setName] = useState("");
   const [dueDate, setDueDate] = useState("");
 
-  const addNewList = async (name, dueDate) => {
-    const response = await apiClient.addList(name, dueDate);
+  const addNewList = async (newList) => {
+    console.log({ name, dueDate });
+    const response = await apiClient.addList(newList);
     onAdd(response[0]);
   };
 
@@ -33,6 +40,7 @@ const CreateNewList = ({ onAdd, updateList, setLists, isAuthenticated }) => {
     addNewList({
       name: name,
       due_date: dueDate || null,
+      owner_id: user.id,
     });
     setName("");
   };
@@ -49,8 +57,7 @@ const CreateNewList = ({ onAdd, updateList, setLists, isAuthenticated }) => {
     <div className="container">
       <button
         type="button"
-        id="create-new-list-button"
-        className="btn btn-primary"
+        className="btn btn-primary float-right create-new-list-button"
         data-toggle="modal"
         data-target="#myModal"
       >
@@ -122,12 +129,13 @@ const CreateNewList = ({ onAdd, updateList, setLists, isAuthenticated }) => {
   );
 };
 
-const ViewAllLists = ({ selectList }) => {
+const ViewAllLists = ({ selectList, userId, user }) => {
   const [lists, setLists] = useState([]);
 
-  async function getLists() {
-    const listsArray = await apiClient.getLists();
+  async function getLists(userId) {
+    const listsArray = await apiClient.getLists(userId);
     setLists(listsArray);
+    console.log("in getlists", userId);
   }
 
   const onAdd = (list) => setLists([...lists, list]);
@@ -144,8 +152,8 @@ const ViewAllLists = ({ selectList }) => {
   };
 
   useEffect(() => {
-    getLists();
-  }, []);
+    getLists(userId);
+  }, [userId]);
 
   // delete list function
   const deleteList = (id) => {
@@ -161,11 +169,24 @@ const ViewAllLists = ({ selectList }) => {
         onAdd={onAdd}
         updateList={updateList}
         setLists={setLists}
+        user={user}
       />
+      <br />
+      <br />
       <div className="list-container">
         {lists.map((list) => (
           <div key={list.id} className="list-element">
-            <div className="list-name">{list.name}</div>
+            <div className="list-title">
+              <span className="list-name">{list.name}</span>
+              {list.due_date ? (
+                <>
+                  <br />
+                  <div className="due-date-title">
+                    <span>List Due Date: {list.due_date}</span>
+                  </div>
+                </>
+              ) : null}
+            </div>
 
             <img
               src={listIcon}

@@ -137,7 +137,9 @@ ADD CONSTRAINT fk_user
 FOREIGN KEY (owner_id)
 REFERENCES users(id);
 
--- NEED TO ADD TO SEED FILE AND HEROKU DB
+-- ENSURES ALL EMAILS ARE UNIQUE FOR USERS
+CREATE UNIQUE INDEX CONCURRENTLY idx_user_email ON users (email);
+ALTER TABLE users ADD CONSTRAINT unique_user_email UNIQUE USING INDEX idx_user_email;
 
 --
 -- PostgreSQL database dump complete
