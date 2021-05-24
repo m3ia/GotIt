@@ -59,19 +59,22 @@ const RecurringSettings = ({ item, editItem }) => {
                   // value={recurFreq}
                   defaultValue={recurFreq}
                 >
-                  <option value="select" selected={recurFreq === null}>
+                  <option value="select" defaultValue={recurFreq === null}>
                     Set Frequency
                   </option>
-                  <option value="5s" selected={recurFreq === "5s"}>
+                  <option value="5s" defaultValue={recurFreq === "5s"}>
                     5s
                   </option>
-                  <option value="Daily" selected={recurFreq === "Daily"}>
+                  <option value="Daily" defaultValue={recurFreq === "Daily"}>
                     Daily
                   </option>
-                  <option value="Weekly" selected={recurFreq === "Weekly"}>
+                  <option value="Weekly" defaultValue={recurFreq === "Weekly"}>
                     Weekly
                   </option>
-                  <option value="Monthly" selected={recurFreq === "Monthly"}>
+                  <option
+                    value="Monthly"
+                    defaultValue={recurFreq === "Monthly"}
+                  >
                     Monthly
                   </option>
                 </select>
@@ -85,7 +88,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   type="date"
                   className="form-control"
                   id="recur-start-date"
-                  defaultValue={recurStartDate}
+                  defaultValue={item.recur_start_date}
                   onChange={(e) => setRecurStartDate(e.target.value)}
                 ></input>
                 {/* Can improve end date option in future */}
@@ -96,7 +99,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   type="date"
                   className="form-control"
                   id="recur-end-date"
-                  defaultValue={recurEndDate}
+                  defaultValue={item.recur_end_date}
                   onChange={(e) => setRecurEndDate(e.target.value)}
                 ></input>
               </div>
@@ -171,13 +174,14 @@ function getNextStartDate(item) {
   let adder = addDays;
   let amountToAdd = 1;
 
-  if (item.recur_freq === "Weekly") {
+  if (item.recur_freq?.trim() === "Weekly") {
     amountToAdd = 7;
-  } else if (item.recur_freq === "Monthly") {
+  } else if (item.recur_freq?.trim() === "Monthly") {
     adder = addMonths;
-  } else if (item.recur_freq === "5s") {
+  } else if (item.recur_freq?.trim() === "5s") {
     // doesn't matter
-    return now;
+    newStartDate = now;
+    return newStartDate;
   } else if (!item.recur_freq) {
     // not recurring
     return null;
@@ -197,14 +201,25 @@ function getNextStartDate(item) {
   //   adder(newStartDate, amountToAdd),
   //   adder(newStartDate, amountToAdd) >= now,
   // );
-  if (adder(newStartDate, amountToAdd) >= now) {
-    newStartDate = new Date(item.recur_start_date);
-    return newStartDate;
-  } else {
-    while (adder(newStartDate, amountToAdd) < now) {
-      newStartDate = addDays(newStartDate, 1);
+
+  // console.log(item.recur_freq?.trim());
+  // if (adder(newStartDate, amountToAdd) > now) {
+  //   newStartDate = new Date(item.recur_start_date);
+  //   return newStartDate;
+  // } else {
+
+  // previous
+  // while (adder(newStartDate, amountToAdd) <= now) {
+  //   newStartDate = addDays(newStartDate, 1);
+  // }
+  // newStartDate = adder(newStartDate, amountToAdd);
+  // return newStartDate;
+  // }
+  //refactoring
+  if (item.recur_freq && item.recur_freq?.trim() !== "5s") {
+    while (newStartDate <= now) {
+      newStartDate = adder(newStartDate, amountToAdd);
     }
-    newStartDate = adder(newStartDate, amountToAdd);
     return newStartDate;
   }
 }
