@@ -19,7 +19,8 @@ const App = ({ user }) => {
   const [list, setList] = useState({});
 
   const back = () => {
-    setPage("home");
+    // TODO: use react-router for navigation
+    // setPage("home");
     setSelectedListId(null);
   };
 
@@ -91,7 +92,8 @@ const App = ({ user }) => {
               {page === "home" && (
                 <ViewAllLists
                   selectList={(list) => {
-                    setPage("listItems");
+                    // TODO: use react-router for navigation
+                    // setPage("listItems");
                     setSelectedListId(list.id);
                     setList(list);
                   }}
