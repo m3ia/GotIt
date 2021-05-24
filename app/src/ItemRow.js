@@ -173,8 +173,6 @@ function getNextStartDate(item) {
   let adder = addDays;
   let amountToAdd = 1;
 
-  console.log("testing. item.recur_start_date: ", item.recur_start_date);
-
   if (item.recur_freq === "Weekly") {
     amountToAdd = 7;
   } else if (item.recur_freq === "Monthly") {
@@ -188,17 +186,19 @@ function getNextStartDate(item) {
   }
 
   // find the next closest of that window
-  console.log(
-    "is adder current date plus amount to add greater than or equal to now? ",
-    "newstartdate: ",
-    newStartDate,
-    "now: ",
-    now,
-    "item sd: ",
-    new Date(item.recur_start_date),
-    adder(newStartDate, amountToAdd),
-    adder(newStartDate, amountToAdd) >= now,
-  );
+
+  // Keeping for testing purposes
+  // console.log(
+  //   "is adder current date plus amount to add greater than or equal to now? ",
+  //   "newstartdate: ",
+  //   newStartDate,
+  //   "now: ",
+  //   now,
+  //   "item sd: ",
+  //   new Date(item.recur_start_date),
+  //   adder(newStartDate, amountToAdd),
+  //   adder(newStartDate, amountToAdd) >= now,
+  // );
   if (adder(newStartDate, amountToAdd) >= now) {
     newStartDate = new Date(item.recur_start_date);
     return newStartDate;

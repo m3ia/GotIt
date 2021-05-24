@@ -12,7 +12,6 @@ export const getList = async (listId, userId) => {
 
 // add list function
 export const addList = async (payload) => {
-  console.log(payload);
   const response = await fetch("/api/lists", {
     method: "POST",
     headers: {

@@ -72,9 +72,7 @@ users.delete("/:id", async (request, response) => {
 
 // gets all lists
 lists.get("/", async (request, response) => {
-  console.log(request.query);
   const { userId } = request.query;
-  console.log("got a user", userId);
   const lists = await db.getLists(userId);
   response.status(200).json(lists);
 });
@@ -116,7 +114,6 @@ lists.delete("/:id", async (request, response) => {
 items.get("/", async (request, response) => {
   const { listId } = request.query;
   const items = await db.getItems(listId);
-  console.log("hello test test");
   response.status(200).json(items);
 });
 
@@ -136,7 +133,6 @@ items.post("/", async (request, response) => {
   const item = await db.addItem(name, list_id);
   response.status(201).json(item);
   // alternatively: response.json(newItem.rows[0]);
-  console.log("i'm in post and item is: ", item); // to test
 });
 
 // write get, put, post, delete routes here with items.
@@ -153,7 +149,6 @@ items.put("/:id", async (request, response) => {
 items.delete("/:id", async (request, response) => {
   const { id } = request.params;
   await db.deleteItem(id);
-  console.log("in delete", request.params);
   response.status(200).json("item was deleted");
 });
 

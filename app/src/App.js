@@ -58,8 +58,6 @@ const App = ({ page, user }) => {
     });
   }, []);
 
-  console.log("=== rendering for page===", page);
-
   return (
     <Fragment>
       <div className="header-body">
@@ -83,7 +81,6 @@ const App = ({ page, user }) => {
               {page === "home" && (
                 <ViewAllLists
                   selectList={(list) => {
-                    console.log("===about to navigate to list detail", list.id);
                     history.push(`/lists/${list.id}`);
                   }}
                   userId={user.id}
@@ -110,7 +107,14 @@ const App = ({ page, user }) => {
               <p>
                 Developed by Meia Natividad
                 <br />
-                as her final project for Techtonica
+                as her final project for{" "}
+                <a
+                  href="https://techtonica.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Techtonica
+                </a>
               </p>
             </div>
             {/* Grid column */}

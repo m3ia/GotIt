@@ -26,7 +26,6 @@ const LoginPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleGoogleAuth = async (isSignedIn) => {
-    console.log("Are we here?", isSignedIn);
     if (!isSignedIn) {
       setIsAuthenticated(false);
       setUser(null);
@@ -42,7 +41,6 @@ const LoginPage = () => {
       },
     });
     const user = await response.json();
-    console.log("WE MADE IT!", { user });
     setUser(user);
     setIsAuthenticated(true);
   };
@@ -78,7 +76,6 @@ const LoginPage = () => {
     });
   }, []);
 
-  console.log("this is user", user);
   return (
     <>
       {isAuthenticated ? (

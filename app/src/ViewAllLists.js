@@ -16,7 +16,6 @@ const CreateNewList = ({
   const [dueDate, setDueDate] = useState("");
 
   const addNewList = async (newList) => {
-    console.log({ name, dueDate });
     const response = await apiClient.addList(newList);
     onAdd(response[0]);
   };
