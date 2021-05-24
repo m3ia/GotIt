@@ -136,121 +136,109 @@ const ListItems = ({ listId, back, list }) => {
 
   return (
     <>
+      {/* Open for test */}
       <div data-testid="test-1">
-        <div className="items-table container-fluid items-container">
-          <button className="btn btn-secondary float-right" onClick={back}>
-            Back To All Lists
-          </button>
-          <br />
-          <h2>
-            {list.name}
-            {list.due_date ? (
-              <>
-                <br />
-                <div className="due-date-title">
-                  <h6>List Due Date: {list.due_date}</h6>
-                </div>
-              </>
-            ) : null}
-          </h2>
-          <AddItem addNewItem={addNewItem} />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              maxWidth: "75%",
-              alignItems: "center",
-            }}
-          >
-            <table
-              className="SM table table-hover mt-5"
-              style={{ maxWidth: "75%" }}
-            >
-              <thead>
-                <tr className="header-row">
-                  <th>Complete</th>
-                  <th>Item</th>
-                  <th>Edit</th>
-                  <th>Frequency</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items
-                  // .filter((item) => !item.is_done)
-                  .map((item) => (
-                    <ItemRow
-                      item={item}
-                      deleteItem={deleteItem}
-                      key={item.id}
-                      getItems={getItems}
-                      updateItem={editItem}
-                    />
-                  ))}
-              </tbody>
-            </table>
-            <br />
+        {/* Open for Active Items Container */}
+        <div className="items-container">
+          {/* Open for item title */}
+          <div className="list-items-header">
+            <div className="list-items-title">
+              <h2>
+                {list.name}
+                {list.due_date ? (
+                  <>
+                    <br />
+                    {/* Open for due date */}
+                    <div className="due-date-title">
+                      <h6>Due: {list.due_date}</h6>
+                    </div>
+                    {/* Close for due date */}
+                  </>
+                ) : null}
+              </h2>
+            </div>
             <button
-              className="show-completed-toggle btn-primary"
-              onClick={() => setShowCompletedItems(!showCompletedItems)}
+              className="btn btn-secondary float-right back-button"
+              onClick={back}
             >
-              {showCompletedItems
-                ? "Hide Completed Items"
-                : "Show Completed Items"}
+              Back To All Lists
             </button>
-            {showCompletedItems && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  maxWidth: "75%",
-                  alignItems: "center",
-                }}
-              >
-                <h3>Completed Items</h3>
-                <table
-                  className="table table-hover mt-5"
-                  style={{ maxWidth: "75%" }}
-                >
-                  <thead>
-                    <tr className="header-row">
-                      <th>Complete</th>
-                      <th>Item</th>
-                      <th>Edit</th>
-                      <th>Frequency</th>
-                      <th>Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {completedItems
-                      // .filter((item) => !item.is_done)
-                      .map((item) => (
-                        <ItemRow
-                          item={item}
-                          deleteItem={deleteItem}
-                          key={item.id}
-                          getItems={getItems}
-                          updateItem={editItem}
-                        />
-                      ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
           </div>
-        </div>
-      </div>
-      <div className="my-calendar">
-        {isAuthenticated ? (
-          <>
+          {/* Close for item title */}
+          {/* Open for section to add item */}
+          <div className="add-item-section">
+            <AddItem addNewItem={addNewItem} />
+          </div>
+          {/* Close for section to add item */}
+          {/* Open for active item row */}
+          <div className="item-row-container">
+            {items
+              // .filter((item) => !item.is_done)
+              .map((item) => (
+                <ItemRow
+                  item={item}
+                  deleteItem={deleteItem}
+                  key={item.id}
+                  getItems={getItems}
+                  updateItem={editItem}
+                />
+              ))}
             <br />
-            <h6>My Upcoming Events on Google Calendar: </h6>
-            <Events />
-          </>
-        ) : null}
+          </div>
+          {/* Close for active item row */}
+        </div>
+        {/* Closure for active items container */}
+        <button
+          className="show-completed-toggle btn btn-primary"
+          onClick={() => setShowCompletedItems(!showCompletedItems)}
+        >
+          {showCompletedItems ? "Hide Completed Items" : "Show Completed Items"}
+        </button>
+
+        {showCompletedItems && (
+          // Open for Completed Items container
+          <div
+            className="completed-items-container"
+            // style={{
+            //   display: "flex",
+            //   flexDirection: "column",
+            //   justifyContent: "center",
+            //   maxWidth: "75%",
+            //   alignItems: "center",
+            // }}
+          >
+            <h3>Completed Items</h3>
+            {/* Open for completed item row */}
+            <div className="items-row-container">
+              {completedItems
+                // .filter((item) => !item.is_done)
+                .map((item) => (
+                  <ItemRow
+                    item={item}
+                    deleteItem={deleteItem}
+                    key={item.id}
+                    getItems={getItems}
+                    updateItem={editItem}
+                  />
+                ))}
+            </div>
+            {/* Closure for completed item row */}
+          </div>
+          // Close for completed items container
+        )}
+        {/* Open for GCal  */}
+        <div className="my-calendar">
+          {isAuthenticated ? (
+            <>
+              <br />
+              <h6>My Upcoming Events on Google Calendar: </h6>
+              <Events />
+            </>
+          ) : null}
+        </div>
+        {/* Close for GCal  */}
       </div>
+      {/*Closure for test*/}
     </>
   );
 };

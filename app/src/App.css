@@ -5,9 +5,6 @@
   place-items: center;
 
 }
-.add-item {
-  width: 70rem;
-}
 
 .add-item-row {
   border: 1px solid;
@@ -16,44 +13,93 @@
 }
 
 .add-item-box {
-  width: 25rem;
   height: 2rem;
   margin : 0 1rem 0 0;
   place-items: center;
 
 }
+.item-row-container {
+  /* max-width: 50%; */
+  display:flex;
+  flex-direction: column;
 
-.header-row, .item-row {
-  width: 25rem;
+}
+.item-row {
+  display: flex;
+  flex-direction: row;
+  min-width: 50%;
+  justify-content:space-between;
+
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  /* max-width: 25%; */
+}
+
+.item-action-buttons {
+  display: flex;
+  flex-direction: row;
+  /* justify-content:space-between; */
+}
+
+.item-row .action-button {
+  padding: 1px;
+  visibility:hidden;
+}
+
+.item-row:hover .action-button
+{
+  visibility:visible;
+}
+
+#edit-button {
+  color: gold;
+}
+
+#save-button {
+  color: #0070b8;
+}
+
+#delete-button {
+  color: red;
+  background-color: white;
+  padding: 1 1 1 1;
+  border-color: white;
+}
+.no-bullets {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .form-check-input {
+  display: flex;
+  align-self: center;
   place-items: center;
   width: 2rem;
   height: 2rem;
   margin : 0 0 0 0;
 }
 
-.item-div {
-  inline-size: 150px;
+.item-name-div {
+  inline-size: 75%;
   overflow-wrap: break-word;
+  /* min-width: 300px; */
+  max-width: 63%;
+  padding: 1px;
 }
 
-#delete-button {
-  color:white;
+.recur-info {
+  font-size: 12px;
+  font-style: italic;
+  color: #FEB062;
 }
 
 #recur-button {
-  background-color: #FEB062;
-  color: #2B2B2B;
-  border: #FEB062;
+  color: #FEB062;
   display: center;
-  /* color: white;
-  padding: 20px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  margin: 4px 2px; */
 }
 
 .list-container {
@@ -84,23 +130,14 @@
   padding: 10px;
 }
 
-.jumbotron {
-  background-color:#FFF;
-}
-
 .page-container {
   position: relative;
   min-height: 100vh;
 }
 
 footer {
-  left: 0;
-  bottom: 0;
-  right: 0;
   background-color:#FEB062;
   /* padding: 5px 5px 5px 5px; */
-  text-overflow: wrap;  
-  position:inherit;
 }
 
 .orange-background {
@@ -169,22 +206,81 @@ a:hover {
 
 .items-container {
   padding-top: 15px;
+  width: 100%; 
+  border-collapse: collapse; 
 }
+
+td, th { 
+  padding: 6px; 
+  border: 1pxsolid transparent; 
+  text-align: left; 
+}
+
+
 
 .due-date-title {
   color: #277967;
   font-style: italic;
   font-size: 12px;
+  max-height: 20px;
+  min-height: 20px;
 }
 
 .list-title {
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
   text-align: center;
-  max-width: 100px;
-  text-overflow: wrap;
   font-size:14px;
 }
 
 
 .list-name {
   font-weight: bold;
+  max-height: 20px;
+  max-width: 100px;
+  overflow: hidden;  
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-name:hover {
+  overflow: visible;
+
+}
+
+.log-out-button {
+  background-color: #FEB062;
+}
+
+/* Edit later */
+.add-item {
+  display: flex;
+}
+
+input.add-item-box {
+  flex: 1;
+}
+
+.items-container {
+  max-width: 600px;
+}
+
+.add-item-section {
+  margin-bottom: 15px;
+}
+
+.list-items-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-item {
+  align-items: center;
+}
+
+.list-items-header {
+  margin-bottom: 15px;
 }

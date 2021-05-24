@@ -177,15 +177,18 @@ const ViewAllLists = ({ selectList, userId, user }) => {
         {lists.map((list) => (
           <div key={list.id} className="list-element">
             <div className="list-title">
-              <span className="list-name">{list.name}</span>
+              <div className="list-name">{list.name}</div>
               {list.due_date ? (
                 <>
-                  <br />
                   <div className="due-date-title">
-                    <span>List Due Date: {list.due_date}</span>
+                    <span>Due: {list.due_date}</span>
                   </div>
                 </>
-              ) : null}
+              ) : (
+                <>
+                  <div className="due-date-title">No due Date</div>
+                </>
+              )}
             </div>
 
             <img
