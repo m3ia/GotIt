@@ -237,11 +237,10 @@ td, th {
 
 .list-name {
   font-weight: bold;
-  /* max-height: 20px; */
   max-width: 100px;
   overflow: hidden;  
   text-overflow: ellipsis;
-  white-space:normal;
+  white-space:nowrap;
 }
 
 .list-name:hover {
