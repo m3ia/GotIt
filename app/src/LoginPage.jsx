@@ -80,12 +80,18 @@ const LoginPage = () => {
       {isAuthenticated ? (
         <AppRootComponent user={user} />
       ) : (
-        <div className="sign-in-wrapper">
-          <div className="sign-in-box container">
-            <Login />
-            <img src={logo} className="logo" alt="Got It Logo" width="15%" />
+        <>
+          <div className="log-in-container">
+            <div className="logo-login">
+              <img src={logo} className="logo" alt="Got It Logo" />
+            </div>
+            <div className="sign-in-wrapper">
+              <div className="sign-in-box container">
+                <Login />
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

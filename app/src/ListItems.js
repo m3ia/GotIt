@@ -152,7 +152,10 @@ const ListItems = ({ listId, back }) => {
         if (itemRecurEndDate && itemRecurEndDate <= today) {
           // TESTED: if the so, then delete the item.
           deleteItem(item.id);
-        } else if (item.recur_start_date && today >= item.recur_start_date) {
+        } else if (
+          item.recur_start_date &&
+          today >= new Date(item.recur_start_date)
+        ) {
           editItem({
             ...item,
             is_done: false,

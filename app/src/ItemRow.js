@@ -4,6 +4,8 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import SaveIcon from "@material-ui/icons/Save";
+import { lightFormat } from "date-fns";
+import { zonedTimeToUtc } from "date-fns-tz";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 
@@ -220,7 +222,10 @@ function getNextStartDate(item) {
     while (newStartDate <= now) {
       newStartDate = adder(newStartDate, amountToAdd);
     }
-    return newStartDate;
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const utcDate = zonedTimeToUtc(new Date(newStartDate), tz);
+    debugger;
+    return lightFormat(utcDate, "yyyy-MM-dd");
   }
 }
 
