@@ -289,3 +289,7 @@ input.add-item-box {
   /* overflow: visible; */
   white-space: normal;
 }
+
+span.add-item-row {
+  color: gray;
+}
