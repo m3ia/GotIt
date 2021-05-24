@@ -210,7 +210,7 @@ const ViewAllLists = ({ selectList, userId, user }) => {
               <button
                 type="button"
                 className="list-button btn btn-danger btn-sm"
-                id="delete-button"
+                id="delete-list-button"
                 onClick={() => deleteList(list.id)}
               >
                 Delete
