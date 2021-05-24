@@ -25,9 +25,14 @@ const Events = () => {
 
   return events.length === 0 ? null : (
     <ul>
-      {events.map((event) => (
-        <li key={event.id}>{event.summary}</li>
-      ))}
+      {events.map((event) => {
+        console.log(event);
+        return (
+          <li key={event.id}>
+            {event.summary} {event.start.dateTime} {event.end.dateTime}
+          </li>
+        );
+      })}
     </ul>
   );
 };
