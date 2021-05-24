@@ -137,7 +137,7 @@ const App = ({ page, user }) => {
                   <GitHubIcon />
                 </a>
                 <a
-                  href="https://linkedin.com/in.meiamay"
+                  href="https://linkedin.com/in/meiamay"
                   target="_blank"
                   rel="noreferrer"
                 >
