@@ -1,5 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 
+import { lightFormat } from "date-fns";
+
 import AddItem from "./AddItemForm";
 import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
@@ -10,46 +12,70 @@ const Events = () => {
 
   useEffect(() => {
     gcal
-      .listUpcomingEvents(10)
+      .listUpcomingEvents(7)
       .then(({ result: { items } }) => setEvents(items));
   }, []);
 
   return events.length === 0 ? null : (
-    <ul>
-      {events.map((event) => {
-        return (
-          <li key={event.id}>
-            {event.summary} {event.start.dateTime} {event.end.dateTime}
-          </li>
-        );
-      })}
-    </ul>
+    <table className="gcal-table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Event</th>
+          <th scope="col">Date</th>
+          {/* <th scope="col">End Date</th> */}
+        </tr>
+      </thead>
+      <tbody>
+        {events.map((event) => {
+          const eventStartDate =
+            event.start.date ||
+            lightFormat(new Date(event.start.dateTime), "yyyy-MM-dd");
+          return (
+            <tr key={event.id}>
+              {/* <th scope="row"></th> */}
+              <td>{event.summary}</td>
+              <td>{eventStartDate}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 
 const AddListToGCal = ({ list }) => {
+  const currURL = window.location.href;
+  const [events, setEvents] = useState([]);
+
   const addListToGCal = async () => {
     await gcal.createEvent({
-      summary: `${list.name}, due ${list.due_date}`,
+      summary: `${list.name}`,
       start: {
         date: list.due_date,
       },
       end: {
         date: list.due_date,
       },
+      source: {
+        url: `${currURL}`,
+      },
+      description: `${currURL}`,
     });
   };
 
   return (
     <>
-      {list.due_date && (
-        <button
-          className="btn btn-warning add-list-to-gcal-button"
-          onClick={addListToGCal}
-        >
-          Add List to Google Calendar
-        </button>
-      )}
+      <button
+        className="btn btn-warning add-list-to-gcal-button"
+        onClick={addListToGCal}
+      >
+        Add List to Google Calendar
+      </button>
+      <div className="my-calendar">
+        <br />
+        <h6>Upcoming Events on My Google Calendar: </h6>
+        <Events />
+      </div>
     </>
   );
 };
@@ -253,20 +279,16 @@ const ListItems = ({ listId, back }) => {
           </div>
           // Close for completed items container
         )}
-        {/* Open for GCal  */}
-        <div className="my-calendar">
-          {isAuthenticated ? (
-            <>
-              <br />
-              <h6>My Upcoming Events on Google Calendar: </h6>
-              <Events />
-            </>
-          ) : null}
-        </div>
-        <div className="add-list-to-gcal">
-          <AddListToGCal list={list} />
-        </div>
-        {/* Close for GCal  */}
+
+        {
+          isAuthenticated && list.due_date ? (
+            // Open for GCal
+            <div className="add-list-to-gcal">
+              <AddListToGCal list={list} />
+            </div>
+          ) : null
+          // Close for GCal
+        }
       </div>
       {/*Closure for test*/}
     </>

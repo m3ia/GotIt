@@ -6,11 +6,6 @@ const AddItem = ({ addNewItem }) => {
   const inputItem = useRef();
   const [name, setName] = useState("");
 
-  // const addNewItem = async (name) => {
-  //   const response = await apiClient.addItem(name);
-  //   onAdd(response[0]);
-  // };
-
   // Clicking Edit/on the value activates editMode. User sees input bar and Submit button.
   const onEditClick = () => {
     setEditMode(true);
@@ -22,11 +17,6 @@ const AddItem = ({ addNewItem }) => {
     setName("");
     inputItem.current.focus();
   };
-
-  // Want: When user clicks out of input box => setEditMode(false) => editMode === false, a line with original value.
-  //   const cancelEdit = () => {
-  //   setEditMode(false);
-  // }
 
   // When user clicks Enter on Edit Mode, onSubmitClick is processed.
   const handleKeyPress = (e) => {
@@ -82,8 +72,7 @@ const AddItem = ({ addNewItem }) => {
             />
             <button
               onClick={onSubmitClick}
-              className="submitButton"
-              class="btn btn-primary"
+              className="btn btn-primary submitButton"
               type="submit"
             >
               Submit

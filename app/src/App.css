@@ -293,3 +293,11 @@ input.add-item-box {
 span.add-item-row {
   color: gray;
 }
+
+.show-completed-toggle, .completed-items-container {
+  margin-bottom: 15px;
+}
+
+.my-calendar {
+  padding-bottom: 15px;
+}
