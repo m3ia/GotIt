@@ -4,9 +4,14 @@ export const getLists = async (userId) => {
   return response.json();
 };
 
+// get one list
+export const getList = async (listId, userId) => {
+  const response = await fetch(`/api/lists/${listId}?userId=${userId}`);
+  return response.json();
+};
+
 // add list function
 export const addList = async (payload) => {
-  console.log(payload);
   const response = await fetch("/api/lists", {
     method: "POST",
     headers: {

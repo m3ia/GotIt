@@ -1,39 +1,87 @@
 import React, { useCallback, useState, useEffect } from "react";
 
+import { lightFormat } from "date-fns";
+
 import AddItem from "./AddItemForm";
 import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
-
-// TODO: remove once this works on log-in
-// // GCal Sign In
-// const Login = ({ isAuthenticated }) =>
-//   isAuthenticated ? (
-//     <button onClick={gcal.handleSignoutClick}>Log out</button>
-//   ) : (
-//     <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
-//   );
 
 const Events = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
     gcal
-      .listUpcomingEvents(10)
+      .listUpcomingEvents(7)
       .then(({ result: { items } }) => setEvents(items));
   }, []);
 
   return events.length === 0 ? null : (
-    <ul>
-      {events.map((event) => (
-        <li key={event.id}>{event.summary}</li>
-      ))}
-    </ul>
+    <table className="gcal-table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Event</th>
+          <th scope="col">Date</th>
+          {/* <th scope="col">End Date</th> */}
+        </tr>
+      </thead>
+      <tbody>
+        {events.map((event) => {
+          const eventStartDate =
+            event.start.date ||
+            lightFormat(new Date(event.start.dateTime), "yyyy-MM-dd");
+          return (
+            <tr key={event.id}>
+              {/* <th scope="row"></th> */}
+              <td>{event.summary}</td>
+              <td>{eventStartDate}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+};
+
+const AddListToGCal = ({ list }) => {
+  const currURL = window.location.href;
+
+  const addListToGCal = async () => {
+    await gcal.createEvent({
+      summary: `${list.name}`,
+      start: {
+        date: list.due_date,
+      },
+      end: {
+        date: list.due_date,
+      },
+      source: {
+        url: `${currURL}`,
+      },
+      description: `${currURL}`,
+    });
+  };
+
+  return (
+    <>
+      <button
+        className="btn btn-warning add-list-to-gcal-button"
+        onClick={addListToGCal}
+      >
+        Add List to Google Calendar
+      </button>
+      <div className="my-calendar">
+        <br />
+        <h6>Upcoming Events on My Google Calendar: </h6>
+        <Events />
+      </div>
+    </>
   );
 };
 
 // This is view for one list.
-const ListItems = ({ listId, back, list }) => {
+const ListItems = ({ listId, back }) => {
+  const [list, setList] = useState(null);
   const [allItems, setItems] = useState([]);
   const [showCompletedItems, setShowCompletedItems] = useState(false);
   const items = allItems.filter((item) => !item.is_done);
@@ -42,8 +90,10 @@ const ListItems = ({ listId, back, list }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
 
   async function getItems(listId) {
+    const list = await apiClient.getList(listId);
     const itemsArray = await apiClient.getItems(listId);
     setItems(itemsArray);
+    setList(list);
   }
 
   const addNewItem = async (name) => {
@@ -133,7 +183,9 @@ const ListItems = ({ listId, back, list }) => {
       }
     });
   }, []);
-
+  if (!list) {
+    return null;
+  }
   return (
     <>
       {/* Open for test */}
@@ -226,17 +278,16 @@ const ListItems = ({ listId, back, list }) => {
           </div>
           // Close for completed items container
         )}
-        {/* Open for GCal  */}
-        <div className="my-calendar">
-          {isAuthenticated ? (
-            <>
-              <br />
-              <h6>My Upcoming Events on Google Calendar: </h6>
-              <Events />
-            </>
-          ) : null}
-        </div>
-        {/* Close for GCal  */}
+
+        {
+          isAuthenticated && list.due_date ? (
+            // Open for GCal
+            <div className="add-list-to-gcal">
+              <AddListToGCal list={list} />
+            </div>
+          ) : null
+          // Close for GCal
+        }
       </div>
       {/*Closure for test*/}
     </>

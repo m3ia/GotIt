@@ -1,24 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import * as apiClient from "./apiClient";
-import icon from "./got-it-logo-icon1.png";
 import listIcon from "./list-icon.png";
-
-// const ListIcon = () => {
-//   return (
-//     <>
-//       {icon}
-//       <button
-//         type="button"
-//         // className="edit-button"
-//         data-target={`#id${list.id}`}
-//         // onClick={onEditClick}
-//       >
-//         View
-//       </button>
-//     </>
-//   );
-// };
 
 const CreateNewList = ({
   onAdd,
@@ -31,7 +14,6 @@ const CreateNewList = ({
   const [dueDate, setDueDate] = useState("");
 
   const addNewList = async (newList) => {
-    console.log({ name, dueDate });
     const response = await apiClient.addList(newList);
     onAdd(response[0]);
   };
@@ -45,14 +27,6 @@ const CreateNewList = ({
     setName("");
   };
 
-  // // Validation to ensure name is not empty
-  // function validateForm() {
-  //   var x = document.forms["myForm"]["fname"].value;
-  //   if (x === "") {
-  //     alert("List name must be filled out");
-  //     return false;
-  //   }
-  // }
   return (
     <div className="container">
       <button
@@ -76,13 +50,6 @@ const CreateNewList = ({
             <div className="modal-body">
               <b>List Name:</b>
               <div className="form-group">
-                {/* <form
-                  name="myForm"
-                  action="/action_page.php"
-                  onsubmit={() => validateForm()}
-                  method="post"
-                  required
-                > */}
                 <label htmlFor="list">Name:</label>
                 <input
                   type="text"
@@ -91,7 +58,6 @@ const CreateNewList = ({
                   defaultValue={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                {/* </form> */}
               </div>
               <b>Due Date: (optional)</b>
               <div className="form-group">
@@ -135,7 +101,6 @@ const ViewAllLists = ({ selectList, userId, user }) => {
   async function getLists(userId) {
     const listsArray = await apiClient.getLists(userId);
     setLists(listsArray);
-    console.log("in getlists", userId);
   }
 
   const onAdd = (list) => setLists([...lists, list]);
@@ -210,7 +175,7 @@ const ViewAllLists = ({ selectList, userId, user }) => {
               <button
                 type="button"
                 className="list-button btn btn-danger btn-sm"
-                id="delete-button"
+                id="delete-list-button"
                 onClick={() => deleteList(list.id)}
               >
                 Delete

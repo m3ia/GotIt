@@ -18,20 +18,16 @@ const items = express.Router();
 const users = express.Router();
 
 app.post("/api/v1/auth/google", async (req, res) => {
-  console.log("made it to google post");
   const { token } = req.body;
-  console.log("We got a token", token);
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.CLIENT_ID,
   });
   const { email } = ticket.getPayload();
-  console.log("We got the user verified email", email);
   let { user } = await db.loginUser(email);
   if (!user) {
     user = await db.getUser(email);
   }
-  console.log("we got em", { user });
   res.status(201);
   res.json(user);
 });
@@ -76,9 +72,7 @@ users.delete("/:id", async (request, response) => {
 
 // gets all lists
 lists.get("/", async (request, response) => {
-  console.log(request.query);
   const { userId } = request.query;
-  console.log("got a user", userId);
   const lists = await db.getLists(userId);
   response.status(200).json(lists);
 });
@@ -120,7 +114,6 @@ lists.delete("/:id", async (request, response) => {
 items.get("/", async (request, response) => {
   const { listId } = request.query;
   const items = await db.getItems(listId);
-  console.log("hello test test");
   response.status(200).json(items);
 });
 
@@ -140,7 +133,6 @@ items.post("/", async (request, response) => {
   const item = await db.addItem(name, list_id);
   response.status(201).json(item);
   // alternatively: response.json(newItem.rows[0]);
-  console.log("i'm in post and item is: ", item); // to test
 });
 
 // write get, put, post, delete routes here with items.
@@ -157,7 +149,6 @@ items.put("/:id", async (request, response) => {
 items.delete("/:id", async (request, response) => {
   const { id } = request.params;
   await db.deleteItem(id);
-  console.log("in delete", request.params);
   response.status(200).json("item was deleted");
 });
 
@@ -165,9 +156,9 @@ app.use("/api/lists", lists);
 app.use("/api/items", items);
 app.use("/api/users", users);
 
-app.use(express.static("public"));
+app.use(express.static("/public"));
 
-process.env?.SERVE_REACT?.toLowerCase() === "true" &&
+if (process.env?.SERVE_REACT?.toLowerCase() === "true") {
   app.use(
     express.static("/app", {
       maxAge: "1d",
@@ -176,6 +167,11 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
         res.setHeader("Cache-Control", "public, max-age=0"),
     }),
   );
+
+  app.get("*", (req, res) => {
+    res.sendFile("/app/index.html");
+  });
+}
 
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),

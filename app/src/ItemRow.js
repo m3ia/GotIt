@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import SaveIcon from "@material-ui/icons/Save";
-import TodayIcon from "@material-ui/icons/Today";
-import ViewWeekIcon from "@material-ui/icons/ViewWeek";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 
@@ -62,19 +59,22 @@ const RecurringSettings = ({ item, editItem }) => {
                   // value={recurFreq}
                   defaultValue={recurFreq}
                 >
-                  <option value="select" selected={recurFreq === null}>
+                  <option value="select" defaultValue={recurFreq === null}>
                     Set Frequency
                   </option>
-                  <option value="5s" selected={recurFreq === "5s"}>
+                  <option value="5s" defaultValue={recurFreq === "5s"}>
                     5s
                   </option>
-                  <option value="Daily" selected={recurFreq === "Daily"}>
+                  <option value="Daily" defaultValue={recurFreq === "Daily"}>
                     Daily
                   </option>
-                  <option value="Weekly" selected={recurFreq === "Weekly"}>
+                  <option value="Weekly" defaultValue={recurFreq === "Weekly"}>
                     Weekly
                   </option>
-                  <option value="Monthly" selected={recurFreq === "Monthly"}>
+                  <option
+                    value="Monthly"
+                    defaultValue={recurFreq === "Monthly"}
+                  >
                     Monthly
                   </option>
                 </select>
@@ -88,7 +88,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   type="date"
                   className="form-control"
                   id="recur-start-date"
-                  defaultValue={recurStartDate}
+                  defaultValue={item.recur_start_date}
                   onChange={(e) => setRecurStartDate(e.target.value)}
                 ></input>
                 {/* Can improve end date option in future */}
@@ -99,7 +99,7 @@ const RecurringSettings = ({ item, editItem }) => {
                   type="date"
                   className="form-control"
                   id="recur-end-date"
-                  defaultValue={recurEndDate}
+                  defaultValue={item.recur_end_date}
                   onChange={(e) => setRecurEndDate(e.target.value)}
                 ></input>
               </div>
@@ -142,7 +142,8 @@ const Checkbox = ({ item, onChange }) => {
           // value={isChecked}
           checked={isChecked}
           name="{item.name}"
-          onClick={(e) => {
+          unchecked="true"
+          onChange={(e) => {
             onChange(e.target.value);
             !isChecked ? setIsChecked(true) : setIsChecked(false);
           }}
@@ -173,40 +174,52 @@ function getNextStartDate(item) {
   let adder = addDays;
   let amountToAdd = 1;
 
-  console.log("testing. item.recur_start_date: ", item.recur_start_date);
-
-  if (item.recur_freq === "Weekly") {
+  if (item.recur_freq?.trim() === "Weekly") {
     amountToAdd = 7;
-  } else if (item.recur_freq === "Monthly") {
+  } else if (item.recur_freq?.trim() === "Monthly") {
     adder = addMonths;
-  } else if (item.recur_freq === "5s") {
+  } else if (item.recur_freq?.trim() === "5s") {
     // doesn't matter
-    return now;
+    newStartDate = now;
+    return newStartDate;
   } else if (!item.recur_freq) {
     // not recurring
     return null;
   }
 
   // find the next closest of that window
-  console.log(
-    "is adder current date plus amount to add greater than or equal to now? ",
-    "newstartdate: ",
-    newStartDate,
-    "now: ",
-    now,
-    "item sd: ",
-    new Date(item.recur_start_date),
-    adder(newStartDate, amountToAdd),
-    adder(newStartDate, amountToAdd) >= now,
-  );
-  if (adder(newStartDate, amountToAdd) >= now) {
-    newStartDate = new Date(item.recur_start_date);
-    return newStartDate;
-  } else {
-    while (adder(newStartDate, amountToAdd) < now) {
-      newStartDate = addDays(newStartDate, 1);
+
+  // Keeping for testing purposes
+  // console.log(
+  //   "is adder current date plus amount to add greater than or equal to now? ",
+  //   "newstartdate: ",
+  //   newStartDate,
+  //   "now: ",
+  //   now,
+  //   "item sd: ",
+  //   new Date(item.recur_start_date),
+  //   adder(newStartDate, amountToAdd),
+  //   adder(newStartDate, amountToAdd) >= now,
+  // );
+
+  // console.log(item.recur_freq?.trim());
+  // if (adder(newStartDate, amountToAdd) > now) {
+  //   newStartDate = new Date(item.recur_start_date);
+  //   return newStartDate;
+  // } else {
+
+  // previous
+  // while (adder(newStartDate, amountToAdd) <= now) {
+  //   newStartDate = addDays(newStartDate, 1);
+  // }
+  // newStartDate = adder(newStartDate, amountToAdd);
+  // return newStartDate;
+  // }
+  //refactoring
+  if (item.recur_freq && item.recur_freq?.trim() !== "5s") {
+    while (newStartDate <= now) {
+      newStartDate = adder(newStartDate, amountToAdd);
     }
-    newStartDate = adder(newStartDate, amountToAdd);
     return newStartDate;
   }
 }
