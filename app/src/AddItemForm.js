@@ -20,7 +20,7 @@ const AddItem = ({ addNewItem }) => {
   const onSubmitClick = () => {
     addNewItem(name);
     setName("");
-    setEditMode(false);
+    inputItem.current.focus();
   };
 
   // Want: When user clicks out of input box => setEditMode(false) => editMode === false, a line with original value.
@@ -33,7 +33,6 @@ const AddItem = ({ addNewItem }) => {
     if (e.charCode === 13) {
       addNewItem(e.target.value);
       setName("");
-      setEditMode(false);
     }
   };
 
