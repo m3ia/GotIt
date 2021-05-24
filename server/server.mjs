@@ -158,7 +158,7 @@ app.use("/api/users", users);
 
 app.use(express.static("/public"));
 
-process.env?.SERVE_REACT?.toLowerCase() === "true" &&
+if (process.env?.SERVE_REACT?.toLowerCase() === "true") {
   app.use(
     express.static("/app", {
       maxAge: "1d",
@@ -167,6 +167,11 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
         res.setHeader("Cache-Control", "public, max-age=0"),
     }),
   );
+
+  app.get("*", (req, res) => {
+    res.sendFile("/app/index.html");
+  });
+}
 
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
