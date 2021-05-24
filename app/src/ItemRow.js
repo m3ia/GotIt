@@ -143,7 +143,6 @@ const Checkbox = ({ item, onChange }) => {
           // value={isChecked}
           checked={isChecked}
           name="{item.name}"
-          unchecked="true"
           onChange={(e) => {
             onChange(e.target.value);
             !isChecked ? setIsChecked(true) : setIsChecked(false);
@@ -174,9 +173,8 @@ export function convertDateStringToDate(dateString) {
   return new Date(year, month - 1, day, 0, 0, 0);
 }
 
-function getNextStartDate(item) {
+export function getNextStartDate(item) {
   const now = new Date();
-  let newStartDate = convertDateStringToDate(item.recur_start_date);
   let adder = addDays;
   let amountToAdd = 1;
 
@@ -186,13 +184,12 @@ function getNextStartDate(item) {
     adder = addMonths;
   } else if (item.recur_freq?.trim() === "5s") {
     // doesn't matter
-    newStartDate = now;
-    return newStartDate;
+    return lightFormat(now, "yyyy-MM-dd");
   } else if (!item.recur_freq) {
     // not recurring
     return null;
   }
-
+  let newStartDate = convertDateStringToDate(item.recur_start_date);
   // find the next closest of that window
 
   // Keeping for testing purposes
