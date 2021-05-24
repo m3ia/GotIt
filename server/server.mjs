@@ -156,7 +156,7 @@ app.use("/api/lists", lists);
 app.use("/api/items", items);
 app.use("/api/users", users);
 
-app.use(express.static("public"));
+app.use(express.static("/public"));
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(

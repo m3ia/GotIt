@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import gcal from "./ApiCalendar";
 import App from "./App";
-import * as apiClient from "./apiClient";
 import logo from "./got-it-logo1.png";
 
 const AppRootComponent = ({ user }) => (

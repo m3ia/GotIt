@@ -45,7 +45,6 @@ const Events = () => {
 
 const AddListToGCal = ({ list }) => {
   const currURL = window.location.href;
-  const [events, setEvents] = useState([]);
 
   const addListToGCal = async () => {
     await gcal.createEvent({

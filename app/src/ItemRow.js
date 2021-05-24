@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import SaveIcon from "@material-ui/icons/Save";
-import TodayIcon from "@material-ui/icons/Today";
-import ViewWeekIcon from "@material-ui/icons/ViewWeek";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 
@@ -142,7 +139,8 @@ const Checkbox = ({ item, onChange }) => {
           // value={isChecked}
           checked={isChecked}
           name="{item.name}"
-          onClick={(e) => {
+          unchecked="true"
+          onChange={(e) => {
             onChange(e.target.value);
             !isChecked ? setIsChecked(true) : setIsChecked(false);
           }}
