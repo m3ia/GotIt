@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect } from "react";
 import EmailIcon from "@material-ui/icons/Email";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import { useParams, useHistory } from "react-router-dom";
 
 import gcal from "./ApiCalendar";
 import ListItems from "./ListItems";
@@ -12,26 +13,14 @@ import logo2 from "./got-it-logo1-removebg-preview.png";
 // import logo from "./got-it-logo1.png";
 // import * as apiClient from "./apiClient";
 
-const App = ({ user }) => {
+const App = ({ page, user }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
-  const [page, setPage] = useState("home");
-  const [selectedListId, setSelectedListId] = useState(null);
-  const [list, setList] = useState({});
+  const { listId } = useParams();
+  const history = useHistory();
+  const selectedListId = listId;
 
   const back = () => {
-    // TODO: use react-router for navigation
-    // setPage("home");
-    setSelectedListId(null);
-  };
-
-  // GCal log-in
-  const handleGoogleAuth = async (isSignedIn) => {
-    console.log("Are we here?", isSignedIn);
-    if (!isSignedIn) {
-      setIsAuthenticated(false);
-      return;
-      // }
-    }
+    history.push("/");
   };
 
   const Login = ({ isAuthenticated }) =>
@@ -69,6 +58,8 @@ const App = ({ user }) => {
     });
   }, []);
 
+  console.log("=== rendering for page===", page);
+
   return (
     <Fragment>
       <div className="header-body">
@@ -92,17 +83,15 @@ const App = ({ user }) => {
               {page === "home" && (
                 <ViewAllLists
                   selectList={(list) => {
-                    // TODO: use react-router for navigation
-                    // setPage("listItems");
-                    setSelectedListId(list.id);
-                    setList(list);
+                    console.log("===about to navigate to list detail", list.id);
+                    history.push(`/lists/${list.id}`);
                   }}
                   userId={user.id}
                   user={user}
                 />
               )}
               {page === "listItems" && (
-                <ListItems listId={selectedListId} back={back} list={list} />
+                <ListItems listId={selectedListId} back={back} />
               )}
             </div>
           </div>

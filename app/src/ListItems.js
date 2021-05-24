@@ -5,15 +5,6 @@ import gcal from "./ApiCalendar";
 import ItemRow from "./ItemRow";
 import * as apiClient from "./apiClient";
 
-// TODO: remove once this works on log-in
-// // GCal Sign In
-// const Login = ({ isAuthenticated }) =>
-//   isAuthenticated ? (
-//     <button onClick={gcal.handleSignoutClick}>Log out</button>
-//   ) : (
-//     <button onClick={gcal.handleAuthClick}>Google Cal Log in</button>
-//   );
-
 const Events = () => {
   const [events, setEvents] = useState([]);
 
@@ -38,7 +29,8 @@ const Events = () => {
 };
 
 // This is view for one list.
-const ListItems = ({ listId, back, list }) => {
+const ListItems = ({ listId, back }) => {
+  const [list, setList] = useState(null);
   const [allItems, setItems] = useState([]);
   const [showCompletedItems, setShowCompletedItems] = useState(false);
   const items = allItems.filter((item) => !item.is_done);
@@ -47,8 +39,10 @@ const ListItems = ({ listId, back, list }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(gcal.sign);
 
   async function getItems(listId) {
+    const list = await apiClient.getList(listId);
     const itemsArray = await apiClient.getItems(listId);
     setItems(itemsArray);
+    setList(list);
   }
 
   const addNewItem = async (name) => {
@@ -138,7 +132,9 @@ const ListItems = ({ listId, back, list }) => {
       }
     });
   }, []);
-
+  if (!list) {
+    return null;
+  }
   return (
     <>
       {/* Open for test */}

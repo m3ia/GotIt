@@ -1,10 +1,25 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
 import gcal from "./ApiCalendar";
 import App from "./App";
 import * as apiClient from "./apiClient";
 import logo from "./got-it-logo1.png";
+
+const AppRootComponent = ({ user }) => (
+  <BrowserRouter>
+    <Switch>
+      <Route path="/lists/:listId">
+        <App page="listItems" user={user} />
+      </Route>
+      <Route path="/">
+        <App page="home" user={user} />
+      </Route>
+    </Switch>
+  </BrowserRouter>
+);
 
 const LoginPage = () => {
   const [user, setUser] = useState(null);
@@ -67,7 +82,7 @@ const LoginPage = () => {
   return (
     <>
       {isAuthenticated ? (
-        <App user={user} />
+        <AppRootComponent user={user} />
       ) : (
         <div className="sign-in-wrapper">
           <div className="sign-in-box container">
@@ -79,13 +94,5 @@ const LoginPage = () => {
     </>
   );
 };
-
-function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log("Name: " + profile.getName());
-  console.log("Image URL: " + profile.getImageUrl());
-  console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
-}
 
 export default LoginPage;

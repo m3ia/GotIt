@@ -1,27 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-
-import App from "./App";
-import ListItems from "./ListItems";
 import LoginPage from "./LoginPage.jsx";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={LoginPage} />
-        <Route path="/home">
-          <App page="home" />
-        </Route>
-        <Route path="/lists/:listId" component={ListItems}>
-          <App page="listItems" />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-    ,
+    <LoginPage />
   </React.StrictMode>,
   document.getElementById("root"),
 );

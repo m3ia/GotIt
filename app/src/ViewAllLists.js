@@ -1,24 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import * as apiClient from "./apiClient";
-import icon from "./got-it-logo-icon1.png";
-import listIcon from "./list-icon.png";
+import { Link } from "react-router-dom";
 
-// const ListIcon = () => {
-//   return (
-//     <>
-//       {icon}
-//       <button
-//         type="button"
-//         // className="edit-button"
-//         data-target={`#id${list.id}`}
-//         // onClick={onEditClick}
-//       >
-//         View
-//       </button>
-//     </>
-//   );
-// };
+import * as apiClient from "./apiClient";
+import listIcon from "./list-icon.png";
 
 const CreateNewList = ({
   onAdd,
@@ -45,14 +30,6 @@ const CreateNewList = ({
     setName("");
   };
 
-  // // Validation to ensure name is not empty
-  // function validateForm() {
-  //   var x = document.forms["myForm"]["fname"].value;
-  //   if (x === "") {
-  //     alert("List name must be filled out");
-  //     return false;
-  //   }
-  // }
   return (
     <div className="container">
       <button
@@ -76,13 +53,6 @@ const CreateNewList = ({
             <div className="modal-body">
               <b>List Name:</b>
               <div className="form-group">
-                {/* <form
-                  name="myForm"
-                  action="/action_page.php"
-                  onsubmit={() => validateForm()}
-                  method="post"
-                  required
-                > */}
                 <label htmlFor="list">Name:</label>
                 <input
                   type="text"
@@ -91,7 +61,6 @@ const CreateNewList = ({
                   defaultValue={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                {/* </form> */}
               </div>
               <b>Due Date: (optional)</b>
               <div className="form-group">
@@ -135,7 +104,6 @@ const ViewAllLists = ({ selectList, userId, user }) => {
   async function getLists(userId) {
     const listsArray = await apiClient.getLists(userId);
     setLists(listsArray);
-    console.log("in getlists", userId);
   }
 
   const onAdd = (list) => setLists([...lists, list]);
