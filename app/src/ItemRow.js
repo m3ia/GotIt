@@ -5,7 +5,6 @@ import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import SaveIcon from "@material-ui/icons/Save";
 import { lightFormat } from "date-fns";
-import { zonedTimeToUtc } from "date-fns-tz";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 
@@ -170,9 +169,14 @@ const Checkbox = ({ item, onChange }) => {
 //   }, [ref, exitEdit]);
 // }
 
+export function convertDateStringToDate(dateString) {
+  const [year, month, day] = dateString.split("-").map((t) => parseInt(t));
+  return new Date(year, month - 1, day, 0, 0, 0);
+}
+
 function getNextStartDate(item) {
   const now = new Date();
-  let newStartDate = new Date(item.recur_start_date);
+  let newStartDate = convertDateStringToDate(item.recur_start_date);
   let adder = addDays;
   let amountToAdd = 1;
 
@@ -222,9 +226,7 @@ function getNextStartDate(item) {
     while (newStartDate <= now) {
       newStartDate = adder(newStartDate, amountToAdd);
     }
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const utcDate = zonedTimeToUtc(new Date(newStartDate), tz);
-    return lightFormat(utcDate, "yyyy-MM-dd");
+    return lightFormat(newStartDate, "yyyy-MM-dd");
   }
 }
 

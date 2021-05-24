@@ -4,7 +4,7 @@ import { lightFormat } from "date-fns";
 
 import AddItem from "./AddItemForm";
 import gcal from "./ApiCalendar";
-import ItemRow from "./ItemRow";
+import ItemRow, { convertDateStringToDate } from "./ItemRow";
 import * as apiClient from "./apiClient";
 
 const Events = () => {
@@ -148,7 +148,7 @@ const ListItems = ({ listId, back }) => {
       // TESTED: loops through each item
       items.forEach((item) => {
         const itemRecurEndDate =
-          item.recur_end_date && new Date(item.recur_end_date);
+          item.recur_end_date && convertDateStringToDate(item.recur_end_date);
         if (itemRecurEndDate && itemRecurEndDate <= today) {
           // TESTED: if the so, then delete the item.
           deleteItem(item.id);
@@ -164,7 +164,7 @@ const ListItems = ({ listId, back }) => {
           });
         } else if (
           item.recur_start_date &&
-          today >= new Date(item.recur_start_date) &&
+          today >= convertDateStringToDate(item.recur_start_date) &&
           item.date_updated > today
         ) {
           editItem({
