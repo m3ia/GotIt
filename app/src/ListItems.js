@@ -144,28 +144,22 @@ const ListItems = ({ listId, back }) => {
   // create a checkRecurring functional component to call in ListItems
   const CheckRecurring = useCallback(
     (items) => {
-      const today = new Date();
+      const now = new Date();
       // TESTED: loops through each item
       items.forEach((item) => {
         const itemRecurEndDate =
           item.recur_end_date && convertDateStringToDate(item.recur_end_date);
-        if (itemRecurEndDate && itemRecurEndDate <= today) {
+        if (itemRecurEndDate && itemRecurEndDate <= now) {
           // TESTED: if the so, then delete the item.
           deleteItem(item.id);
-        } else if (
-          item.recur_freq &&
-          item.recur_freq?.trim() !== "5s" &&
-          item.recur_start_date === today &&
-          item.date_updated > today
-        ) {
+        } else if (item.recur_freq && item.recur_freq.trim() === "5s") {
           editItem({
             ...item,
-            is_done: true,
+            is_done: false,
           });
         } else if (
-          item.recur_start_date &&
-          today >= convertDateStringToDate(item.recur_start_date) &&
-          item.date_updated > today
+          item.recur_freq &&
+          now >= convertDateStringToDate(item.recur_start_date)
         ) {
           editItem({
             ...item,
