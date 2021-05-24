@@ -223,7 +223,8 @@ function getNextStartDate(item) {
       newStartDate = adder(newStartDate, amountToAdd);
     }
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const utcDate = zonedTimeToUtc(new Date(newStartDate), tz);       return lightFormat(utcDate, "yyyy-MM-dd");
+    const utcDate = zonedTimeToUtc(new Date(newStartDate), tz);
+    return lightFormat(utcDate, "yyyy-MM-dd");
   }
 }
 

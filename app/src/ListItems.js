@@ -153,8 +153,19 @@ const ListItems = ({ listId, back }) => {
           // TESTED: if the so, then delete the item.
           deleteItem(item.id);
         } else if (
+          item.recur_freq &&
+          item.recur_freq?.trim() !== "5s" &&
+          item.recur_start_date === today &&
+          item.date_updated > today
+        ) {
+          editItem({
+            ...item,
+            is_done: true,
+          });
+        } else if (
           item.recur_start_date &&
-          today >= new Date(item.recur_start_date)
+          today >= new Date(item.recur_start_date) &&
+          item.date_updated > today
         ) {
           editItem({
             ...item,
