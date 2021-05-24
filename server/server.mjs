@@ -18,20 +18,16 @@ const items = express.Router();
 const users = express.Router();
 
 app.post("/api/v1/auth/google", async (req, res) => {
-  console.log("made it to google post");
   const { token } = req.body;
-  console.log("We got a token", token);
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.CLIENT_ID,
   });
   const { email } = ticket.getPayload();
-  console.log("We got the user verified email", email);
   let { user } = await db.loginUser(email);
   if (!user) {
     user = await db.getUser(email);
   }
-  console.log("we got em", { user });
   res.status(201);
   res.json(user);
 });
