@@ -17,7 +17,6 @@ const Events = () => {
   return events.length === 0 ? null : (
     <ul>
       {events.map((event) => {
-        console.log(event);
         return (
           <li key={event.id}>
             {event.summary} {event.start.dateTime} {event.end.dateTime}
@@ -25,6 +24,33 @@ const Events = () => {
         );
       })}
     </ul>
+  );
+};
+
+const AddListToGCal = ({ list }) => {
+  const addListToGCal = async () => {
+    await gcal.createEvent({
+      summary: `${list.name}, due ${list.due_date}`,
+      start: {
+        date: list.due_date,
+      },
+      end: {
+        date: list.due_date,
+      },
+    });
+  };
+
+  return (
+    <>
+      {list.due_date && (
+        <button
+          className="btn btn-warning add-list-to-gcal-button"
+          onClick={addListToGCal}
+        >
+          Add List to Google Calendar
+        </button>
+      )}
+    </>
   );
 };
 
@@ -236,6 +262,9 @@ const ListItems = ({ listId, back }) => {
               <Events />
             </>
           ) : null}
+        </div>
+        <div className="add-list-to-gcal">
+          <AddListToGCal list={list} />
         </div>
         {/* Close for GCal  */}
       </div>
