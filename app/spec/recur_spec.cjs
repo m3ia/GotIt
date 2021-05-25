@@ -1,12 +1,12 @@
-const addDays = require("date-fns/addDays");
+import { addDays } from "date-fns/addDays";
 
-const { getNextStartDate } = require("../src/ItemRow");
+import { getNextStartDate } from "../src/ItemRow";
 
 describe("A suite", function () {
   it("contains spec with an expectation", function () {
     const firstDate = new Date(2014, 8, 1);
     const secondDate = addDays(firstDate, 10);
-    const nextStartDate = getNextStartDate(secondDate);
+    getNextStartDate(secondDate);
     expect(firstDate).not.toEqual(secondDate);
   });
 });
