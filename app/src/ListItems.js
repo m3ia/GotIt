@@ -4,18 +4,10 @@ import { lightFormat } from "date-fns";
 
 import AddItem from "./AddItemForm";
 import gcal from "./ApiCalendar";
-import ItemRow from "./ItemRow";
+import ItemRow, { convertDateStringToDate } from "./ItemRow";
 import * as apiClient from "./apiClient";
 
-const Events = () => {
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    gcal
-      .listUpcomingEvents(7)
-      .then(({ result: { items } }) => setEvents(items));
-  }, []);
-
+const Events = ({ events }) => {
   return events.length === 0 ? null : (
     <table className="gcal-table table-bordered">
       <thead>
@@ -44,10 +36,17 @@ const Events = () => {
 };
 
 const AddListToGCal = ({ list }) => {
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    gcal
+      .listUpcomingEvents(7)
+      .then(({ result: { items } }) => setEvents(items));
+  }, []);
+
   const currURL = window.location.href;
 
   const addListToGCal = async () => {
-    await gcal.createEvent({
+    const { result } = await gcal.createEvent({
       summary: `${list.name}`,
       start: {
         date: list.due_date,
@@ -60,6 +59,7 @@ const AddListToGCal = ({ list }) => {
       },
       description: `${currURL}`,
     });
+    setEvents([...events, result]);
   };
 
   return (
@@ -73,7 +73,7 @@ const AddListToGCal = ({ list }) => {
       <div className="my-calendar">
         <br />
         <h6>Upcoming Events on My Google Calendar: </h6>
-        <Events />
+        <Events events={events} />
       </div>
     </>
   );
@@ -144,15 +144,23 @@ const ListItems = ({ listId, back }) => {
   // create a checkRecurring functional component to call in ListItems
   const CheckRecurring = useCallback(
     (items) => {
-      const today = new Date();
+      const now = new Date();
       // TESTED: loops through each item
       items.forEach((item) => {
         const itemRecurEndDate =
-          item.recur_end_date && new Date(item.recur_end_date);
-        if (itemRecurEndDate && itemRecurEndDate <= today) {
+          item.recur_end_date && convertDateStringToDate(item.recur_end_date);
+        if (itemRecurEndDate && itemRecurEndDate <= now) {
           // TESTED: if the so, then delete the item.
           deleteItem(item.id);
-        } else if (item.recur_start_date && today >= item.recur_start_date) {
+        } else if (item.recur_freq && item.recur_freq.trim() === "5s") {
+          editItem({
+            ...item,
+            is_done: false,
+          });
+        } else if (
+          item.recur_freq &&
+          now >= convertDateStringToDate(item.recur_start_date)
+        ) {
           editItem({
             ...item,
             is_done: false,

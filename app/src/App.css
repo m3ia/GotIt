@@ -300,3 +300,34 @@ span.add-item-row {
 .my-calendar {
   padding-bottom: 15px;
 }
+
+.log-in-container {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-in-wrapper {
+  display: flex;
+  justify-content: center;
+  max-width:  100%;
+}
+
+img.logo {
+  display: flex;
+  /* max-width: 65%; */
+  justify-content: center;
+  padding: 10px;
+  min-width: 50%;
+  align-items: center;
+  margin-top: 50%;
+}
+
+.logo-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 25%;
+}

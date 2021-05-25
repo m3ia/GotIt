@@ -4,6 +4,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import SaveIcon from "@material-ui/icons/Save";
+import { lightFormat } from "date-fns";
 import addDays from "date-fns/addDays";
 import addMonths from "date-fns/addMonths";
 
@@ -142,7 +143,6 @@ const Checkbox = ({ item, onChange }) => {
           // value={isChecked}
           checked={isChecked}
           name="{item.name}"
-          unchecked="true"
           onChange={(e) => {
             onChange(e.target.value);
             !isChecked ? setIsChecked(true) : setIsChecked(false);
@@ -168,9 +168,13 @@ const Checkbox = ({ item, onChange }) => {
 //   }, [ref, exitEdit]);
 // }
 
-function getNextStartDate(item) {
+export function convertDateStringToDate(dateString) {
+  const [year, month, day] = dateString.split("-").map((t) => parseInt(t));
+  return new Date(year, month - 1, day, 0, 0, 0);
+}
+
+export function getNextStartDate(item) {
   const now = new Date();
-  let newStartDate = new Date(item.recur_start_date);
   let adder = addDays;
   let amountToAdd = 1;
 
@@ -180,13 +184,12 @@ function getNextStartDate(item) {
     adder = addMonths;
   } else if (item.recur_freq?.trim() === "5s") {
     // doesn't matter
-    newStartDate = now;
-    return newStartDate;
+    return lightFormat(now, "yyyy-MM-dd");
   } else if (!item.recur_freq) {
     // not recurring
     return null;
   }
-
+  let newStartDate = convertDateStringToDate(item.recur_start_date);
   // find the next closest of that window
 
   // Keeping for testing purposes
@@ -220,7 +223,7 @@ function getNextStartDate(item) {
     while (newStartDate <= now) {
       newStartDate = adder(newStartDate, amountToAdd);
     }
-    return newStartDate;
+    return lightFormat(newStartDate, "yyyy-MM-dd");
   }
 }
 
