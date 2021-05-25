@@ -7,15 +7,7 @@ import gcal from "./ApiCalendar";
 import ItemRow, { convertDateStringToDate } from "./ItemRow";
 import * as apiClient from "./apiClient";
 
-const Events = () => {
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    gcal
-      .listUpcomingEvents(7)
-      .then(({ result: { items } }) => setEvents(items));
-  }, []);
-
+const Events = ({ events }) => {
   return events.length === 0 ? null : (
     <table className="gcal-table table-bordered">
       <thead>
@@ -44,10 +36,17 @@ const Events = () => {
 };
 
 const AddListToGCal = ({ list }) => {
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    gcal
+      .listUpcomingEvents(7)
+      .then(({ result: { items } }) => setEvents(items));
+  }, []);
+
   const currURL = window.location.href;
 
   const addListToGCal = async () => {
-    await gcal.createEvent({
+    const { result } = await gcal.createEvent({
       summary: `${list.name}`,
       start: {
         date: list.due_date,
@@ -60,6 +59,7 @@ const AddListToGCal = ({ list }) => {
       },
       description: `${currURL}`,
     });
+    setEvents([...events, result]);
   };
 
   return (
@@ -73,7 +73,7 @@ const AddListToGCal = ({ list }) => {
       <div className="my-calendar">
         <br />
         <h6>Upcoming Events on My Google Calendar: </h6>
-        <Events />
+        <Events events={events} />
       </div>
     </>
   );
