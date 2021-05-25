@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import ListItems from "../ListItems";
 // write a test where items that recur, all of which are checked off
@@ -9,7 +9,7 @@ import ListItems from "../ListItems";
 
 test("should render ListItems component", () => {
   render(<ListItems />);
-  const listItemsElement = screen.getByTestId("test-1");
-  expect(listItemsElement).toBeInTheDocument();
-  expect(listItemsElement).toHaveTextContent("dropdown");
+  const liqstItemsElement = screen.getByTestId("test-1");
+  // expect(listItemsElement).toBeInTheDocument();
+  expect(listItemsElement).toHaveTextContent("Completed Items");
 });

@@ -12,16 +12,16 @@ const AddItem = ({ addNewItem }) => {
   };
 
   // Submit sets setEditMode(false). User sees value with submitted input item.
-  const onSubmitClick = () => {
-    addNewItem(name);
+  const onSubmitClick = async () => {
+    await addNewItem(name);
     inputItem.current.focus();
     setName("");
   };
 
   // When user clicks Enter on Edit Mode, onSubmitClick is processed.
-  const handleKeyPress = (e) => {
+  const handleKeyPress = async (e) => {
     if (e.charCode === 13) {
-      addNewItem(e.target.value);
+      await addNewItem(e.target.value);
       inputItem.current.focus();
       setName("");
     }
