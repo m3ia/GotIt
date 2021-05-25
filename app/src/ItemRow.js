@@ -188,6 +188,8 @@ export function getNextStartDate(item) {
   } else if (!item.recur_freq) {
     // not recurring
     return null;
+  } else if (!item.recur_start_date) {
+    return now;
   }
   let newStartDate = convertDateStringToDate(item.recur_start_date);
   // find the next closest of that window
