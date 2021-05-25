@@ -8,7 +8,7 @@
     "eslint": "eslint . --ext js,mjs",
     "start": "bin/start-server.sh",
     "test": "react-scripts test",
-    "jtest": "jasmine"q
+    "jtest": "jasmine"
   },
   "eslintConfig": {
     "extends": [
