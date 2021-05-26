@@ -28,7 +28,7 @@ const App = ({ page, user }) => {
       <div className="log-out-button">
         <button
           onClick={gcal.handleSignoutClick}
-          className="btn btn-primary btn-outline-dark float-right mt-2"
+          className="btn btn-primary btn-outline-danger float-right"
         >
           Log out
         </button>

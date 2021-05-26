@@ -201,7 +201,8 @@ a:hover {
 
 .create-new-list-button {
   display: flex;
-  margin-right: 100px;
+  justify-content:last baseline;
+  margin-right: 12%;
 }
 
 .items-container, .completed-items-container {
@@ -246,10 +247,6 @@ td, th {
 .list-name:hover {
   overflow: visible;
   overflow-wrap:break-word;
-}
-
-.log-out-button {
-  background-color: #FEB062;
 }
 
 /* Edit later */
@@ -330,4 +327,13 @@ img.logo {
   flex-direction: column;
   justify-content: center;
   margin-left: 25%;
+}
+
+button.btn.btn-primary.btn-outline-danger.float-right {
+
+  margin-top: 50%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 12%;
+
 }
