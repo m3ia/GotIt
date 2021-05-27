@@ -81,18 +81,40 @@ To check the Heroku database, open a terminal window and run `heroku psql --app 
 
 # Demo and Screenshots
 [Demo Video](https://www.youtube.com/watch?v=dnagrd67--o)
+
+Below: homepage to view all lists
+
 <img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/view-all-lists-screenshot.png?raw=true" alt="A screenshot to view all lists" width="300" border="1" />
-<img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/completed-and-noncompleted.png?raw=true" alt="A screenshot to view one list" width="300" border="1" />
-<img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/edit-mode-ex.png" alt="A screenshot to view how to edit an item an item" width="300" border="1" /> <img src="https://github.com/m3ia/GotIt/blob/main/images/add-freq.png" alt="A screenshot to show how to adjust frequency of a list" width="300" border="1" />
-<img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/test-before.png" alt="A screenshot of Daily, Weekly, Monthly recurring tasks being checked with \"Return 05/26\" for the daily option and \"Return 05/25\" for the weekly and monthly options" width="300" border="1" />
+
+Below: a view to show how to edit an item 
+
+<img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/edit-mode-ex.png" alt="A screenshot to view how to edit an item" width="300" border="1" /> 
+
+Below: A screenshot to show how to adjust frequency of a list
+
+<img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/freq-set.png?raw=true" alt="A screenshot to show how to adjust frequency of a list" width="300" border="1" />
+
+Below: A screenshot of Daily, Weekly, Monthly recurring tasks being checked with return dates
+
+<img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/test-before.png" alt="A screenshot of Daily, Weekly, Monthly recurring tasks being checked with return dates" width="300" border="1" />
+
+Below: A screenshot of Daily, Weekly, Monthly recurring tasks that have returned back to the list as unchecked items on 05/25
+
 <img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/test-after.png" alt="A screenshot of Daily, Weekly, Monthly recurring tasks that have returned back to the list as unchecked items on 05/25" width="300" border="1" />
+
+Below: A screenshot of the user's upcoming events from their Google Calendar listed as a table at the bottom of the page
+
 <img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/google-cal-ex.png" alt="A screenshot of the user's upcoming events from their Google Calendar listed as a table at the bottom of the page" width="300" border="1" />
-<img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/google-cal-ex.png" alt="A screenshot of the user's upcoming events from their Google Calendar listed as a table at the bottom of the page" width="300" border="1" />
+
+Below: A screenshot to view one list, with both completed and non-completed items in view
+
+<img src="https://github.com/m3ia/GotIt/blob/main/images/screenshots/completed-and-noncompleted.png?raw=true" alt="A screenshot to view one list, with both completed and non-completed items in view" width="300" border="1" />
+
 
 # Known Risks
 - Getting sign-in with OAuth2 in time with Google API
 - Getting verified by Google to allow non-test users for sign in in time for demonstration
 
 # Future Development
-- Capability to share lists with other users and/or non-users (with passwords)
+- Capability to share lists with non-users (with passwords)
 - Inventory feature where users can track items they have and re-add needed items to lists
